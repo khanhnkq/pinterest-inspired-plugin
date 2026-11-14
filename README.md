@@ -1,7 +1,8 @@
 # 🎨 Pinterest Inspiration Plugin
 
-> **Universal Visual Inspiration Engine & Design-to-Code MCP Plugin for AI Agents**  
-> Battle-tested for **Google Antigravity**, **Claude Code**, **OpenAI Codex**, and **Cursor / Windsurf**.
+> **Universal Visual Inspiration Engine & Anti-Slop Design-to-Code MCP Plugin for AI Agents**  
+> Battle-tested for **Google Antigravity**, **Claude Code**, **OpenAI Codex**, and **Cursor / Windsurf**.  
+> Bundling native UI/UX skills: **`design-taste-frontend`** (Anti-Slop Taste) and **`web-design-guidelines`** (A11y Standards).
 
 [![CI/CD Status](https://github.com/khanhnkq/pinterest-inspired-plugin/actions/workflows/deploy.yml/badge.svg)](https://github.com/khanhnkq/pinterest-inspired-plugin/actions)
 [![MCP Standard](https://img.shields.io/badge/MCP-Standard%20JSON--RPC%202.0-blue.svg)](https://modelcontextprotocol.io)
@@ -14,22 +15,22 @@
 
 ## 📸 Real-World Showcase: From Pinterest Moodboard to Live UI
 
-> **Chứng minh năng lực thực tế:** Dưới đây là sản phẩm website thực tế **"KANSO COFFEE — Single Origin & Slow Roastery"** được AI Agent thiết kế và lập trình hoàn chỉnh bằng cách bóc tách trực tiếp ảnh và mã màu từ Pinterest qua plugin này!
+> **Real-World Proof of Concept:** Below is the live production website **"KANSO ROASTERS — Artisanal Single-Origin & Slow Craft"**, designed and coded entirely by an AI Agent. The agent extracted real pins and dominant hex colors directly from Pinterest via this plugin, applied anti-slop guidelines (`design-taste-frontend`), and enforced accessibility standards (`web-design-guidelines`).
 
 <p align="center">
-  <img src="showcase/kanso-showcase-desktop.png" alt="Pinterest Inspiration Plugin Real World Showcase" width="100%" />
+  <img src="showcase/kanso-showcase-desktop.png" alt="Pinterest Inspiration Plugin Real World Showcase Desktop View" width="100%" />
 </p>
 
-### 🎯 Quy trình biến đổi trực quan (From Pins to Production Code)
+### 🎯 Visual Transformation Pipeline (From Pins to Production Code)
 
-| 📌 1. Ảnh & Mã Màu Bóc Tách Từ Pinterest | 💻 2. Giao Diện Web Thực Tế Tạo Ra (Tailwind CSS) |
+| 📌 1. Pinterest Extracted Pins & Hex Tokens | 💻 2. Live UI Implementation (Tailwind CSS + React) |
 | :--- | :--- |
-| <img src="showcase/assets/pin_1.jpg" width="220" /> <br> **V60 Pour Over Protocol** <br> `Dominant Hex: #6A4E37` <br><br> <img src="showcase/assets/pin_2.jpg" width="220" /> <br> **Artisanal Roasted Beans** <br> `Dominant Hex: #93725B` | **Hero Section Bất Đối Xứng:** <br> • Ánh xạ trực tiếp màu `#6A4E37` vào nút bấm CTA & typography Cormorant Garamond.<br> • Bố cục so le khung ảnh đôi tái hiện đúng tỉ lệ khung hình Pinterest.<br> • Sử dụng màu nền kem yến mạch `#FBF9F5` làm dịu mắt người dùng. |
-| <img src="showcase/assets/pin_3.jpg" width="220" /> <br> **Ethiopia Yirgacheffe** <br> `Dominant Hex: #CEAA8A` <br><br> <img src="showcase/assets/pin_4.jpg" width="220" /> <br> **Colombia Gesha Reserve** <br> `Dominant Hex: #49432F` | **Bento Grid Sản Phẩm Mùa Vụ:** <br> • Thẻ Card sản phẩm gắn trực tiếp mã màu nhận diện từng loại hạt.<br> • Phối màu 60-30-10 chống hiện tượng "AI slop" rập khuôn.<br> • Thẻ Kanso Club dùng màu nền espresso than củi `#211813` tạo điểm nhấn. |
+| <img src="showcase/assets/pin_1.jpg" width="220" alt="V60 Pour Over Pin" /> <br> **V60 Pour Over Protocol** <br> `Dominant Hex: #6A4E37` <br><br> <img src="showcase/assets/pin_2.jpg" width="220" alt="Artisanal Roasted Beans Pin" /> <br> **Artisanal Roasted Beans** <br> `Dominant Hex: #93725B` | **Asymmetric Editorial Hero Section:** <br> • Direct mapping of `#6A4E37` to primary CTA buttons and brand accent pills.<br> • Staggered dual-frame photography preserving native Pinterest aspect ratios.<br> • Oatmeal linen canvas (`#FAF7F2`) replacing harsh clinical whites.<br> • Elegant typography pairing: *Cormorant Garamond* display + *Plus Jakarta Sans* UI copy. |
+| <img src="showcase/assets/pin_3.jpg" width="220" alt="Ethiopia Yirgacheffe Pin" /> <br> **Ethiopia Yirgacheffe** <br> `Dominant Hex: #CEAA8A` <br><br> <img src="showcase/assets/pin_4.jpg" width="220" alt="Colombia Gesha Reserve Pin" /> <br> **Colombia Gesha Reserve** <br> `Dominant Hex: #49432F` | **Seasonal Bento Grid & Interactive Extraction Lab:** <br> • Individual lot cards tagged with dominant hex identifiers (`#CEAA8A`, `#49432F`).<br> • 60-30-10 harmonic color distribution eliminating "AI slop" cliches.<br> • Deep espresso charcoal card (`#211813`) creating visual hierarchy and focal weight.<br> • WCAG AA compliant contrast ratios (4.5:1+) and visible keyboard focus rings. |
 
 <p align="center">
   <img src="showcase/kanso-showcase-full.png" alt="Full Editorial Bento Grid Showcase" width="100%" />
-  <em>Toàn cảnh giao diện hoàn chỉnh được chụp thực tế bằng Headless Chrome (1440 x 1800 viewport). Mã nguồn có sẵn tại <code>showcase/index.html</code>.</em>
+  <em>Complete editorial interface captured directly via Headless Chrome (1440 x 1800 viewport). Full source code available in <code>showcase/index.html</code>.</em>
 </p>
 
 ---
@@ -37,6 +38,7 @@
 ## 📖 Table of Contents
 - [Real-World Showcase](#-real-world-showcase-from-pinterest-moodboard-to-live-ui)
 - [Overview](#-overview)
+- [Integrated UI/UX Skills](#-integrated-uiux-skills)
 - [Why This Plugin? (Anti-Generic AI)](#-why-this-plugin-anti-generic-ai)
 - [Key Features](#-key-features)
 - [Architecture & Mechanics](#-architecture--mechanics)
@@ -51,13 +53,14 @@
   - [4. OpenAI Codex](#4-openai-codex-setup)
 - [Production Deployment (Azure VM & Docker)](#-production-deployment-azure-vm--docker)
 - [Testing & Quality Assurance](#-testing--quality-assurance)
-- [License & Contributing](#-license)
+- [Repository Structure](#-repository-structure)
+- [License](#-license)
 
 ---
 
 ## 🌟 Overview
 
-The **Pinterest Inspiration Plugin** bridges the gap between text-based AI models and real-world aesthetic references. 
+The **Pinterest Inspiration Plugin** bridges the gap between text-based AI models and real-world aesthetic references.
 
 Instead of guessing generic UI colors or hallucinating vague art styles, AI coding agents can now query Pinterest's infinite visual repository, extract precise visual design tokens (**high-resolution images**, **dominant hex colors**, **aspect ratios**, **dimensions**), construct aesthetic moodboards, and synthesize production-grade code or generative prompts.
 
@@ -69,8 +72,31 @@ flowchart LR
     Pinterest -->|3. JSON State & Dominant Hex| MCP
     MCP -->|4. Structured Pin Tokens| Agent
     Agent -->|5. Visual Moodboard| Moodboard["🖼️ Live Markdown Moodboard"]
-    Agent -->|6. Token Mapping| Output["💻 Tailwind React Code / 🎨 Imagen 3 Prompt"]
+    Agent -->|6. Design Read & Dials| Taste["🎨 design-taste-frontend"]
+    Taste -->|7. A11y & Contrast Audit| A11y["♿ web-design-guidelines"]
+    A11y --> Output["💻 Production Tailwind UI / 🎨 Imagen 3 Prompt"]
 ```
+
+---
+
+## 🧠 Integrated UI/UX Skills
+
+This plugin bundles two world-class UI/UX skills directly inside `skills/` to elevate agent output from raw data into cohesive, production-ready interfaces:
+
+### 1. `design-taste-frontend` (Anti-Slop Design Taste)
+- **Brief Inference & Design Read**: Dissects the prompt into page kind, audience, and aesthetic family before writing code.
+- **The Three Dials**:
+  - `DESIGN_VARIANCE` (1–10): Governs asymmetry, layout rhythm, and organic staggering.
+  - `MOTION_INTENSITY` (1–10): Balances subtle micro-interactions vs. cinematic choreography.
+  - `VISUAL_DENSITY` (1–10): Calibrates airy editorial spacing vs. data-dense cockpit grids.
+- **Anti-Default Discipline**: Completely eliminates generic AI tells (purple gradients, Inter + slate-900, uniform centered 3-card grids).
+- **Font Pairing Matrix**: Curated pairings like *Cormorant Garamond* / *Instrument Serif* with *Plus Jakarta Sans* / *Geist*.
+
+### 2. `web-design-guidelines` (Vercel A11y & Engineering Standards)
+- **Contrast & Hierarchy**: Strictly enforces WCAG AA 4.5:1 contrast for body copy and 3:1 for display typography.
+- **Keyboard Navigation**: Mandates visible focus rings (`focus-visible:ring-2 focus-visible:ring-offset-2`) and forbids naked `outline: none`.
+- **Semantic HTML**: Strict `<button>` for actions, `<a>` for navigation, `<main>`, `<nav>`, `<header>`, and hidden skip-links.
+- **Performance & CLS**: Explicit `width` and `height` on images, lazy loading below fold, and `prefers-reduced-motion` compliance.
 
 ---
 
@@ -91,6 +117,7 @@ By feeding live Pinterest visual tokens into the Agent's reasoning loop:
 - **Zero Headless Browser Overhead:** No Puppeteer, Chromium, or Playwright binaries. Pure, ultra-fast Python HTTP parsing (< 800ms per request).
 - **Hard Clamped Results:** Intelligently capped at $\le 10$ pins per query to prevent LLM context-window bloating and avoid Pinterest rate-limiting.
 - **Local Asset Caching:** Downloads original high-res images directly into `.pinterest_cache/` for multimodal Vision inspection by the Agent.
+- **Native Skill Bundling:** Includes `skills/pinterest-inspiration`, `skills/design-taste-frontend`, and `skills/web-design-guidelines` for out-of-the-box design intelligence.
 - **Multi-Agent Cross-Compatibility:** Includes native manifests for Antigravity (`plugin.json`, `gemini-extension.json`), Claude Code (`.claude-plugin/plugin.json`, `CLAUDE.md`), and Codex/Cursor (`AGENTS.md`, `mcp.json`).
 - **Production-Ready Remote Deployment:** Pre-configured Docker container and automated GitHub Actions CI/CD deploying to Azure VM via GHCR.
 
@@ -137,10 +164,10 @@ Downloads an inspiration image to local storage for Vision model inspection or p
 ### Workflow 1: UI/UX & Tailwind CSS Frontend
 
 #### Step 1: User Request
-> *"Thiết kế một trang Landing Page bán gốm sứ thủ công tối giản mang phong cách ấm cúng (cozy ceramic pottery) bằng React và Tailwind CSS."*
+> *"Design a warm, minimalist landing page for a boutique handcrafted ceramic studio using React and Tailwind CSS."*
 
 #### Step 2: Agent Tool Call
-Agent translates the request into high-signal visual keywords and calls the tool:
+Agent translates the intent into high-signal visual keywords and queries Pinterest:
 ```python
 search_pinterest_inspiration(
     query="minimalist handcrafted ceramic pottery editorial landing page",
@@ -157,36 +184,46 @@ The Agent outputs an aesthetic Markdown moodboard:
 | ![Ceramic 2](https://i.pinimg.com/736x/b4/11/e4/b411e44595c8cdda7cff914f58db21f9.jpg) | `#3E2723` | `1200x1800` | [Original HD](https://i.pinimg.com/originals/b4/11/e4/b411e44595c8cdda7cff914f58db21f9.jpg) |
 | ![Ceramic 3](https://i.pinimg.com/736x/4d/5b/f3/4d5bf3a3f5a7e2875b28280efa67e5a5.jpg) | `#F5F2EB` | `1080x1080` | [Original HD](https://i.pinimg.com/originals/4d/5b/f3/4d5bf3a3f5a7e2875b28280efa67e5a5.png) |
 
-#### Step 4: Token Extraction & Code Generation
-Agent extracts the exact palette (60-30-10 rule) and generates production React code:
+#### Step 4: Token Extraction & Code Generation (`design-taste-frontend` + `web-design-guidelines`)
+Agent declares the Design Read, sets the Dials (`8 / 5 / 3`), and generates production React code:
+
 ```tsx
-// Tailwind CSS theme tokens mapped directly from Pinterest dominant colors:
-// Primary Ground (60%): #F5F2EB (warm bone linen)
-// Surface/Accent (30%): #D8C2B0 (clay glaze)
-// Contrast Text (10%): #3E2723 (deep espresso terracotta)
+// Design Read: Craft studio landing for design-conscious consumers with an earthy editorial language.
+// Palette (60-30-10): #F5F2EB (Canvas 60%) | #D8C2B0 (Structure 30%) | #3E2723 (Accent/Text 10%)
 
 export function CeramicHero() {
   return (
-    <section className="min-h-screen bg-[#F5F2EB] text-[#3E2723] px-8 py-20 font-serif">
+    <section className="min-h-screen bg-[#F5F2EB] text-[#3E2723] px-8 py-20 font-serif selection:bg-[#3E2723] selection:text-[#F5F2EB]">
+      {/* Skip link for accessibility */}
+      <a href="#collection" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 bg-[#3E2723] text-[#F5F2EB] px-4 py-2 text-xs uppercase tracking-widest">
+        Skip to collection
+      </a>
+
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
         <div className="md:col-span-7 space-y-6">
-          <span className="text-xs uppercase tracking-widest text-[#8C6D58]">Handcrafted Studio • Est. 2026</span>
-          <h1 className="text-5xl md:text-7xl font-light tracking-tight leading-tight">
+          <span className="text-xs uppercase tracking-widest text-[#8C6D58] font-sans font-medium">Handcrafted Studio • Est. 2026</span>
+          <h1 className="text-5xl md:text-7xl font-light tracking-tight leading-[1.05] text-balance">
             Earth, water, <br/><span className="italic font-normal">and quiet patience.</span>
           </h1>
-          <p className="text-base text-[#6B5547] max-w-md font-sans leading-relaxed">
+          <p className="text-base text-[#6B5547] max-w-md font-sans leading-relaxed text-pretty">
             Each stoneware vessel is wheel-thrown in small batches using local riverbed clay.
           </p>
-          <button className="bg-[#3E2723] text-[#F5F2EB] px-8 py-4 text-xs font-sans tracking-widest uppercase hover:bg-[#8C6D58] transition-colors">
-            Explore Collection
-          </button>
+          <div className="flex items-center gap-4 pt-2">
+            <button className="bg-[#3E2723] text-[#F5F2EB] px-8 py-4 text-xs font-sans tracking-widest uppercase hover:bg-[#8C6D58] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#3E2723] transition-colors">
+              Explore Collection
+            </button>
+          </div>
         </div>
+
         <div className="md:col-span-5">
-          <div className="relative aspect-[3/4] bg-[#D8C2B0] overflow-hidden shadow-2xl">
+          <div className="relative aspect-[3/4] bg-[#D8C2B0] overflow-hidden shadow-2xl rounded-sm">
             <img 
               src="https://i.pinimg.com/originals/b4/11/e4/b411e44595c8cdda7cff914f58db21f9.jpg" 
-              alt="Handcrafted ceramic vase" 
-              className="w-full h-full object-cover"
+              alt="Handcrafted ceramic vase on textured stone" 
+              width={1200}
+              height={1800}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 ease-out"
+              fetchpriority="high"
             />
           </div>
         </div>
@@ -201,7 +238,7 @@ export function CeramicHero() {
 ### Workflow 2: AI Image Generation (Midjourney / Imagen 3)
 
 #### Step 1: User Request
-> *"Tạo prompt Midjourney để vẽ một bức ảnh chụp sản phẩm đồng hồ cơ khí sang trọng mang phong cách cyberpunk neon ban đêm."*
+> *"Craft a Midjourney prompt for a luxury mechanical skeleton watch with dark cyberpunk neon lighting."*
 
 #### Step 2: Agent Tool Call
 ```python
@@ -376,12 +413,22 @@ pinterest-inspired-plugin/
 │       └── deploy.yml              # CI/CD: Pytest -> GHCR build -> Azure VM deploy
 ├── .claude-plugin/
 │   └── plugin.json                 # Claude Code plugin manifest
+├── showcase/
+│   ├── assets/                     # Downloaded Pinterest reference pins
+│   ├── index.html                  # Live KANSO ROASTERS showcase website
+│   ├── kanso-showcase-desktop.png  # High-res desktop showcase screenshot
+│   ├── kanso-showcase-full.png     # Full-page editorial showcase screenshot
+│   └── pins.json                   # Raw Pinterest token dump
 ├── skills/
-│   └── pinterest-inspiration/
-│       ├── SKILL.md                # Agent skill with query translation matrix
-│       └── references/
-│           ├── ui-design-guide.md  # 60-30-10 palette rules & React layouts
-│           └── prompt-crafting.md  # 4-pillar Midjourney/Imagen 3 guide
+│   ├── pinterest-inspiration/
+│   │   ├── SKILL.md                # Agent skill with query translation matrix
+│   │   └── references/
+│   │       ├── ui-design-guide.md  # 60-30-10 palette rules & React layouts
+│   │       └── prompt-crafting.md  # 4-pillar Midjourney/Imagen 3 guide
+│   ├── design-taste-frontend/
+│   │   └── SKILL.md                # Anti-slop frontend taste (Three Dials, Design Read)
+│   └── web-design-guidelines/
+│       └── SKILL.md                # Vercel accessibility & interface guidelines
 ├── src/
 │   ├── __init__.py
 │   ├── pinterest_scraper.py        # Mobile SSR parser & downloader

@@ -13,7 +13,7 @@ Operational guidelines for Claude Code interacting with the Pinterest Inspiratio
 
 ---
 
-## MCP Tool Reference
+## MCP Tools Reference
 
 This plugin registers two MCP tools:
 
@@ -28,8 +28,15 @@ This plugin registers two MCP tools:
 
 ---
 
-## Agent Guidelines & Style
+## Bundled Skills & Design Workflow
 
-- **Always translate non-English or vague user intents into visual English search terms.** Pinterest returns optimal visual pins with descriptive English style keywords (e.g. `brutalist editorial typography poster`, `swiss style minimalism ui`).
-- **Do not overwhelm the user with raw JSON.** Synthesize search results into clean Markdown visual moodboards with dominant color swatches (`#hex`) and image previews.
-- **Respect constraints:** Zero API keys, zero headless browser dependencies, fast execution (<800ms).
+This plugin bundles three native skills inside `skills/`:
+- `skills/pinterest-inspiration`: Core visual search and moodboard extraction.
+- `skills/design-taste-frontend`: Anti-slop frontend taste (The Three Dials, Design Read, asymmetric layouts, typographic tension).
+- `skills/web-design-guidelines`: Web interface guidelines, accessibility compliance, visible focus states, and WCAG contrast.
+
+### Standard Pipeline:
+1. **Translate queries into descriptive visual English** with design terminology (e.g. `minimalist brutalist dashboard ui`, `artisanal ceramic landing page`).
+2. **Present a rich Markdown visual moodboard** featuring preview images and dominant color hex badges.
+3. **Execute Design Read & Dials** before writing frontend code. Avoid AI defaults (purple gradients, generic centered 3-card grids).
+4. **Map Pinterest dominant hex colors** into a 60-30-10 palette and enforce WCAG 4.5:1 contrast and keyboard focus.

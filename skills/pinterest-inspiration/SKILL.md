@@ -1,11 +1,12 @@
 ---
 name: pinterest-inspiration
-description: Search Pinterest for real-world visual inspiration, color palettes, and layout aesthetics without API keys. Displays Markdown moodboards with image previews and dominant color hex pills, and guides downstream UI/UX design (Tailwind/React) and AI image generation (Midjourney/Gemini).
+description: Search Pinterest for real-world visual inspiration, color palettes, and layout aesthetics without API keys. Displays Markdown moodboards with image previews and dominant color hex pills, and orchestrates downstream anti-slop UI/UX design (via bundled design-taste-frontend and web-design-guidelines) and photorealistic AI image generation.
 ---
 
 # Pinterest Inspiration Skill
 
 > **Universal AI Agent Skill for Visual Reference & Creative Direction**  
+> Integrated with **design-taste-frontend** (Anti-Slop Design Taste) and **web-design-guidelines** (A11y Standards).  
 > Compatible with **Google Antigravity, Claude Code, OpenAI Codex, Cursor, and Windsurf**.
 
 This skill empowers AI Agents to search Pinterest for real-world visual references, extract high-fidelity design tokens (HD original images, preview URLs, dominant color hex values, and aspect ratios), render structured visual moodboards, and translate visual concepts directly into production-grade UI/UX code or photorealistic AI image generation prompts.
@@ -18,14 +19,14 @@ Activate this skill whenever the user:
 - Requests UI/UX design ideas, landing page concepts, web/mobile dashboards, or app redesigns.
 - Asks for color palette recommendations, moodboards, or visual theme inspiration.
 - Wants to generate AI images (Midjourney, Gemini ImageGen, Imagen 3, DALL-E) and needs authentic style reference tokens (lighting, texture, angle, composition).
-- Provides vague or abstract visual requests (e.g., *"làm giao diện quán cafe tối giản ấm cúng"*, *"design a sleek cybernetic watch landing page"*, *"retro Japanese poster design"*).
+- Provides visual requests that need elevated design execution (e.g., *"design a minimalist artisanal coffee landing page"*, *"design a sleek cybernetic watch dashboard"*, *"retro Japanese poster design"*).
 - Needs to break free from generic "AI slop" (overused purple-cyan gradients, generic Inter typography, cookie-cutter cards).
 
 ---
 
 ## 2. Core MCP Tools
 
-The plugin provides two core Model Context Protocol (MCP) tools via stdio:
+The plugin provides two core Model Context Protocol (MCP) tools via stdio / SSE:
 
 ### 1. `search_pinterest_inspiration`
 - **Purpose**: Scrapes top Pinterest pins directly using mobile SSR without requiring Pinterest API credentials.
@@ -57,23 +58,24 @@ The plugin provides two core Model Context Protocol (MCP) tools via stdio:
 
 ---
 
-## 3. Step-by-Step Agent Workflow
+## 3. End-to-End Design Pipeline
 
 ```mermaid
 flowchart TD
-    A[User Request] --> B[Phase 1: Query Formulation & Translation]
-    B --> C[Phase 2: Call search_pinterest_inspiration]
-    C --> D[Phase 3: Render Markdown Visual Moodboard]
-    D --> E{User Intent Branch}
-    E -->|UI / Web / App Design| F[Phase 4A: Tailwind & Component Architecture]
-    E -->|AI Image Generation| G[Phase 4B: Midjourney / Gemini Prompt Crafting]
-    F --> H[references/ui-design-guide.md]
-    G --> I[references/prompt-crafting.md]
+    User["User Prompt"] --> Phase1["Phase 1: Visual Query Formulation"]
+    Phase1 --> Phase2["Phase 2: Pinterest Scraper Engine"]
+    Phase2 --> Phase3["Phase 3: Visual Markdown Moodboard"]
+    Phase3 --> Branch{"Creative Intent"}
+    Branch -->|Frontend UI/UX| Phase4A["Phase 4A: design-taste-frontend Pipeline"]
+    Phase4A --> Dial["The Three Dials (Variance / Motion / Density)"]
+    Dial --> Code["Anti-Slop Tailwind & React Architecture"]
+    Code --> Audit["Phase 5: web-design-guidelines Audit (A11y / WCAG 4.5:1)"]
+    Branch -->|GenAI Imagery| Phase4B["Phase 4B: Prompt Deconstruction (Midjourney/Imagen 3)"]
 ```
 
 ### Phase 1: Query Formulation & Translation
 
-Pinterest search algorithms respond best to **descriptive visual English keywords** rather than abstract conceptual Vietnamese or conversational phrases.
+Pinterest search algorithms respond best to **descriptive visual English keywords** rather than abstract conceptual or conversational phrases.
 
 #### Translation & Keyword Expansion Rules:
 1. **Always translate non-English requests into English.**
@@ -83,26 +85,24 @@ Pinterest search algorithms respond best to **descriptive visual English keyword
 
 | User Prompt | Ineffective Query | Optimal Visual Query |
 | :--- | :--- | :--- |
-| "Thiết kế app quản lý chi tiêu hiện đại" | `app quan ly chi tieu` | `fintech mobile app ui minimalist clean dark mode` |
-| "Landing page quán cafe ấm cúng tối giản" | `coffee website` | `artisanal coffee shop website ui editorial warm earthy` |
-| "Poster phong cách Cyberpunk neon" | `cyberpunk poster` | `cyberpunk graphic design typography poster neon chiaroscuro` |
-| "Sofa bọc nỉ sang trọng phòng khách" | `luxury sofa living room` | `scandinavian modern living room boucle sofa soft natural lighting` |
-| "Giao diện SaaS AI B2B chuyên nghiệp" | `ai b2b dashboard` | `enterprise b2b saas dashboard dense typography sleek slate` |
+| "Fintech app dashboard" | `finance app` | `fintech mobile app ui minimalist clean dark mode dense` |
+| "Landing page for coffee roaster" | `coffee website` | `artisanal coffee shop website ui editorial warm earthy` |
+| "Cyberpunk watch concept" | `cyberpunk watch` | `luxury mechanical watch cyberpunk neon editorial photography` |
+| "Ceramic studio portfolio" | `pottery site` | `minimalist handcrafted ceramic pottery editorial landing page` |
+| "B2B AI Platform" | `ai software` | `enterprise b2b saas dashboard dense typography sleek slate` |
 
 ---
 
 ### Phase 2: Call `search_pinterest_inspiration`
 
-Invoke the tool with the formulated query and set `limit` between 6 and 10:
+Invoke the tool with the formulated query and set `limit` between 4 and 8:
 
 ```json
 {
   "query": "artisanal coffee shop website ui editorial warm earthy",
-  "limit": 8
+  "limit": 6
 }
 ```
-
-*Note: If the search query returns zero pins (rare, but can happen for obscure terms), broaden the query (e.g., remove niche modifiers) and retry once.*
 
 ---
 
@@ -110,75 +110,72 @@ Invoke the tool with the formulated query and set `limit` between 6 and 10:
 
 Always present the findings to the user as a **structured, highly visual Markdown Moodboard** before jumping into code or prompt generation.
 
-#### Required Moodboard Elements:
-1. **Curated Color Palette Bar**: Group unique `dominant_color` hex codes from the pins, display them with visual pills, and assign semantic roles.
-2. **Visual Inspiration Grid**: Display markdown preview images using `preview_url` (or `image_url`), accompanied by dominant color pills, dimensions, and the aesthetic insight it provides.
-3. **Design Synthesis**: A 2–3 bullet summary of the common aesthetic patterns observed (e.g., typography trends, whitespace, lighting, contrast).
-
 #### Standard Moodboard Format:
 
-````markdown
-### 🎨 Visual Inspiration Moodboard: [Search Topic]
+```markdown
+### 🎨 Visual Inspiration Moodboard: [Topic]
 
 **Search Query:** `artisanal coffee shop website ui editorial warm earthy`  
-**Identified Palette:**
-- `Primary`: `#2C1E17` (Dark Roasted Bean)
-- `Secondary`: `#8C6546` (Warm Caramel Ochre)
-- `Surface/Background`: `#F4EFEA` (Oatmeal Cream)
-- `Accent`: `#C15C3D` (Terracotta Clay)
-- `Muted Neutral`: `#D8CEBA` (Linen Sand)
+**Identified Color Palette:**
+- `Primary Accent`: `#6A4E37` (Dark Roasted Bean)
+- `Secondary Tone`: `#93725B` (Warm Caramel)
+- `Surface Base`: `#CEAA8A` (Almond Ochre)
+- `Deep Contrast`: `#49432F` (Olive Charcoal)
 
 ---
 
 #### Curated Reference Pins
 
-| Preview | Details & Dominant Tone | Aesthetic Key Takeaways |
-| :---: | :--- | :--- |
-| ![Coffee Hero](https://i.pinimg.com/736x/ab/cd/ef/abcdef12345.jpg) | **Dominant:** `#F4EFEA`<br>**Aspect:** 3:4 (Portrait)<br>**ID:** `108719709139` | High-contrast serif headlines, asymmetric editorial layout, generous negative space. |
-| ![Packaging Detail](https://i.pinimg.com/736x/12/34/56/123456789.jpg) | **Dominant:** `#2C1E17`<br>**Aspect:** 1:1 (Square)<br>**ID:** `98421839210` | Tactile organic paper texture, gold foil accents, Swiss grid typography. |
-| ![Interior Vibe](https://i.pinimg.com/736x/fe/dc/ba/fedcba9876.jpg) | **Dominant:** `#8C6546`<br>**Aspect:** 16:9 (Landscape)<br>**ID:** `7421893012` | Soft morning directional light, warm wood grain, muted earth tones. |
+| Visual Reference | Dominant Tone | Ratio & Dimensions | Aesthetic Takeaway |
+| :---: | :---: | :---: | :--- |
+| ![Ref 1](preview_url_1) | `#6A4E37` | 3:4 (Portrait) | High-contrast serif headlines, asymmetric framing |
+| ![Ref 2](preview_url_2) | `#93725B` | 1:1 (Square) | Tactile texture, warm neutral backdrop, clean label |
+| ![Ref 3](preview_url_3) | `#CEAA8A` | 16:9 (Landscape) | Directional morning sunlight, brutalist spacing |
 
 ---
 
 ### 💡 Aesthetic Synthesis
-1. **Typography**: High contrast between elegant serif display headings (e.g., *Playfair Display* or *Editorial New*) and clean geometric sans body.
-2. **Layout Rhythm**: Asymmetrical, magazine-style layouts with organic margins rather than rigid 3-column cards.
-3. **Color Atmosphere**: Warm off-white canvas with deep charcoal/brown text replacing harsh pure `#000000` blacks.
-````
+1. **Typographic Tension**: Contrast between editorial serif titles and monospaced technical labels.
+2. **Asymmetric Bento Layout**: Non-uniform card proportions reflecting natural editorial storytelling.
+3. **Color Harmony**: 60-30-10 palette anchored on natural roasted tones against an oatmeal background.
+```
 
 ---
 
-### Phase 4: Downstream Execution
+### Phase 4A: UI/UX Synthesis via `design-taste-frontend`
 
-Once the moodboard is established, branch into one of two paths based on the user's objective:
+When generating frontend code, activate the bundled **`design-taste-frontend`** methodology:
 
-#### Branch A: UI / UX Design & Frontend Code
-Refer to [UI Design Guide](references/ui-design-guide.md) for detailed execution:
-1. **Tailwind CSS Theme Tokenization**: Map dominant hexes into CSS variables or Tailwind `@theme` config.
-2. **Component Architecture**: Build hero sections, bento grids, navigation, and cards matching the visual rhythm of the pins.
-3. **Typography & Styling**: Apply matching font pairings, subtle border gradients, and elevation.
+#### 1. Output the One-Line Design Read
+Before writing code, state clearly:  
+`"Reading this as: <page kind> for <audience>, with a <vibe> language, leaning toward <aesthetic family>."`
 
-#### Branch B: AI Image Generation Prompting
-Refer to [Prompt Crafting Guide](references/prompt-crafting.md) for detailed execution:
-1. **Visual Token Extraction**: Deconstruct pins into 4 pillars (Style & Medium, Lighting & Atmosphere, Composition & Framing, Color Palette & Mood Tokens).
-2. **Prompt Synthesis**: Generate ready-to-run prompts tailored for Midjourney v6+ or Gemini Imagen 3.
-3. **Anti-slop Guardrails**: Eliminate generic stock aesthetics and unnatural plastic lighting.
+#### 2. Set The Three Dials
+- **`DESIGN_VARIANCE` (1–10)**: 7–8 (editorial asymmetry, broken grids, staggering).
+- **`MOTION_INTENSITY` (1–10)**: 4–6 (restrained subtle micro-interactions, smooth hover lifts).
+- **`VISUAL_DENSITY` (1–10)**: 3–4 (spacious, breathable negative space).
 
----
-
-## 4. Anti-Patterns & Best Practices
-
-| Do's ✅ | Don'ts ❌ |
-| :--- | :--- |
-| **Translate queries into descriptive English** with art & design terminology. | **Don't search in raw conversational Vietnamese** or single vague words like `"web"`. |
-| **Display markdown image previews** (`![alt](preview_url)`) so the user can see the inspiration. | **Don't just output raw JSON text** or long lists of plain URLs without image embeds. |
-| **Extract dominant colors** and assign them to semantic design roles (Background, Text, Accent). | **Don't ignore the colors** or default back to standard Tailwind `purple-600` / `blue-500`. |
-| **Limit scraping to 6–10 pins** for focused, high-speed aesthetic extraction. | **Don't request 50+ pins** or overwhelm the LLM context window. |
-| **Use `download_pin_image`** when local image inspection or Vision analysis is needed. | **Don't download every image indiscriminately** when visual URLs suffice for prompt/code generation. |
+#### 3. Enforce Anti-Default Discipline
+- ❌ **No AI-purple gradients** (`indigo-500` to `purple-600`).
+- ❌ **No generic Inter + slate-900 combinations**. Use curated pairings (e.g. *Cormorant Garamond* / *Instrument Serif* + *Plus Jakarta Sans* / *Geist*).
+- ❌ **No cookie-cutter 3-column centered cards**.
+- ✅ **Use Pinterest extracted hex colors** for the 60-30-10 rule (Canvas, Structure, Accent).
 
 ---
 
-## 5. Cross-Agent Environment Support
+### Phase 5: Accessibility Audit via `web-design-guidelines`
+
+Every generated component must be validated against the bundled **`web-design-guidelines`**:
+
+1. **WCAG AA 4.5:1 Contrast Ratio**: Text must maintain sufficient contrast against all background surfaces.
+2. **Keyboard Focus Rings**: Never use `outline-none` without `focus-visible:ring-2 focus-visible:ring-offset-2`.
+3. **Semantic Markup**: `<button>` for actions, `<a>` for navigation. Include a hidden skip-link (`<a href="#main" class="sr-only focus:not-sr-only">Skip to content</a>`).
+4. **Layout Stability (CLS)**: Explicit `width` and `height` on all image tags.
+5. **Typographic Polish**: Curly quotes (`“` `”`), true ellipsis (`…`), and non-breaking spaces (`&nbsp;`).
+
+---
+
+## 4. Cross-Agent Environment Support
 
 This skill operates uniformly across all supported environments:
 - **Google Antigravity**: Discovered under `skills/pinterest-inspiration/SKILL.md` with tool calls via `mcp_config.json`.

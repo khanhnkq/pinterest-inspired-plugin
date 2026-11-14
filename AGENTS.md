@@ -1,15 +1,19 @@
 # AGENTS.md — Universal Agent Operating Guidelines
 
-This document provides context, tool signatures, and operational workflows for AI coding agents (OpenAI Codex, Antigravity, Cursor, Windsurf, Claude Code) working with or utilizing the **Pinterest Inspiration Plugin**.
+This document provides context, tool signatures, bundled skills, and operational workflows for AI coding agents (**Google Antigravity**, **Claude Code**, **OpenAI Codex**, **Cursor**, and **Windsurf**) working with or utilizing the **Pinterest Inspiration Plugin**.
 
 ---
 
 ## 1. Project Purpose & Architecture
 
-The **Pinterest Inspiration Plugin** is a zero-configuration, zero-API-key, and zero-browser-dependency visual inspiration engine. It uses Python 3, `uv`, and FastMCP over standard I/O (stdio).
+The **Pinterest Inspiration Plugin** is a zero-configuration, zero-API-key, and zero-browser-dependency visual inspiration and design-to-code engine. It combines real-time Pinterest visual scraping with bundled UI/UX design intelligence skills.
 
 - **Scraper Engine (`src/pinterest_scraper.py`):** Uses mobile Safari User-Agent SSR to parse `<script id="__PWS_INITIAL_PROPS__">` JSON, delivering top pins (<800ms) with original HD images, preview URLs, dominant hex colors, and aspect ratios.
-- **FastMCP Server (`src/server.py`):** Exposes standardized MCP tools.
+- **FastMCP Server (`src/server.py`):** Exposes standardized MCP tools over stdio (local) and SSE (remote/Docker).
+- **Bundled Agent Skills (`skills/`):**
+  1. `skills/pinterest-inspiration`: Core visual inspiration, moodboards, and token extraction.
+  2. `skills/design-taste-frontend`: Comprehensive anti-slop frontend taste skill (The Three Dials, Design Read, font pairings, layout variance, non-templated interfaces).
+  3. `skills/web-design-guidelines`: Vercel-standard accessibility, keyboard focus, WCAG 4.5:1 contrast, semantic HTML, and CLS prevention.
 - **Cross-Agent Manifests:** `plugin.json`, `gemini-extension.json`, `mcp_config.json`, `mcp.json`, `.claude-plugin/plugin.json`.
 
 ---
@@ -42,17 +46,34 @@ Downloads an inspiration image to local storage for multi-modal vision inspectio
 
 ---
 
-## 3. Standard Agent Workflow
+## 3. Bundled Skills & Design Workflow
 
 When a user asks for UI design, moodboards, branding, or AI image creation:
 
-1. **Query Translation:** Convert user requests (even in Vietnamese or casual language) into clear visual English search terms.
-   - *Example:* "Làm trang landing page bán gốm tối giản" → `"minimalist handcrafted ceramic pottery editorial landing page"`
+```mermaid
+flowchart TD
+    User["User Request"] --> Query["1. Query Formulation (Visual English)"]
+    Query --> Fetch["2. Call search_pinterest_inspiration (Limit 4-8)"]
+    Fetch --> Moodboard["3. Render Visual Markdown Moodboard"]
+    Moodboard --> Taste["4. Apply design-taste-frontend: Design Read & Three Dials"]
+    Taste --> Code["5. Synthesize Anti-Slop Tailwind/React Code"]
+    Code --> Audit["6. Audit with web-design-guidelines (A11y & WCAG 4.5:1)"]
+```
+
+1. **Query Translation:** Convert user requests into descriptive visual English search terms.
+   - *Example:* "Make a minimalist artisanal coffee roastery website" → `"artisanal coffee shop website ui editorial warm earthy"`
 2. **Visual Retrieval:** Call `search_pinterest_inspiration(query=..., limit=6)`.
-3. **Present Moodboard:** Display an aesthetic Markdown moodboard with clickable images and dominant color hex badges.
-4. **Downstream Execution:**
-   - **For UI/UX:** Map dominant hex colors to Tailwind CSS palette (`primary`, `surface`, `accent`), choose layout grids, and build components.
-   - **For AI Image Generation:** Deconstruct lighting, medium, camera angle, and colors into precise Midjourney or Gemini Imagen 3 prompts.
+3. **Present Moodboard:** Display an aesthetic Markdown moodboard with clickable preview images and dominant color hex badges.
+4. **Design Read & The Three Dials (`design-taste-frontend`):**
+   - Output a one-line Design Read: `"Reading this as: <page kind> for <audience>, with a <vibe> language, leaning toward <aesthetic family>."`
+   - Set the dials: `DESIGN_VARIANCE`, `MOTION_INTENSITY`, `VISUAL_DENSITY` (e.g., `8 / 6 / 4`).
+   - Eliminate AI tells: No purple gradients, no generic Inter+slate-900, no cookie-cutter centered cards.
+5. **Color & Layout Synthesis:**
+   - Map Pinterest `dominant_color` hex codes to the 60-30-10 palette rule (Canvas, Structure, Accent).
+   - Pair display serif/grotesque fonts with clean body typography.
+6. **Accessibility Audit (`web-design-guidelines`):**
+   - Verify WCAG AA 4.5:1 contrast against surfaces.
+   - Enforce visible `:focus-visible` rings, semantic `<button>` / `<a>` tags, skip links, and explicit image dimensions.
 
 ---
 

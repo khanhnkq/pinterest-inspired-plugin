@@ -1,21 +1,31 @@
 {
   "name": "pinterest-inspiration",
-  "version": "1.0.0",
-  "description": "Pinterest visual inspiration MCP plugin. Scrapes top visual references, dominant colors, and image dimensions for UI/UX design and AI image generation without browser binaries or API tokens.",
+  "version": "1.1.0",
+  "description": "Zero-config visual inspiration MCP plugin with built-in frontend design taste and web interface accessibility skills. Scrapes top Pinterest pins, extracts dominant hex colors and dimensions, generates anti-slop Tailwind/React UI, and crafts precision AI prompts.",
   "author": "Antigravity Team",
   "keywords": [
     "pinterest",
     "inspiration",
     "design",
     "ui",
+    "ux",
     "moodboard",
     "mcp",
     "visual-reference",
-    "color-palette"
+    "color-palette",
+    "design-taste-frontend",
+    "web-design-guidelines",
+    "anti-slop",
+    "accessibility"
+  ],
+  "skills": [
+    "skills/pinterest-inspiration/SKILL.md",
+    "skills/design-taste-frontend/SKILL.md",
+    "skills/web-design-guidelines/SKILL.md"
   ],
   "suggestedPrompts": [
-    "Find visual inspiration for a minimalist modern dashboard UI",
-    "Show me Pinterest moodboards for luxury perfume editorial branding",
-    "Search Pinterest for brutalist typography posters and download the top image"
+    "Find visual inspiration for a minimalist modern coffee shop landing page and build it using design-taste-frontend",
+    "Show me Pinterest moodboards for luxury perfume editorial branding and audit the UI with web-design-guidelines",
+    "Search Pinterest for brutalist typography posters and download the top image for multimodal inspection"
   ]
 }
