@@ -2,14 +2,14 @@
 
 - **Date:** 2026-11-14
 - **Status:** Reviewed & Ready for Implementation Planning
-- **Target Platform:** Antigravity Plugin Ecosystem / Model Context Protocol (MCP)
+- **Target Platform:** Multi-Agent Ecosystem (Google Antigravity, Claude Code, OpenAI Codex, Cursor/Windsurf) via Universal MCP Standard & Agent Manifests
 
 ---
 
 ## 1. Intent and The Why
 
 ### Intent
-Xây dựng một plugin cho Agent (Antigravity/MCP) có khả năng tự động cào (scrape) 5–10 hình ảnh cảm hứng từ Pinterest dựa theo từ khóa/phong cách, trích xuất các thuộc tính thị giác (ảnh HD gốc, mã màu chủ đạo, tỷ lệ khung hình), và đưa vào ngữ cảnh của Agent làm tư liệu tham chiếu thiết kế UI, viết code giao diện, sinh prompt tạo ảnh và sản xuất nội dung visual.
+Xây dựng một plugin chuẩn hóa đa nền tảng (Universal AI Agent Plugin) tương thích đồng thời với **Google Antigravity, Claude Code, OpenAI Codex và Cursor/Windsurf**. Plugin có khả năng tự động cào (scrape) 5–10 hình ảnh cảm hứng từ Pinterest dựa theo từ khóa/phong cách, trích xuất các thuộc tính thị giác (ảnh HD gốc, mã màu chủ đạo, tỷ lệ khung hình), và đưa vào ngữ cảnh của Agent làm tư liệu tham chiếu thiết kế UI, viết code giao diện, sinh prompt tạo ảnh và sản xuất nội dung visual.
 
 ### The Why
 - Khi thiết kế giao diện (UI/UX) hoặc tạo hình ảnh AI (Image Generation), các mô tả bằng văn bản thường trừu tượng và dễ dẫn đến kết quả rập khuôn (AI slop / generic UI).
@@ -73,8 +73,14 @@ Xây dựng một plugin cho Agent (Antigravity/MCP) có khả năng tự độn
 
 ```
 pinterest-inspired-plugin/
-├── plugin.json                 # Manifest khai báo plugin cho Antigravity
-├── mcp_config.json             # Khai báo stdio MCP server
+├── plugin.json                 # Manifest chuẩn chung (Antigravity / Agent plugins)
+├── gemini-extension.json       # Manifest chuẩn Gemini CLI / Antigravity Extension
+├── mcp_config.json             # Manifest cấu hình MCP cho Antigravity
+├── mcp.json                    # Manifest MCP chuẩn mở (Claude Code, Cursor, Windsurf, Codex)
+├── .claude-plugin/
+│   └── plugin.json             # Manifest chuẩn Claude Code Plugin
+├── AGENTS.md                   # Chỉ dẫn ngữ cảnh chuẩn cho OpenAI Codex & Universal Agents
+├── CLAUDE.md                   # Chỉ dẫn ngữ cảnh chuẩn cho Claude Code
 ├── package.json                # Dependencies (@modelcontextprotocol/sdk, typescript, tsup)
 ├── tsconfig.json               # Cấu hình TypeScript
 ├── src/
@@ -87,11 +93,11 @@ pinterest-inspired-plugin/
 │       └── types.ts            # Type definitions cho Pin, Image, DominantColor
 ├── skills/
 │   └── pinterest-inspiration/
-│       ├── SKILL.md            # Skill hướng dẫn Agent workflow tham chiếu
+│       ├── SKILL.md            # Skill chuẩn hóa hướng dẫn Agent workflow tham chiếu
 │       └── references/
 │           ├── ui-design-guide.md     # Bóc tách grid, spacing, color palette vào Tailwind/React
 │           └── prompt-crafting.md     # Tạo prompt ảnh AI từ moodboard và lighting
-└── README.md                   # Hướng dẫn sử dụng và cài đặt
+└── README.md                   # Hướng dẫn cài đặt và sử dụng cho từng AI Agent
 ```
 
 ### Tools cung cấp qua MCP:

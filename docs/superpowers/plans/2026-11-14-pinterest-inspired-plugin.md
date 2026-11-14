@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build a lightweight Antigravity/MCP plugin that scrapes 5–10 visual inspiration images from Pinterest, extracts design tokens (high-res images, dominant colors, aspect ratios), and equips the Agent with skills to reference them for UI/UX coding and AI image generation.
+**Goal:** Build a lightweight, cross-agent MCP plugin (compatible with Antigravity, Claude Code, OpenAI Codex, and Cursor) that scrapes 5–10 visual inspiration images from Pinterest, extracts design tokens (high-res images, dominant colors, aspect ratios), and equips AI Agents with standardized skills to reference them for UI/UX coding and AI image generation.
 
 **Architecture:** Node.js (TypeScript) stdio MCP server using native `fetch` with mobile User-Agent to extract Pinterest's server-rendered `<script id="__PWS_INITIAL_PROPS__">` JSON state, returning clean visual-first pins without requiring browser binaries or API tokens. Paired with an Antigravity Skill (`pinterest-inspiration`) that guides the Agent to map dominant colors, layouts, and moods into Tailwind CSS/React code or image prompts.
 
@@ -28,18 +28,23 @@
 
 ---
 
-### Task 1: Scaffolding, Manifests, and Build Tooling
+### Task 1: Scaffolding, Cross-Agent Manifests, and Build Tooling
 
 **Files:**
 - Create: `package.json`
 - Create: `tsconfig.json`
 - Create: `tsup.config.ts`
-- Create: `plugin.json`
-- Create: `mcp_config.json`
+- Create: `plugin.json` (Universal Plugin Manifest)
+- Create: `gemini-extension.json` (Antigravity & Gemini CLI)
+- Create: `mcp_config.json` (Antigravity MCP config)
+- Create: `mcp.json` (Claude Code, Codex, Cursor MCP standard)
+- Create: `.claude-plugin/plugin.json` (Claude Code plugin manifest)
+- Create: `AGENTS.md` (OpenAI Codex / Universal Agent Rules)
+- Create: `CLAUDE.md` (Claude Code Instructions)
 - Create: `.gitignore`
 
 **Interfaces:**
-- Produces: Project build pipeline (`npm run build`), test runner (`npm test`), and Antigravity plugin manifest files.
+- Produces: Project build pipeline (`npm run build`), test runner (`npm test`), and multi-agent manifest files enabling seamless plug-and-play across Antigravity, Claude Code, OpenAI Codex, and Cursor.
 
 - [ ] **Step 1: Create `package.json`**
   Define npm package with scripts (`build`, `test`, `start`), dependencies (`@modelcontextprotocol/sdk`), and devDependencies (`typescript`, `tsup`, `vitest`, `@types/node`).
@@ -47,9 +52,12 @@
 - [ ] **Step 2: Create `tsconfig.json` and `tsup.config.ts`**
   Configure TypeScript targeting ES2022 with NodeNext module resolution, and `tsup` bundling `src/index.ts` to `dist/index.js` with shebang `#!/usr/bin/env node`.
 
-- [ ] **Step 3: Create Antigravity manifests (`plugin.json`, `mcp_config.json`, `.gitignore`)**
-  - `plugin.json`: Declare plugin name `pinterest-inspiration`, version `1.0.0`, description, and keywords.
-  - `mcp_config.json`: Register stdio MCP server `pinterest` executing `node dist/index.js`.
+- [ ] **Step 3: Create Multi-Agent manifests & guidelines**
+  - `plugin.json`: Declare universal plugin manifest (name `pinterest-inspiration`, version `1.0.0`, description, keywords).
+  - `gemini-extension.json`: Antigravity / Gemini CLI extension descriptor.
+  - `mcp_config.json` & `mcp.json`: Standard stdio MCP registration executing `node dist/index.js`.
+  - `.claude-plugin/plugin.json`: Claude Code plugin manifest.
+  - `AGENTS.md` & `CLAUDE.md`: Universal guidance on when and how to call the Pinterest inspiration tools and skills.
   - `.gitignore`: Ignore `node_modules/`, `dist/`, `.pinterest_cache/`.
 
 - [ ] **Step 4: Install dependencies and verify build toolchain**
@@ -57,7 +65,9 @@
 
 - [ ] **Step 5: Commit**
   ```bash
-  git add package.json tsconfig.json tsup.config.ts plugin.json mcp_config.json .gitignore
+  git add package.json tsconfig.json tsup.config.ts plugin.json gemini-extension.json mcp_config.json mcp.json .claude-plugin/ AGENTS.md CLAUDE.md .gitignore
+  git commit -m "chore: scaffold cross-agent plugin manifests and build tooling"
+  ```
   git commit -m "chore: scaffold pinterest-inspiration plugin project"
   ```
 
