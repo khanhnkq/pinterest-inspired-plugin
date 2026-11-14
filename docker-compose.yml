@@ -1,6 +1,6 @@
 services:
   pinterest-mcp:
-    build: .
+    image: ghcr.io/khanhnkq/pinterest-inspired-plugin:latest
     container_name: pinterest-inspiration-mcp
     restart: unless-stopped
     ports:
