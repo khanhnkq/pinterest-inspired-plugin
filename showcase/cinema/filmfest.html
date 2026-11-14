@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth antialiased dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Lumière Cinémathèque — 34th Annual Autumn Arthouse Retrospective & 35mm Archival Film Festival. Browse schedule and reserve auditorium seats.">
+  <title>LUMIÈRE CINÉMATHÈQUE — 34th Retrospective & 35mm Film Festival</title>
+
+  <!-- Typography: Instrument Serif + Space Grotesk + Space Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            noir: {
+              DEFAULT: '#000000',
+              canvas: '#040102',
+              card: '#120306',
+              elevated: '#1c060b',
+              surface: '#260a10',
+              wine: '#30080C',
+              burgundy: '#420d14',
+            },
+            celluloid: {
+              50: '#f6f6f7',
+              100: '#ececed',
+              200: '#d5d4d7',
+              300: '#b4b2b7',
+              400: '#8e8b93',
+              500: '#777578',
+              600: '#615f63',
+              700: '#4e4c50',
+              800: '#343336',
+              900: '#1b1a1c',
+            },
+            crimson: {
+              DEFAULT: '#D62828',
+              hover: '#BA1A2E',
+              glow: 'rgba(214, 40, 40, 0.4)',
+            },
+            amberfilm: {
+              DEFAULT: '#F4A261',
+              light: '#FFD166',
+              dim: '#B37D36',
+            },
+            ivory: {
+              DEFAULT: '#FDFBF7',
+              muted: '#D8D4CC',
+              dark: '#A8A39B',
+            }
+          },
+          fontFamily: {
+            serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+            sans: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+            mono: ['"Space Mono"', 'monospace'],
+          },
+          boxShadow: {
+            'velvet': '0 20px 40px -15px rgba(48, 8, 12, 0.7)',
+            'glow-crimson': '0 0 30px -5px rgba(230, 57, 70, 0.4)',
+            'film-strip': 'inset 0 0 100px rgba(0,0,0,0.8), 0 0 1px 1px rgba(255,255,255,0.06)',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Anti-slop custom touches & accessibility */
+    :focus-visible {
+      outline: 2px solid #F4A261 !important;
+      outline-offset: 3px !important;
+    }
+    
+    /* Film perforation styling */
+    .film-sprocket {
+      background-image: radial-gradient(circle, rgba(255,255,255,0.18) 35%, transparent 40%);
+      background-size: 16px 20px;
+      background-repeat: repeat-y;
+    }
+
+    /* Screen glow */
+    .screen-glow {
+      background: linear-gradient(180deg, rgba(253, 251, 247, 0.45) 0%, rgba(244, 162, 97, 0.15) 30%, transparent 100%);
+      clip-path: perspective(500px) rotateX(15deg);
+    }
+
+    /* Subtle grain */
+    .film-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-delay: -1ms !important;
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        background-attachment: initial !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0s !important;
+        transition-delay: 0s !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-noir text-ivory font-sans min-h-screen selection:bg-crimson selection:text-white film-grain relative">
+
+  <!-- Accessible Skip Link -->
+  <a href="#main-schedule" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-5 focus:py-2.5 focus:bg-amberfilm focus:text-noir font-bold focus:shadow-2xl focus:rounded focus:outline-none">
+    Skip to film festival schedule
+  </a>
+
+  <!-- Layout Container: Left Sidebar + Main Canvas -->
+  <div class="flex flex-col lg:flex-row min-h-screen">
+
+    <!-- LEFT SIDEBAR / ARCHIVAL RAIL (Matches detected 10.8% layout sidebar) -->
+    <aside aria-label="Festival Navigation & Reel Index" class="w-full lg:w-36 lg:min-h-screen bg-noir-card border-b lg:border-b-0 lg:border-r border-noir-wine/80 flex flex-col justify-between p-4 lg:py-8 lg:px-4 z-20 shrink-0">
+      <div class="flex flex-row lg:flex-col items-center justify-between lg:justify-start lg:space-y-10">
+        
+        <!-- Logo / Monogram -->
+        <a href="#hero" class="group flex flex-col items-center focus-visible:rounded" aria-label="Lumière Cinémathèque Home">
+          <div class="w-12 h-12 rounded-sm border border-amberfilm/40 bg-noir-wine/70 flex items-center justify-center text-amberfilm font-serif text-2xl font-bold tracking-tighter group-hover:border-amberfilm transition-colors duration-200">
+            L
+          </div>
+          <span class="mt-2 text-[10px] tracking-[0.25em] font-mono uppercase text-celluloid-400 text-center hidden lg:block">
+            LUMIÈRE<br>PARIS 6<sup>e</sup>
+          </span>
+        </a>
+
+        <!-- Sprocket divider hidden on mobile -->
+        <div class="hidden lg:block w-full h-16 film-sprocket opacity-40"></div>
+
+        <!-- Vertical Navigation Links -->
+        <nav aria-label="Primary Navigation" class="flex flex-row lg:flex-col items-center space-x-4 lg:space-x-0 lg:space-y-6 text-xs font-mono uppercase tracking-wider text-celluloid-300">
+          <a href="#screenings" class="hover:text-amberfilm transition-colors py-1 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-crimson inline-block"></span>
+            <span class="lg:rotate-180 lg:[writing-mode:vertical-rl]">SCHEDULE</span>
+          </a>
+          <a href="#seat-booking" class="hover:text-amberfilm transition-colors py-1 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-amberfilm inline-block"></span>
+            <span class="lg:rotate-180 lg:[writing-mode:vertical-rl]">SEATS</span>
+          </a>
+          <a href="#retrospective" class="hover:text-amberfilm transition-colors py-1 hidden sm:flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-celluloid-500 inline-block"></span>
+            <span class="lg:rotate-180 lg:[writing-mode:vertical-rl]">ARCHIVE</span>
+          </a>
+          <a href="#projection-info" class="hover:text-amberfilm transition-colors py-1 hidden sm:flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-celluloid-500 inline-block"></span>
+            <span class="lg:rotate-180 lg:[writing-mode:vertical-rl]">SPECS</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Reel Status indicator -->
+      <div class="hidden lg:flex flex-col items-center space-y-3 pt-6 border-t border-noir-wine">
+        <div class="flex items-center gap-2 text-[10px] font-mono text-celluloid-400">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true"></span>
+          <span>35MM ON REEL</span>
+        </div>
+        <p class="text-[9px] font-mono text-celluloid-500 text-center leading-tight">
+          KINOTON FP30<br>DOLBY SR·D
+        </p>
+      </div>
+    </aside>
+
+    <!-- MAIN BODY CONTENT -->
+    <div class="flex-1 flex flex-col min-w-0">
+
+      <!-- TOP HEADER / FESTIVAL MARQUEE (Detected header 22.4% height) -->
+      <header id="hero" class="relative bg-gradient-to-b from-noir-wine/90 via-noir-card to-noir border-b border-noir-wine/90 pt-8 pb-10 px-6 sm:px-10 lg:px-14 overflow-hidden">
+        
+        <!-- Background Vignette & Ambient Glow -->
+        <div class="absolute -top-32 right-10 w-96 h-96 bg-crimson/15 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+        <div class="absolute top-1/2 left-1/4 w-80 h-80 bg-amberfilm/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+        <!-- Marquee Ticker -->
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-6 mb-6 border-b border-white/10 text-xs font-mono uppercase tracking-widest text-celluloid-400">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-0.5 rounded bg-crimson/20 border border-crimson/40 text-crimson font-bold text-[11px]">
+              FESTIVAL PASS ACTIVE
+            </span>
+            <span class="hidden sm:inline text-celluloid-500">|</span>
+            <span class="text-ivory">EDITION XXXIV • 14–24 NOVEMBER 2026</span>
+          </div>
+          <div class="flex items-center gap-6">
+            <span class="hidden md:inline text-celluloid-400">AUDITORIUM LUMIÈRE (380 SEATS)</span>
+            <span class="text-amberfilm">TICKETS: €18 — €32</span>
+          </div>
+        </div>
+
+        <!-- Hero Headline & Editorial Intro -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+          <div class="lg:col-span-8">
+            <p class="text-amberfilm font-mono text-xs uppercase tracking-[0.3em] mb-3">
+              Retrospective & Restoration Autumn Program
+            </p>
+            <h1 class="font-serif text-5xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-ivory leading-[1.05] text-balance">
+              Lumière Cinémathèque
+            </h1>
+            <p class="mt-4 text-base sm:text-lg text-celluloid-200 max-w-2xl font-light leading-relaxed text-pretty">
+              A bespoke haven for celluloid purists. Ten days celebrating pristine 35mm archival prints, rare 70mm roadshows, and world-premiere 4K photochemically restored masterworks with visiting directors.
+            </p>
+          </div>
+
+          <!-- Quick Reserve Card -->
+          <div class="lg:col-span-4 bg-noir-elevated/90 border border-noir-wine rounded-sm p-5 backdrop-blur-md shadow-velvet">
+            <div class="flex items-center justify-between text-xs font-mono text-amberfilm mb-2">
+              <span>TONIGHT'S GALA PREMIERE</span>
+              <span class="w-2 h-2 rounded-full bg-crimson animate-ping" aria-hidden="true"></span>
+            </div>
+            <h2 class="font-serif text-2xl text-ivory leading-snug">Cinema Paradiso (1988)</h2>
+            <p class="text-xs font-mono text-celluloid-400 mt-1">Dir. Giuseppe Tornatore • 174m • 35mm Italian Print</p>
+            <div class="mt-4 flex items-center justify-between gap-3 pt-3 border-t border-white/10">
+              <div>
+                <span class="text-[10px] font-mono uppercase text-celluloid-400 block">Screening at</span>
+                <span class="text-sm font-mono text-ivory font-bold tabular-nums">20:30 CET</span>
+              </div>
+              <a href="#seat-booking" onclick="selectMovie('Cinema Paradiso (1988)', '20:30', 24)" class="inline-flex items-center justify-center px-4 py-2 bg-crimson hover:bg-crimson-hover text-white text-xs font-mono uppercase tracking-wider font-semibold rounded-sm transition-all duration-150 shadow-glow-crimson focus-visible:ring-2">
+                Book Seats &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Date selector bar -->
+        <nav aria-label="Festival Calendar Days" class="mt-10 pt-6 border-t border-white/10 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          <button type="button" class="day-tab active px-4 py-2 rounded-sm bg-noir-surface border border-amberfilm/60 text-amberfilm text-xs font-mono font-bold tracking-wider shrink-0 transition-colors focus-visible:ring-2">
+            THU 14 NOV <span class="text-[10px] opacity-75 ml-1">• GALA</span>
+          </button>
+          <button type="button" class="day-tab px-4 py-2 rounded-sm bg-noir-card/60 hover:bg-noir-surface border border-white/10 hover:border-white/20 text-celluloid-300 text-xs font-mono tracking-wider shrink-0 transition-colors focus-visible:ring-2">
+            FRI 15 NOV
+          </button>
+          <button type="button" class="day-tab px-4 py-2 rounded-sm bg-noir-card/60 hover:bg-noir-surface border border-white/10 hover:border-white/20 text-celluloid-300 text-xs font-mono tracking-wider shrink-0 transition-colors focus-visible:ring-2">
+            SAT 16 NOV <span class="text-[10px] opacity-75 ml-1">• 70MM</span>
+          </button>
+          <button type="button" class="day-tab px-4 py-2 rounded-sm bg-noir-card/60 hover:bg-noir-surface border border-white/10 hover:border-white/20 text-celluloid-300 text-xs font-mono tracking-wider shrink-0 transition-colors focus-visible:ring-2">
+            SUN 17 NOV
+          </button>
+          <button type="button" class="day-tab px-4 py-2 rounded-sm bg-noir-card/60 hover:bg-noir-surface border border-white/10 hover:border-white/20 text-celluloid-300 text-xs font-mono tracking-wider shrink-0 transition-colors focus-visible:ring-2">
+            MON 18 NOV
+          </button>
+          <button type="button" class="day-tab px-4 py-2 rounded-sm bg-noir-card/60 hover:bg-noir-surface border border-white/10 hover:border-white/20 text-celluloid-300 text-xs font-mono tracking-wider shrink-0 transition-colors focus-visible:ring-2">
+            TUE 19 NOV
+          </button>
+        </nav>
+      </header>
+
+      <!-- MAIN CONTENT: SCREENINGS & SEAT RESERVATION -->
+      <main id="main-schedule" class="p-6 sm:p-10 lg:p-14 space-y-16">
+
+        <!-- SECTION 1: 3-COLUMN EDITORIAL SCREENINGS GRID (Matches detected layout) -->
+        <section id="screenings" aria-labelledby="screenings-heading" class="space-y-8">
+          
+          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-noir-wine pb-4">
+            <div>
+              <p class="text-xs font-mono uppercase tracking-[0.25em] text-celluloid-400">Curated Program Selection</p>
+              <h2 id="screenings-heading" class="font-serif text-3xl sm:text-4xl text-ivory mt-1">Screenings & Retrospectives</h2>
+            </div>
+            
+            <!-- Format Filter Pills -->
+            <div class="flex flex-wrap items-center gap-2" role="group" aria-label="Filter screenings by projection format">
+              <button type="button" class="filter-btn active px-3 py-1 text-xs font-mono bg-noir-elevated border border-amberfilm/50 text-amberfilm rounded-sm focus-visible:ring-2">
+                All Formats (6)
+              </button>
+              <button type="button" class="filter-btn px-3 py-1 text-xs font-mono bg-noir-card/70 border border-white/10 text-celluloid-400 hover:text-ivory rounded-sm transition-colors focus-visible:ring-2">
+                35mm Print
+              </button>
+              <button type="button" class="filter-btn px-3 py-1 text-xs font-mono bg-noir-card/70 border border-white/10 text-celluloid-400 hover:text-ivory rounded-sm transition-colors focus-visible:ring-2">
+                4K Restoration
+              </button>
+              <button type="button" class="filter-btn px-3 py-1 text-xs font-mono bg-noir-card/70 border border-white/10 text-celluloid-400 hover:text-ivory rounded-sm transition-colors focus-visible:ring-2">
+                Director Q&amp;A
+              </button>
+            </div>
+          </div>
+
+          <!-- 3-Column Card Grid (Detected 3 columns in layout_detector) -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+
+            <!-- FILM CARD 1: Cinema Paradiso (Reference pin focal title) -->
+            <article class="film-card group bg-noir-card border border-noir-wine/80 rounded-sm overflow-hidden flex flex-col justify-between hover:border-amberfilm/50 transition-all duration-300 hover:shadow-velvet">
+              <div>
+                <!-- Visual Banner / Poster Marquee -->
+                <div class="relative h-56 bg-noir-surface overflow-hidden flex items-end p-5">
+                  <div class="absolute inset-0 bg-gradient-to-t from-noir-card via-noir-surface/40 to-transparent z-10"></div>
+                  <!-- Abstract cinematic poster texture -->
+                  <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,#30080C,transparent_60%)] opacity-80 group-hover:scale-105 transition-transform duration-700 ease-out"></div>
+                  
+                  <div class="relative z-20 w-full flex items-center justify-between">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-amberfilm/20 text-amberfilm border border-amberfilm/40 font-semibold">
+                      35mm Archival Print
+                    </span>
+                    <span class="text-xs font-mono text-celluloid-300 tabular-nums">174 min</span>
+                  </div>
+                </div>
+
+                <div class="p-6 space-y-3">
+                  <div class="flex items-center justify-between text-xs font-mono text-celluloid-400">
+                    <span>GIUSEPPE TORNATORE • 1988</span>
+                    <span class="text-crimson font-bold">HALL 1</span>
+                  </div>
+                  <h3 class="font-serif text-2xl text-ivory group-hover:text-amberfilm transition-colors">
+                    Cinema Paradiso
+                  </h3>
+                  <p class="text-xs text-celluloid-300 line-clamp-3 leading-relaxed">
+                    Director’s uncut Italian version. A young boy in a war-torn Sicilian village falls under the spell of cinema and the aging projectionist Alfredo. Photochemically restored from the original negative.
+                  </p>
+                  <div class="pt-2 flex flex-wrap gap-1.5 text-[10px] font-mono text-celluloid-400">
+                    <span class="px-2 py-0.5 bg-noir-elevated rounded border border-white/5">Italian (EN Subs)</span>
+                    <span class="px-2 py-0.5 bg-noir-elevated rounded border border-white/5">Mono Optical Sound</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Footer with Showtimes & Select Button -->
+              <div class="p-6 pt-0 mt-2 border-t border-white/5 flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-mono text-celluloid-500 uppercase block">Showtime</span>
+                  <span class="text-sm font-mono text-ivory font-bold tabular-nums">20:30 CET</span>
+                </div>
+                <button type="button" onclick="selectMovie('Cinema Paradiso', '20:30', 24)" class="px-3.5 py-1.5 bg-noir-surface hover:bg-crimson text-ivory hover:text-white border border-noir-wine hover:border-crimson text-xs font-mono uppercase tracking-wider rounded-sm transition-all duration-200 focus-visible:ring-2">
+                  Select Seats
+                </button>
+              </div>
+            </article>
+
+            <!-- FILM CARD 2: In the Mood for Love -->
+            <article class="film-card group bg-noir-card border border-noir-wine/80 rounded-sm overflow-hidden flex flex-col justify-between hover:border-amberfilm/50 transition-all duration-300 hover:shadow-velvet">
+              <div>
+                <div class="relative h-56 bg-noir-surface overflow-hidden flex items-end p-5">
+                  <div class="absolute inset-0 bg-gradient-to-t from-noir-card via-noir-surface/40 to-transparent z-10"></div>
+                  <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,#420d14,transparent_60%)] opacity-80 group-hover:scale-105 transition-transform duration-700 ease-out"></div>
+                  
+                  <div class="relative z-20 w-full flex items-center justify-between">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-crimson/20 text-crimson border border-crimson/40 font-semibold">
+                      4K Restoration
+                    </span>
+                    <span class="text-xs font-mono text-celluloid-300 tabular-nums">98 min</span>
+                  </div>
+                </div>
+
+                <div class="p-6 space-y-3">
+                  <div class="flex items-center justify-between text-xs font-mono text-celluloid-400">
+                    <span>WONG KAR-WAI • 2000</span>
+                    <span class="text-crimson font-bold">HALL 2</span>
+                  </div>
+                  <h3 class="font-serif text-2xl text-ivory group-hover:text-amberfilm transition-colors">
+                    In the Mood for Love
+                  </h3>
+                  <p class="text-xs text-celluloid-300 line-clamp-3 leading-relaxed">
+                    Hong Kong, 1962. Two neighbors develop a tender, secret bond after suspecting their spouses of extramarital intimacy. Transferred from the original 35mm camera negative in Dolby Atmos.
+                  </p>
+                  <div class="pt-2 flex flex-wrap gap-1.5 text-[10px] font-mono text-celluloid-400">
+                    <span class="px-2 py-0.5 bg-noir-elevated rounded border border-white/5">Cantonese (EN Subs)</span>
+                    <span class="px-2 py-0.5 bg-noir-elevated rounded border border-white/5">Christopher Doyle Cinematography</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-6 pt-0 mt-2 border-t border-white/5 flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-mono text-celluloid-500 uppercase block">Showtime</span>
+                  <span class="text-sm font-mono text-ivory font-bold tabular-nums">18:00 CET</span>
+                </div>
+                <button type="button" onclick="selectMovie('In the Mood for Love', '18:00', 18)" class="px-3.5 py-1.5 bg-noir-surface hover:bg-crimson text-ivory hover:text-white border border-noir-wine hover:border-crimson text-xs font-mono uppercase tracking-wider rounded-sm transition-all duration-200 focus-visible:ring-2">
+                  Select Seats
+                </button>
+              </div>
+            </article>
+
+            <!-- FILM CARD 3: Paris, Texas -->
+            <article class="film-card group bg-noir-card border border-noir-wine/80 rounded-sm overflow-hidden flex flex-col justify-between hover:border-amberfilm/50 transition-all duration-300 hover:shadow-velvet">
+              <div>
+                <div class="relative h-56 bg-noir-surface overflow-hidden flex items-end p-5">
+                  <div class="absolute inset-0 bg-gradient-to-t from-noir-card via-noir-surface/40 to-transparent z-10"></div>
+                  <div class="absolute inset-0 bg-[radial-gradient(circle_at_60%_70%,#30080C,transparent_60%)] opacity-80 group-hover:scale-105 transition-transform duration-700 ease-out"></div>
+                  
+                  <div class="relative z-20 w-full flex items-center justify-between">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-amberfilm/20 text-amberfilm border border-amberfilm/40 font-semibold">
+                      35mm Technicolor
+                    </span>
+                    <span class="text-xs font-mono text-celluloid-300 tabular-nums">147 min</span>
+                  </div>
+                </div>
+
+                <div class="p-6 space-y-3">
+                  <div class="flex items-center justify-between text-xs font-mono text-celluloid-400">
+                    <span>WIM WENDERS • 1984</span>
+                    <span class="text-crimson font-bold">HALL 1</span>
+                  </div>
+                  <h3 class="font-serif text-2xl text-ivory group-hover:text-amberfilm transition-colors">
+                    Paris, Texas
+                  </h3>
+                  <p class="text-xs text-celluloid-300 line-clamp-3 leading-relaxed">
+                    Palme d’Or recipient. A disheveled man wanders out of the desert into a forgotten past. Featuring Ry Cooder’s haunting acoustic slide guitar score on newly struck German archival 35mm.
+                  </p>
+                  <div class="pt-2 flex flex-wrap gap-1.5 text-[10px] font-mono text-celluloid-400">
+                    <span class="px-2 py-0.5 bg-noir-elevated rounded border border-white/5">English (FR Subs)</span>
+                    <span class="px-2 py-0.5 bg-noir-elevated rounded border border-white/5">Robby Müller Photography</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-6 pt-0 mt-2 border-t border-white/5 flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-mono text-celluloid-500 uppercase block">Showtime</span>
+                  <span class="text-sm font-mono text-ivory font-bold tabular-nums">15:30 CET</span>
+                </div>
+                <button type="button" onclick="selectMovie('Paris, Texas', '15:30', 20)" class="px-3.5 py-1.5 bg-noir-surface hover:bg-crimson text-ivory hover:text-white border border-noir-wine hover:border-crimson text-xs font-mono uppercase tracking-wider rounded-sm transition-all duration-200 focus-visible:ring-2">
+                  Select Seats
+                </button>
+              </div>
+            </article>
+
+            <!-- FILM CARD 4: Solaris -->
+            <article class="film-card group bg-noir-card border border-noir-wine/80 rounded-sm overflow-hidden flex flex-col justify-between hover:border-amberfilm/50 transition-all duration-300 hover:shadow-velvet">
+              <div>
+                <div class="relative h-56 bg-noir-surface overflow-hidden flex items-end p-5">
+                  <div class="absolute inset-0 bg-gradient-to-t from-noir-card via-noir-surface/40 to-transparent z-10"></div>
+                  <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,#260a10,transparent_60%)] opacity-80 group-hover:scale-105 transition-transform duration-700 ease-out"></div>
+                  
+                  <div class="relative z-20 w-full flex items-center justify-between">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-amberfilm/20 text-amberfilm border border-amberfilm/40 font-semibold">
+                      35mm Sovcolor Print
+                    </span>
+                    <span class="text-xs font-mono text-celluloid-300 tabular-nums">167 min</span>
+                  </div>
+                </div>
+
+                <div class="p-6 space-y-3">
+                  <div class="flex items-center justify-between text-xs font-mono text-celluloid-400">
+                    <span>ANDREI TARKOVSKY • 1972</span>
+                    <span class="text-crimson font-bold">HALL 3</span>
+                  </div>
+                  <h3 class="font-serif text-2xl text-ivory group-hover:text-amberfilm transition-colors">
+                    Solaris (Солярис)
+                  </h3>
+                  <p class="text-xs text-celluloid-300 line-clamp-3 leading-relaxed">
+                    A psychologist is dispatched to a space station hovering above an oceanic planet to investigate emotional breakdowns of the crew. Preserved by Mosfilm archives with analog magnetic mono track.
+                  </p>
+                  <div class="pt-2 flex flex-wrap gap-1.5 text-[10px] font-mono text-celluloid-400">
+                    <span class="px-2 py-0.5 bg-noir-elevated rounded border border-white/5">Russian (EN Subs)</span>
+                    <span class="px-2 py-0.5 bg-noir-elevated rounded border border-white/5">Edward Artemiev Score</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-6 pt-0 mt-2 border-t border-white/5 flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-mono text-celluloid-500 uppercase block">Showtime</span>
+                  <span class="text-sm font-mono text-ivory font-bold tabular-nums">14:00 CET</span>
+                </div>
+                <button type="button" onclick="selectMovie('Solaris', '14:00', 18)" class="px-3.5 py-1.5 bg-noir-surface hover:bg-crimson text-ivory hover:text-white border border-noir-wine hover:border-crimson text-xs font-mono uppercase tracking-wider rounded-sm transition-all duration-200 focus-visible:ring-2">
+                  Select Seats
+                </button>
+              </div>
+            </article>
+
+            <!-- FILM CARD 5: La Haine (Director Q&A) -->
+            <article class="film-card group bg-noir-card border border-noir-wine/80 rounded-sm overflow-hidden flex flex-col justify-between hover:border-amberfilm/50 transition-all duration-300 hover:shadow-velvet">
+              <div>
+                <div class="relative h-56 bg-noir-surface overflow-hidden flex items-end p-5">
+                  <div class="absolute inset-0 bg-gradient-to-t from-noir-card via-noir-surface/40 to-transparent z-10"></div>
+                  <div class="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,#420d14,transparent_60%)] opacity-80 group-hover:scale-105 transition-transform duration-700 ease-out"></div>
+                  
+                  <div class="relative z-20 w-full flex items-center justify-between">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-semibold">
+                      Director Q&amp;A Live
+                    </span>
+                    <span class="text-xs font-mono text-celluloid-300 tabular-nums">98 min</span>
+                  </div>
+                </div>
+
+                <div class="p-6 space-y-3">
+                  <div class="flex items-center justify-between text-xs font-mono text-celluloid-400">
+                    <span>MATHIEU KASSOVITZ • 1995</span>
+                    <span class="text-crimson font-bold">HALL 1</span>
+                  </div>
+                  <h3 class="font-serif text-2xl text-ivory group-hover:text-amberfilm transition-colors">
+                    La Haine (30th Anniv.)
+                  </h3>
+                  <p class="text-xs text-celluloid-300 line-clamp-3 leading-relaxed">
+                    24 breathless hours in the Paris suburbs. Followed by an in-person masterclass and Q&amp;A with Mathieu Kassovitz and cinematographer Pierre Aïm. 4K high-dynamic-range theatrical premiere.
+                  </p>
+                  <div class="pt-2 flex flex-wrap gap-1.5 text-[10px] font-mono text-celluloid-400">
+                    <span class="px-2 py-0.5 bg-noir-elevated rounded border border-white/5">French (EN Subs)</span>
+                    <span class="px-2 py-0.5 bg-noir-elevated rounded border border-white/5">Live Simultaneous Translation</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-6 pt-0 mt-2 border-t border-white/5 flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-mono text-celluloid-500 uppercase block">Showtime</span>
+                  <span class="text-sm font-mono text-ivory font-bold tabular-nums">22:00 CET</span>
+                </div>
+                <button type="button" onclick="selectMovie('La Haine (Q&A)', '22:00', 32)" class="px-3.5 py-1.5 bg-noir-surface hover:bg-crimson text-ivory hover:text-white border border-noir-wine hover:border-crimson text-xs font-mono uppercase tracking-wider rounded-sm transition-all duration-200 focus-visible:ring-2">
+                  Select Seats
+                </button>
+              </div>
+            </article>
+
+            <!-- FILM CARD 6: Memories of Murder -->
+            <article class="film-card group bg-noir-card border border-noir-wine/80 rounded-sm overflow-hidden flex flex-col justify-between hover:border-amberfilm/50 transition-all duration-300 hover:shadow-velvet">
+              <div>
+                <div class="relative h-56 bg-noir-surface overflow-hidden flex items-end p-5">
+                  <div class="absolute inset-0 bg-gradient-to-t from-noir-card via-noir-surface/40 to-transparent z-10"></div>
+                  <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#30080C,transparent_60%)] opacity-80 group-hover:scale-105 transition-transform duration-700 ease-out"></div>
+                  
+                  <div class="relative z-20 w-full flex items-center justify-between">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-amberfilm/20 text-amberfilm border border-amberfilm/40 font-semibold">
+                      Korean 35mm Archive
+                    </span>
+                    <span class="text-xs font-mono text-celluloid-300 tabular-nums">131 min</span>
+                  </div>
+                </div>
+
+                <div class="p-6 space-y-3">
+                  <div class="flex items-center justify-between text-xs font-mono text-celluloid-400">
+                    <span>BONG JOON-HO • 2003</span>
+                    <span class="text-crimson font-bold">HALL 2</span>
+                  </div>
+                  <h3 class="font-serif text-2xl text-ivory group-hover:text-amberfilm transition-colors">
+                    Memories of Murder (살인의 추억)
+                  </h3>
+                  <p class="text-xs text-celluloid-300 line-clamp-3 leading-relaxed">
+                    Set in rural 1986 Gyunggi Province. Two contrasting detectives attempt to catch South Korea’s first serial killer. Presented on rare original 35mm release print with theatrical color grading.
+                  </p>
+                  <div class="pt-2 flex flex-wrap gap-1.5 text-[10px] font-mono text-celluloid-400">
+                    <span class="px-2 py-0.5 bg-noir-elevated rounded border border-white/5">Korean (EN/FR Subs)</span>
+                    <span class="px-2 py-0.5 bg-noir-elevated rounded border border-white/5">Dolby Digital 5.1</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-6 pt-0 mt-2 border-t border-white/5 flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-mono text-celluloid-500 uppercase block">Showtime</span>
+                  <span class="text-sm font-mono text-ivory font-bold tabular-nums">17:15 CET</span>
+                </div>
+                <button type="button" onclick="selectMovie('Memories of Murder', '17:15', 20)" class="px-3.5 py-1.5 bg-noir-surface hover:bg-crimson text-ivory hover:text-white border border-noir-wine hover:border-crimson text-xs font-mono uppercase tracking-wider rounded-sm transition-all duration-200 focus-visible:ring-2">
+                  Select Seats
+                </button>
+              </div>
+            </article>
+
+          </div>
+        </section>
+
+
+        <!-- SECTION 2: INTERACTIVE CINEMA SEAT MAP & TIER RESERVATION -->
+        <section id="seat-booking" aria-labelledby="seat-booking-heading" class="pt-8 border-t border-noir-wine">
+          
+          <div class="mb-8">
+            <p class="text-xs font-mono uppercase tracking-[0.25em] text-celluloid-400">Tactile Interactive Reservation</p>
+            <h2 id="seat-booking-heading" class="font-serif text-3xl sm:text-4xl text-ivory mt-1">
+              Auditorium Seat Selection &amp; Tiers
+            </h2>
+            <p class="text-sm text-celluloid-300 mt-2 max-w-xl">
+              Choose your ideal vantage point. All seating rows feature deep velvet upholstery, generous legroom, and calibrated line-of-sight to our curved silver screen.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- SEAT MAP STAGE (lg:col-span-8) -->
+            <div class="lg:col-span-8 bg-noir-card border border-noir-wine rounded-sm p-6 sm:p-8 flex flex-col items-center shadow-velvet">
+              
+              <!-- Curated Projection Screen Geometry -->
+              <div class="w-full max-w-lg flex flex-col items-center mb-10">
+                <div class="w-full h-3 rounded-t-full bg-gradient-to-r from-celluloid-800 via-ivory to-celluloid-800 opacity-90 shadow-[0_0_25px_rgba(253,251,247,0.5)]"></div>
+                <div class="w-4/5 h-12 screen-glow opacity-30 pointer-events-none" aria-hidden="true"></div>
+                <span class="text-[10px] font-mono tracking-[0.3em] uppercase text-celluloid-500 mt-1">
+                  &uarr; PROJECTION SCREEN — 1.85:1 CURVED SILVER &uarr;
+                </span>
+              </div>
+
+              <!-- Seat Map Legend -->
+              <div class="flex flex-wrap items-center justify-center gap-6 mb-8 text-xs font-mono text-celluloid-300">
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-sm bg-noir-surface border border-white/20"></span>
+                  <span>Available</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-sm bg-crimson border border-crimson shadow-glow-crimson"></span>
+                  <span class="text-white font-semibold">Your Selection</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-sm bg-noir-elevated opacity-30 border border-white/5 cursor-not-allowed"></span>
+                  <span class="text-celluloid-600">Reserved</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-sm border border-amberfilm bg-amberfilm/20"></span>
+                  <span class="text-amberfilm">Velvet VIP</span>
+                </div>
+              </div>
+
+              <!-- INTERACTIVE SEATING MATRIX (Rows A to G) -->
+              <div class="w-full max-w-xl space-y-3" role="region" aria-label="Auditorium Seating Matrix">
+                
+                <!-- TIER 1: BALCONY LOGE (Rows A & B) -->
+                <div class="text-[10px] font-mono uppercase tracking-widest text-celluloid-500 text-center mb-1">
+                  — Balcony Loge Tier (€24.00) —
+                </div>
+
+                <!-- Row A -->
+                <div class="flex items-center justify-center gap-2 sm:gap-3" data-row="A" data-tier="Balcony" data-price="24">
+                  <span class="w-5 text-right font-mono text-xs text-celluloid-500">A</span>
+                  <div class="flex items-center gap-1.5 sm:gap-2">
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="A-01" aria-label="Seat A-01, Balcony Tier, €24">1</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="A-02" aria-label="Seat A-02, Balcony Tier, €24">2</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="A-03" aria-label="Seat A-03, Balcony Tier, €24">3</button>
+                    <div class="w-4 sm:w-6" aria-hidden="true"></div> <!-- Aisle -->
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="A-04" aria-label="Seat A-04, Balcony Tier, €24">4</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="A-05" aria-label="Seat A-05, Balcony Tier, €24">5</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="A-06" aria-label="Seat A-06, Balcony Tier, €24">6</button>
+                    <div class="w-4 sm:w-6" aria-hidden="true"></div> <!-- Aisle -->
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="A-07" aria-label="Seat A-07, Balcony Tier, €24">7</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="A-08" aria-label="Seat A-08, Balcony Tier, €24">8</button>
+                  </div>
+                  <span class="w-5 text-left font-mono text-xs text-celluloid-500">A</span>
+                </div>
+
+                <!-- Row B -->
+                <div class="flex items-center justify-center gap-2 sm:gap-3" data-row="B" data-tier="Balcony" data-price="24">
+                  <span class="w-5 text-right font-mono text-xs text-celluloid-500">B</span>
+                  <div class="flex items-center gap-1.5 sm:gap-2">
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-elevated opacity-30 cursor-not-allowed border border-white/5 text-[10px] font-mono" data-seat="B-01" disabled aria-label="Seat B-01, Reserved">1</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-elevated opacity-30 cursor-not-allowed border border-white/5 text-[10px] font-mono" data-seat="B-02" disabled aria-label="Seat B-02, Reserved">2</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="B-03" aria-label="Seat B-03, Balcony Tier, €24">3</button>
+                    <div class="w-4 sm:w-6" aria-hidden="true"></div>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="B-04" aria-label="Seat B-04, Balcony Tier, €24">4</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="B-05" aria-label="Seat B-05, Balcony Tier, €24">5</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="B-06" aria-label="Seat B-06, Balcony Tier, €24">6</button>
+                    <div class="w-4 sm:w-6" aria-hidden="true"></div>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="B-07" aria-label="Seat B-07, Balcony Tier, €24">7</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="B-08" aria-label="Seat B-08, Balcony Tier, €24">8</button>
+                  </div>
+                  <span class="w-5 text-left font-mono text-xs text-celluloid-500">B</span>
+                </div>
+
+                <!-- TIER 2: ORCHESTRA STALLS (Rows C, D, E) -->
+                <div class="text-[10px] font-mono uppercase tracking-widest text-celluloid-500 text-center pt-2 mb-1">
+                  — Orchestra Stalls (€18.00) —
+                </div>
+
+                <!-- Row C -->
+                <div class="flex items-center justify-center gap-2 sm:gap-3" data-row="C" data-tier="Orchestra" data-price="18">
+                  <span class="w-5 text-right font-mono text-xs text-celluloid-500">C</span>
+                  <div class="flex items-center gap-1.5 sm:gap-2">
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="C-01" aria-label="Seat C-01, Orchestra Tier, €18">1</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="C-02" aria-label="Seat C-02, Orchestra Tier, €18">2</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="C-03" aria-label="Seat C-03, Orchestra Tier, €18">3</button>
+                    <div class="w-4 sm:w-6" aria-hidden="true"></div>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="C-04" aria-label="Seat C-04, Orchestra Tier, €18">4</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="C-05" aria-label="Seat C-05, Orchestra Tier, €18">5</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="C-06" aria-label="Seat C-06, Orchestra Tier, €18">6</button>
+                    <div class="w-4 sm:w-6" aria-hidden="true"></div>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="C-07" aria-label="Seat C-07, Orchestra Tier, €18">7</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="C-08" aria-label="Seat C-08, Orchestra Tier, €18">8</button>
+                  </div>
+                  <span class="w-5 text-left font-mono text-xs text-celluloid-500">C</span>
+                </div>
+
+                <!-- Row D (Pre-selected demo seats D-04 & D-05) -->
+                <div class="flex items-center justify-center gap-2 sm:gap-3" data-row="D" data-tier="Orchestra" data-price="18">
+                  <span class="w-5 text-right font-mono text-xs text-celluloid-500">D</span>
+                  <div class="flex items-center gap-1.5 sm:gap-2">
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="D-01" aria-label="Seat D-01, Orchestra Tier, €18">1</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="D-02" aria-label="Seat D-02, Orchestra Tier, €18">2</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="D-03" aria-label="Seat D-03, Orchestra Tier, €18">3</button>
+                    <div class="w-4 sm:w-6" aria-hidden="true"></div>
+                    <button type="button" class="seat-btn selected w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-crimson border border-crimson text-white shadow-glow-crimson font-bold text-[10px] font-mono" data-seat="D-04" aria-label="Seat D-04, Orchestra Tier, €18, Selected">4</button>
+                    <button type="button" class="seat-btn selected w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-crimson border border-crimson text-white shadow-glow-crimson font-bold text-[10px] font-mono" data-seat="D-05" aria-label="Seat D-05, Orchestra Tier, €18, Selected">5</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="D-06" aria-label="Seat D-06, Orchestra Tier, €18">6</button>
+                    <div class="w-4 sm:w-6" aria-hidden="true"></div>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="D-07" aria-label="Seat D-07, Orchestra Tier, €18">7</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="D-08" aria-label="Seat D-08, Orchestra Tier, €18">8</button>
+                  </div>
+                  <span class="w-5 text-left font-mono text-xs text-celluloid-500">D</span>
+                </div>
+
+                <!-- Row E -->
+                <div class="flex items-center justify-center gap-2 sm:gap-3" data-row="E" data-tier="Orchestra" data-price="18">
+                  <span class="w-5 text-right font-mono text-xs text-celluloid-500">E</span>
+                  <div class="flex items-center gap-1.5 sm:gap-2">
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="E-01" aria-label="Seat E-01, Orchestra Tier, €18">1</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-elevated opacity-30 cursor-not-allowed border border-white/5 text-[10px] font-mono" data-seat="E-02" disabled aria-label="Seat E-02, Reserved">2</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-elevated opacity-30 cursor-not-allowed border border-white/5 text-[10px] font-mono" data-seat="E-03" disabled aria-label="Seat E-03, Reserved">3</button>
+                    <div class="w-4 sm:w-6" aria-hidden="true"></div>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="E-04" aria-label="Seat E-04, Orchestra Tier, €18">4</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="E-05" aria-label="Seat E-05, Orchestra Tier, €18">5</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="E-06" aria-label="Seat E-06, Orchestra Tier, €18">6</button>
+                    <div class="w-4 sm:w-6" aria-hidden="true"></div>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="E-07" aria-label="Seat E-07, Orchestra Tier, €18">7</button>
+                    <button type="button" class="seat-btn w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-noir-surface border border-white/20 hover:border-amberfilm transition-colors text-[10px] font-mono" data-seat="E-08" aria-label="Seat E-08, Orchestra Tier, €18">8</button>
+                  </div>
+                  <span class="w-5 text-left font-mono text-xs text-celluloid-500">E</span>
+                </div>
+
+                <!-- TIER 3: VELVET LOUNGE VIP (Row G) -->
+                <div class="text-[10px] font-mono uppercase tracking-widest text-amberfilm text-center pt-2 mb-1">
+                  — Grand Velvet Loge VIP (€32.00 • Sommelier Service) —
+                </div>
+
+                <!-- Row G -->
+                <div class="flex items-center justify-center gap-2 sm:gap-3" data-row="G" data-tier="Velvet VIP" data-price="32">
+                  <span class="w-5 text-right font-mono text-xs text-amberfilm">G</span>
+                  <div class="flex items-center gap-2 sm:gap-3">
+                    <button type="button" class="seat-btn w-8 h-7 rounded-sm bg-noir-surface border border-amberfilm/60 hover:bg-amberfilm/20 transition-colors text-[10px] font-mono text-amberfilm font-semibold" data-seat="G-01" aria-label="Seat G-01, Velvet VIP, €32">G1</button>
+                    <button type="button" class="seat-btn w-8 h-7 rounded-sm bg-noir-surface border border-amberfilm/60 hover:bg-amberfilm/20 transition-colors text-[10px] font-mono text-amberfilm font-semibold" data-seat="G-02" aria-label="Seat G-02, Velvet VIP, €32">G2</button>
+                    <div class="w-6 sm:w-8" aria-hidden="true"></div>
+                    <button type="button" class="seat-btn w-8 h-7 rounded-sm bg-noir-surface border border-amberfilm/60 hover:bg-amberfilm/20 transition-colors text-[10px] font-mono text-amberfilm font-semibold" data-seat="G-03" aria-label="Seat G-03, Velvet VIP, €32">G3</button>
+                    <button type="button" class="seat-btn w-8 h-7 rounded-sm bg-noir-surface border border-amberfilm/60 hover:bg-amberfilm/20 transition-colors text-[10px] font-mono text-amberfilm font-semibold" data-seat="G-04" aria-label="Seat G-04, Velvet VIP, €32">G4</button>
+                    <div class="w-6 sm:w-8" aria-hidden="true"></div>
+                    <button type="button" class="seat-btn w-8 h-7 rounded-sm bg-noir-surface border border-amberfilm/60 hover:bg-amberfilm/20 transition-colors text-[10px] font-mono text-amberfilm font-semibold" data-seat="G-05" aria-label="Seat G-05, Velvet VIP, €32">G5</button>
+                    <button type="button" class="seat-btn w-8 h-7 rounded-sm bg-noir-surface border border-amberfilm/60 hover:bg-amberfilm/20 transition-colors text-[10px] font-mono text-amberfilm font-semibold" data-seat="G-06" aria-label="Seat G-06, Velvet VIP, €32">G6</button>
+                  </div>
+                  <span class="w-5 text-left font-mono text-xs text-amberfilm">G</span>
+                </div>
+
+              </div>
+
+              <p class="text-[11px] font-mono text-celluloid-400 mt-8 text-center">
+                * Click or press Enter on any seat to toggle reservation. Wheelchair companion spaces available in Row C.
+              </p>
+            </div>
+
+            <!-- BOOKING SUMMARY & TICKET CART (lg:col-span-4) -->
+            <div class="lg:col-span-4 bg-noir-elevated border border-noir-wine rounded-sm p-6 space-y-6 shadow-velvet">
+              
+              <div class="border-b border-white/10 pb-4">
+                <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-amberfilm block mb-1">
+                  Ticket Dossier
+                </span>
+                <h3 id="selected-film-title" class="font-serif text-2xl text-ivory">Cinema Paradiso</h3>
+                <p id="selected-film-meta" class="text-xs font-mono text-celluloid-400 mt-1">
+                  Hall 1 Lumière • Today, 20:30 CET • 35mm
+                </p>
+              </div>
+
+              <!-- Selected Seats breakdown -->
+              <div class="space-y-3">
+                <div class="flex items-center justify-between text-xs font-mono">
+                  <span class="text-celluloid-400">Selected Seats:</span>
+                  <span id="selected-seats-badge" class="px-2 py-0.5 rounded bg-crimson/20 border border-crimson/50 text-crimson font-bold">
+                    D-04, D-05 (2 Seats)
+                  </span>
+                </div>
+
+                <div class="bg-noir-card rounded p-3 text-xs font-mono space-y-2 border border-white/5">
+                  <div class="flex justify-between text-celluloid-300">
+                    <span>Orchestra Stalls (×2)</span>
+                    <span id="subtotal-display" class="tabular-nums text-ivory">€36.00</span>
+                  </div>
+                  <div class="flex justify-between text-celluloid-400 text-[11px]">
+                    <span>Archival Preservation Levy</span>
+                    <span class="tabular-nums text-emerald-400">€0.00 (Waived)</span>
+                  </div>
+                  <div class="flex justify-between text-celluloid-400 text-[11px]">
+                    <span>35mm Projection Quality Guarantee</span>
+                    <span class="text-ivory">Included</span>
+                  </div>
+                  <div class="pt-2 border-t border-white/10 flex justify-between text-sm font-bold text-amberfilm">
+                    <span>Total Due</span>
+                    <span id="total-display" class="tabular-nums font-mono text-base">€36.00</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Reservation Form -->
+              <form id="reservation-form" onsubmit="handleReservation(event)" class="space-y-4 pt-2">
+                <div>
+                  <label for="cinephile-name" class="block text-xs font-mono uppercase tracking-wider text-celluloid-300 mb-1">
+                    Cinephile Full Name
+                  </label>
+                  <input type="text" id="cinephile-name" name="name" required autocomplete="name" placeholder="Jean-Luc Belmondo…" class="w-full bg-noir-card border border-white/15 focus:border-amberfilm rounded-sm px-3.5 py-2 text-xs font-mono text-ivory placeholder-celluloid-500 focus:outline-none transition-colors">
+                </div>
+
+                <div>
+                  <label for="cinephile-email" class="block text-xs font-mono uppercase tracking-wider text-celluloid-300 mb-1">
+                    Electronic Dispatch Email
+                  </label>
+                  <input type="email" id="cinephile-email" name="email" required autocomplete="email" spellcheck="false" placeholder="cinephile@lumiere-paris.fr…" class="w-full bg-noir-card border border-white/15 focus:border-amberfilm rounded-sm px-3.5 py-2 text-xs font-mono text-ivory placeholder-celluloid-500 focus:outline-none transition-colors">
+                </div>
+
+                <div class="pt-2">
+                  <button type="submit" id="reserve-btn" class="w-full py-3 px-4 bg-crimson hover:bg-crimson-hover text-white text-xs font-mono uppercase tracking-widest font-bold rounded-sm shadow-glow-crimson transition-all duration-150 focus-visible:ring-2 flex items-center justify-center gap-2">
+                    <span id="reserve-text">Confirm Seat Reservation</span>
+                    <span id="reserve-spinner" class="hidden w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" aria-hidden="true"></span>
+                  </button>
+                  <p class="text-[10px] font-mono text-celluloid-500 text-center mt-2">
+                    Tickets dispatched via email with printable pass + Apple Wallet NFC.
+                  </p>
+                </div>
+              </form>
+
+              <!-- Live Toast notification area -->
+              <div id="booking-toast" role="status" aria-live="polite" class="hidden p-4 rounded bg-emerald-950/80 border border-emerald-500/50 text-emerald-200 text-xs font-mono space-y-1">
+                <div class="font-bold flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  <span>RESERVATION CONFIRMED</span>
+                </div>
+                <p id="toast-message" class="text-[11px] text-emerald-300">
+                  Your seat pass for Cinema Paradiso has been reserved.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- SECTION 3: TECHNICAL ARCHIVAL PROJECTION SPECIFICATIONS -->
+        <section id="projection-info" aria-labelledby="specs-heading" class="pt-8 border-t border-noir-wine">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="p-6 bg-noir-card border border-noir-wine rounded-sm space-y-2">
+              <span class="text-amberfilm font-mono text-xs uppercase tracking-widest block">01 / Celluloid Standards</span>
+              <h3 class="font-serif text-xl text-ivory">Kinoton FP30 Dual Projectors</h3>
+              <p class="text-xs text-celluloid-400 leading-relaxed font-light">
+                Continuous-reel changeover system ensuring zero interruption during archival 35mm & 70mm presentation. Certified optical audio sensors.
+              </p>
+            </div>
+
+            <div class="p-6 bg-noir-card border border-noir-wine rounded-sm space-y-2">
+              <span class="text-amberfilm font-mono text-xs uppercase tracking-widest block">02 / Acoustic Mastery</span>
+              <h3 class="font-serif text-xl text-ivory">Meyer Sound EXP &amp; Dolby SR·D</h3>
+              <p class="text-xs text-celluloid-400 leading-relaxed font-light">
+                Linear sound reproduction engineered to preserve vintage mono, 4-track magnetic, and modern 7.1 discreet multichannel soundstages.
+              </p>
+            </div>
+
+            <div class="p-6 bg-noir-card border border-noir-wine rounded-sm space-y-2">
+              <span class="text-amberfilm font-mono text-xs uppercase tracking-widest block">03 / The Celluloid Vow</span>
+              <h3 class="font-serif text-xl text-ivory">No Commercial Advertisements</h3>
+              <p class="text-xs text-celluloid-400 leading-relaxed font-light">
+                Programs begin precisely at the advertised minute with bespoke period trailers and hand-curated archival short subjects.
+              </p>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+
+      <!-- FOOTER -->
+      <footer class="bg-noir-canvas border-t border-noir-wine/80 p-8 sm:p-12 text-xs font-mono text-celluloid-400 mt-12 space-y-6">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div>
+            <div class="flex items-center gap-3">
+              <span class="font-serif text-2xl text-ivory">Lumière Cinémathèque</span>
+              <span class="px-2 py-0.5 rounded bg-noir-elevated border border-white/10 text-[10px] text-amberfilm">PARIS</span>
+            </div>
+            <p class="text-[11px] text-celluloid-500 mt-1">
+              42 Boulevard Saint-Michel, 75006 Paris, France • Métro Cluny–La Sorbonne
+            </p>
+          </div>
+
+          <div class="flex items-center gap-6 text-celluloid-300">
+            <a href="#main-schedule" class="hover:text-amberfilm transition-colors">Program</a>
+            <a href="#seat-booking" class="hover:text-amberfilm transition-colors">Tickets</a>
+            <a href="#specs-heading" class="hover:text-amberfilm transition-colors">Projection Specs</a>
+            <a href="#hero" class="hover:text-amberfilm transition-colors">&uarr; Back to Top</a>
+          </div>
+        </div>
+
+        <div class="pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] text-celluloid-600">
+          <p>© 2026 Lumière Cinémathèque &amp; Film Archive Foundation. All rights reserved.</p>
+          <p class="flex items-center gap-2">
+            <span>WCAG 2.1 AA Compliant</span>
+            <span>•</span>
+            <span>Photochemically Safe</span>
+          </p>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript logic for dynamic seat selection and reservation -->
+  <script>
+    // State management
+    const state = {
+      selectedMovie: 'Cinema Paradiso',
+      selectedTime: '20:30',
+      basePrice: 18,
+      selectedSeats: [
+        { id: 'D-04', tier: 'Orchestra', price: 18 },
+        { id: 'D-05', tier: 'Orchestra', price: 18 }
+      ]
+    };
+
+    function updateSummary() {
+      const seatsBadge = document.getElementById('selected-seats-badge');
+      const subtotalEl = document.getElementById('subtotal-display');
+      const totalEl = document.getElementById('total-display');
+      
+      if (state.selectedSeats.length === 0) {
+        seatsBadge.textContent = 'None Selected (Please choose a seat)';
+        seatsBadge.className = 'px-2 py-0.5 rounded bg-amberfilm/10 border border-amberfilm/30 text-amberfilm text-[11px]';
+        subtotalEl.textContent = '€0.00';
+        totalEl.textContent = '€0.00';
+        return;
+      }
+
+      const seatIds = state.selectedSeats.map(s => s.id).join(', ');
+      const total = state.selectedSeats.reduce((sum, s) => sum + s.price, 0);
+
+      seatsBadge.textContent = `${seatIds} (${state.selectedSeats.length} Seat${state.selectedSeats.length > 1 ? 's' : ''})`;
+      seatsBadge.className = 'px-2 py-0.5 rounded bg-crimson/20 border border-crimson/50 text-crimson font-bold';
+      subtotalEl.textContent = `€${total.toFixed(2)}`;
+      totalEl.textContent = `€${total.toFixed(2)}`;
+    }
+
+    function selectMovie(title, time, price) {
+      state.selectedMovie = title;
+      state.selectedTime = time;
+      state.basePrice = price;
+      
+      document.getElementById('selected-film-title').textContent = title;
+      document.getElementById('selected-film-meta').textContent = `Auditorium Lumière • Today, ${time} CET • 35mm Archival`;
+      
+      // Scroll smoothly to seat booking
+      document.getElementById('seat-booking').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Attach click listeners to all available seat buttons
+    document.querySelectorAll('.seat-btn:not([disabled])').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const seatId = btn.getAttribute('data-seat');
+        const rowEl = btn.closest('[data-row]');
+        const tier = rowEl ? rowEl.getAttribute('data-tier') : 'Orchestra';
+        const price = rowEl ? parseFloat(rowEl.getAttribute('data-price')) : 18;
+
+        const existingIdx = state.selectedSeats.findIndex(s => s.id === seatId);
+        if (existingIdx > -1) {
+          // Deselect
+          state.selectedSeats.splice(existingIdx, 1);
+          btn.classList.remove('selected', 'bg-crimson', 'border-crimson', 'text-white', 'shadow-glow-crimson', 'font-bold');
+          if (tier === 'Velvet VIP') {
+            btn.classList.add('bg-noir-surface', 'border-amberfilm/60', 'text-amberfilm');
+          } else {
+            btn.classList.add('bg-noir-surface', 'border-white/20');
+          }
+          btn.setAttribute('aria-label', `Seat ${seatId}, ${tier} Tier, €${price}`);
+        } else {
+          // Select
+          state.selectedSeats.push({ id: seatId, tier, price });
+          btn.classList.add('selected', 'bg-crimson', 'border-crimson', 'text-white', 'shadow-glow-crimson', 'font-bold');
+          btn.classList.remove('bg-noir-surface', 'border-white/20', 'border-amberfilm/60', 'text-amberfilm');
+          btn.setAttribute('aria-label', `Seat ${seatId}, ${tier} Tier, €${price}, Selected`);
+        }
+
+        updateSummary();
+      });
+    });
+
+    // Form submission handler
+    function handleReservation(e) {
+      e.preventDefault();
+      if (state.selectedSeats.length === 0) {
+        alert('Please select at least one seat from the auditorium map before continuing.');
+        return;
+      }
+
+      const name = document.getElementById('cinephile-name').value;
+      const email = document.getElementById('cinephile-email').value;
+      const reserveBtn = document.getElementById('reserve-btn');
+      const spinner = document.getElementById('reserve-spinner');
+      const text = document.getElementById('reserve-text');
+      const toast = document.getElementById('booking-toast');
+      const toastMsg = document.getElementById('toast-message');
+
+      reserveBtn.disabled = true;
+      spinner.classList.remove('hidden');
+      text.textContent = 'Securing Archival Passes…';
+
+      setTimeout(() => {
+        reserveBtn.disabled = false;
+        spinner.classList.add('hidden');
+        text.textContent = 'Confirm Seat Reservation';
+        
+        toast.classList.remove('hidden');
+        toastMsg.textContent = `Reservation confirmed for ${name}. Pass sent to ${email} for ${state.selectedMovie} (${state.selectedSeats.map(s => s.id).join(', ')}).`;
+        
+        // Announce to screen readers
+        toast.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 700);
+    }
+
+    // Initialize summary on load
+    updateSummary();
+  </script>
+</body>
+</html>

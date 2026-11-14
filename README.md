@@ -61,10 +61,50 @@
 
 ---
 
+### 🎬 Showcase 3: CINESTHETE — Curated Auteur & Indie Film Streaming
+
+> **Autonomous Subagent 1:** `Streaming Platform Architect`  
+> **Design Read:** *Curated cinematic streaming platform for film aficionados and festival-goers, with an ultra-dark boutique language, leaning toward Criterion Channel meets A24 editorial aesthetics.*  
+> **The Three Dials:** `DESIGN_VARIANCE: 7` | `MOTION_INTENSITY: 6` | `VISUAL_DENSITY: 8`  
+> **Visual Diff Verification:** **`87.94%` Match** (Threshold: $\ge 80.0\%$, Status: **PASSED**)
+
+<p align="center">
+  <img src="showcase/cinema/streaming-desktop.png" alt="CINESTHETE Auteur Streaming Platform Desktop View" width="100%" />
+</p>
+
+| 📌 1. Pinterest Extracted Tokens | 💻 2. Live UI Implementation (Tailwind CSS + HTML5) |
+| :--- | :--- |
+| <img src="showcase/cinema/pin_stream.jpg" width="240" alt="Cinematic Dark Streaming Pin" /> <br> **Curated Editorial Streaming Pin** <br> `Canvas Ground: #000000` / `#060608` <br> `Surface Structure: #150E0B` <br> `Accent Highlight: #D4AF37` / `#E5A93C` | **Autonomous Micro-Rail & Auteur Spotlight:** <br> • **Multi-Modal OCR:** Extracted authentic titles (*Dune: Part Two*, *Tron: Ares*, *Anatomy of a Fall*) and audio tags (`4K UHD`, `Dolby Atmos 7.1.4`).<br> • **Geometry Detection:** Detected 6.7% vertical navigation rail and 22.2% hero spotlight height.<br> • **Curated Double Features:** Interactive comparison module matching auteur film pairings.<br> • **Accessible Typography:** Classical *Cinzel* display paired with *Plus Jakarta Sans*. |
+
+*Complete streaming platform interface captured via Headless Chrome (1440 x 960 viewport). Source code available in <code>showcase/cinema/streaming.html</code>.*
+
+---
+
+### 🎟️ Showcase 4: LUMIÈRE CINÉMATHÈQUE — Arthouse 35mm Screening & Seat Booking
+
+> **Autonomous Subagent 2:** `Film Fest UI Engineer`  
+> **Design Read:** *Repertory cinema schedule and live ticket booking platform for archival film screenings, with a rich retro-modern French Cinémathèque language.*  
+> **The Three Dials:** `DESIGN_VARIANCE: 8` | `MOTION_INTENSITY: 5` | `VISUAL_DENSITY: 7`  
+> **Visual Diff Verification:** **`82.85%` Match** (Threshold: $\ge 80.0\%$, Status: **PASSED**)
+
+<p align="center">
+  <img src="showcase/cinema/filmfest-desktop.png" alt="Lumiere Cinematheque 35mm Booking Desktop View" width="100%" />
+</p>
+
+| 📌 1. Pinterest Extracted Tokens | 💻 2. Live UI Implementation (Tailwind CSS + Interactive JS) |
+| :--- | :--- |
+| <img src="showcase/cinema/pin_festival.jpg" width="240" alt="Arthouse Film Festival Schedule Pin" /> <br> **Repertory Schedule & Marquee Pin** <br> `Canvas Ground: #000000` <br> `Surface Structure: #30080C` (Velvet Burgundy) <br> `Accent Highlight: #D62828` / `#F4A261` | **Interactive 35mm Screening & Curved Seat Booking:** <br> • **Multi-Modal OCR:** Extracted archival repertory titles (*Chungking Express*, *Paris, Texas*, *La Haine*) and auditorium row matrices.<br> • **Geometry Detection:** Detected 10.8% film-perforation left rail and 22.4% marquee hero banner.<br> • **Interactive Seat Selector:** Dynamic 48-seat curved auditorium matrix with live VIP calculation and instant pass checkout modal.<br> • **Contrast Compliance:** WCAG AAA Enhanced ($16.4:1$) on velvet burgundy surfaces. |
+
+*Complete repertory cinema booking interface captured via Headless Chrome (1440 x 960 viewport). Source code available in <code>showcase/cinema/filmfest.html</code>.*
+
+---
+
 ## 📖 Table of Contents
 - [Real-World Showcases](#-real-world-showcases-from-pinterest-moodboards-to-production-ui)
   - [Showcase 1: Modern AI Inference Dashboard (AETHER)](#-showcase-1-aether-telemetry--modern-ai-inference-dashboard)
   - [Showcase 2: Artisanal Specialty Roastery (KANSO)](#-showcase-2-kanso-roasters--artisanal-single-origin-roastery)
+  - [Showcase 3: Auteur & Indie Film Streaming (CINESTHETE)](#-showcase-3-cinesthete--curated-auteur--indie-film-streaming)
+  - [Showcase 4: Arthouse 35mm Screening & Seat Booking (LUMIÈRE CINÉMATHÈQUE)](#-showcase-4-lumière-cinémathèque--arthouse-35mm-screening--seat-booking)
 - [Overview](#-overview)
 - [Integrated UI/UX Skills](#-integrated-uiux-skills)
 - [Why This Plugin? (Anti-Generic AI)](#-why-this-plugin-anti-generic-ai)
@@ -525,7 +565,7 @@ uv run pytest --cov=src -v
 ```
 
 ```
-============================== 39 passed in 1.92s ==============================
+============================== 59 passed in 2.65s ==============================
 ```
 
 ---
@@ -542,6 +582,13 @@ pinterest-inspired-plugin/
 ├── showcase/
 │   ├── assets/                     # Downloaded Pinterest pins (Roastery)
 │   ├── dashboard/                  # Downloaded Pinterest pins (Telemetry)
+│   ├── cinema/                     # Downloaded Pinterest pins & Cinema UI
+│   │   ├── pin_stream.jpg          # Curated streaming pin
+│   │   ├── streaming.html          # CINESTHETE Auteur Streaming Platform
+│   │   ├── streaming-desktop.png   # 1440x960 desktop capture (87.94% visual diff)
+│   │   ├── pin_festival.jpg        # Arthouse repertory schedule pin
+│   │   ├── filmfest.html           # LUMIÈRE CINÉMATHÈQUE 35mm Booking Platform
+│   │   └── filmfest-desktop.png    # 1440x960 desktop capture (82.85% visual diff)
 │   ├── index.html                  # Live KANSO ROASTERS showcase website
 │   ├── dashboard.html              # Live AETHER TELEMETRY modern dashboard
 │   ├── kanso-showcase-desktop.png  # Desktop roastery screenshot
