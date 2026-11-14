@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KANSO ROASTERS — Minimalist Artisanal Coffee</title>
+  
+  <!-- Tailwind CSS v3 CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            kanso: {
+              bg: '#FBF9F5',
+              card: '#F4EFE6',
+              border: '#E8DFD1',
+              dark: '#211813',
+              bean: '#6A4E37',
+              latte: '#93725B',
+              honey: '#CEAA8A',
+              espresso: '#49432F'
+            }
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FBF9F5;
+      color: #211813;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+<body class="selection:bg-kanso-bean selection:text-white">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-kanso-dark text-kanso-bg text-[11px] tracking-widest uppercase py-2.5 px-6 text-center border-b border-kanso-border/20 font-medium">
+    <span>Direct Trade Harvest • Small Batch Kyoto & Saigon Micro-Roastery • Free Shipping Over $60</span>
+  </div>
+
+  <!-- Navigation -->
+  <header class="sticky top-0 z-50 bg-[#FBF9F5]/90 backdrop-blur-md border-b border-kanso-border">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div class="flex items-center space-x-10">
+        <a href="#" class="font-serif text-3xl tracking-tight font-normal text-kanso-dark">
+          KANSO <span class="text-xs uppercase tracking-widest font-sans ml-1 text-kanso-bean font-semibold">Roasters</span>
+        </a>
+        <nav class="hidden md:flex items-center space-x-8 text-xs uppercase tracking-widest text-kanso-dark/70 font-medium">
+          <a href="#single-origin" class="hover:text-kanso-bean transition-colors">Origins</a>
+          <a href="#roastery" class="hover:text-kanso-bean transition-colors">Process</a>
+          <a href="#curations" class="hover:text-kanso-bean transition-colors">Curations</a>
+          <a href="#manifesto" class="hover:text-kanso-bean transition-colors">Manifesto</a>
+        </nav>
+      </div>
+
+      <div class="flex items-center space-x-5">
+        <div class="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-kanso-card border border-kanso-border text-[11px] text-kanso-dark/80">
+          <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+          <span>Roasting Batch #104 Active</span>
+        </div>
+        <a href="#single-origin" class="bg-kanso-dark text-kanso-bg text-xs uppercase tracking-widest px-6 py-3 hover:bg-kanso-bean transition-all duration-300 font-medium shadow-sm">
+          Reserve Batch
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section (Editorial Asymmetric Layout) -->
+  <section class="relative pt-16 pb-24 border-b border-kanso-border overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      
+      <!-- Left Column: Typography & Philosophy -->
+      <div class="lg:col-span-6 space-y-8">
+        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-kanso-card border border-kanso-border text-xs text-kanso-bean font-medium">
+          <span>Pinterest Reference #6A4E37</span>
+          <span>•</span>
+          <span>Slow Roasted At High Altitude</span>
+        </div>
+
+        <h1 class="font-serif text-6xl md:text-7xl lg:text-[80px] leading-[0.95] tracking-tight text-kanso-dark font-light">
+          Quiet beans. <br>
+          <span class="italic font-normal text-kanso-bean">Patient craft.</span>
+        </h1>
+
+        <p class="text-base md:text-lg text-kanso-dark/70 font-light leading-relaxed max-w-lg">
+          We honor coffee as agricultural poetry. Direct from volcanic soil farms in Yirgacheffe and Dalat, roasted on cast iron, rested for 14 days before your first sip.
+        </p>
+
+        <!-- CTA Group & Tasting Ticker -->
+        <div class="pt-2 flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
+          <a href="#single-origin" class="inline-flex justify-center items-center bg-kanso-bean text-white px-8 py-4 text-xs uppercase tracking-widest font-medium hover:bg-kanso-dark transition-all duration-300 shadow-md">
+            Order Single Origin
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+          </a>
+          <a href="#roastery" class="inline-flex justify-center items-center text-xs uppercase tracking-widest text-kanso-dark/80 hover:text-kanso-bean transition-colors font-semibold">
+            Our Brew Formula →
+          </a>
+        </div>
+
+        <!-- Reference Token Pills Bar -->
+        <div class="pt-6 border-t border-kanso-border grid grid-cols-3 gap-4">
+          <div>
+            <div class="text-[11px] uppercase tracking-wider text-kanso-dark/50">Primary Soil</div>
+            <div class="text-sm font-semibold flex items-center mt-1">
+              <span class="w-3 h-3 rounded-full mr-2" style="background-color: #6A4E37"></span>
+              #6A4E37
+            </div>
+          </div>
+          <div>
+            <div class="text-[11px] uppercase tracking-wider text-kanso-dark/50">Linen Accent</div>
+            <div class="text-sm font-semibold flex items-center mt-1">
+              <span class="w-3 h-3 rounded-full mr-2" style="background-color: #CEAA8A"></span>
+              #CEAA8A
+            </div>
+          </div>
+          <div>
+            <div class="text-[11px] uppercase tracking-wider text-kanso-dark/50">Brew Ratio</div>
+            <div class="text-sm font-semibold mt-1">1 : 16.5</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Visual Composition with Pinterest Assets -->
+      <div class="lg:col-span-6 relative">
+        <div class="grid grid-cols-12 gap-4 items-center">
+          
+          <!-- Main Hero Image (Pin 1) -->
+          <div class="col-span-8 relative rounded-lg overflow-hidden shadow-xl border border-kanso-border group">
+            <img src="assets/pin_1.jpg" alt="Artisanal Pour Over Brewing" class="w-full h-[480px] object-cover transition-transform duration-700 group-hover:scale-105">
+            <div class="absolute bottom-4 left-4 right-4 bg-kanso-bg/95 backdrop-blur-sm p-4 rounded border border-kanso-border/80 flex items-center justify-between">
+              <div>
+                <p class="text-[10px] uppercase tracking-widest text-kanso-dark/60">Featured Reference</p>
+                <p class="font-serif text-lg text-kanso-dark font-medium">V60 Pour Over Protocol</p>
+              </div>
+              <span class="text-xs font-mono bg-kanso-bean text-white px-2.5 py-1 rounded">#6A4E37</span>
+            </div>
+          </div>
+
+          <!-- Secondary Overlapping Visual (Pin 2) -->
+          <div class="col-span-4 -ml-6 space-y-4">
+            <div class="rounded-lg overflow-hidden shadow-lg border border-kanso-border group">
+              <img src="assets/pin_2.jpg" alt="Craft Roasted Coffee Beans" class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105">
+            </div>
+            <div class="bg-kanso-card p-4 rounded-lg border border-kanso-border text-center">
+              <span class="font-serif text-3xl font-light text-kanso-bean block">93.5</span>
+              <span class="text-[10px] uppercase tracking-widest text-kanso-dark/70 font-semibold block mt-0.5">SCA Cupping Score</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Curated Bento Grid (Showcase Origins & Craft) -->
+  <section id="single-origin" class="py-20 max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-14">
+      <div>
+        <span class="text-xs uppercase tracking-widest text-kanso-bean font-semibold">Seasonal Reserve</span>
+        <h2 class="font-serif text-4xl md:text-5xl font-light tracking-tight text-kanso-dark mt-2">
+          Curated Roasts of the Month
+        </h2>
+      </div>
+      <p class="text-xs uppercase tracking-widest text-kanso-dark/60 mt-4 md:mt-0">
+        Extracted with Pinterest Visual Harmony
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <!-- Card 1 (Pin 3) -->
+      <div class="bg-kanso-card rounded-lg overflow-hidden border border-kanso-border flex flex-col group hover:shadow-lg transition-all duration-300">
+        <div class="relative h-72 overflow-hidden">
+          <img src="assets/pin_3.jpg" alt="Ethiopia Yirgacheffe Washed" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          <span class="absolute top-3 right-3 text-[10px] font-mono px-2 py-0.5 rounded bg-white/90 text-kanso-dark backdrop-blur-sm border border-kanso-border">#CEAA8A</span>
+        </div>
+        <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex items-center justify-between text-xs text-kanso-dark/60 mb-1">
+              <span>Washed • 2,100m</span>
+              <span class="font-semibold text-kanso-bean">$24.00</span>
+            </div>
+            <h3 class="font-serif text-2xl text-kanso-dark font-normal">Ethiopia Gedeb Chelchele</h3>
+            <p class="text-xs text-kanso-dark/70 mt-2 leading-relaxed font-light">
+              Tasting Notes: Jasmine Blossom, Bergamot Citrus, and Sweet Honeycrisp Apple.
+            </p>
+          </div>
+          <button class="w-full bg-kanso-dark text-kanso-bg text-xs uppercase tracking-widest py-3 hover:bg-kanso-bean transition-colors">
+            Add to Basket
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 2 (Pin 4) -->
+      <div class="bg-kanso-card rounded-lg overflow-hidden border border-kanso-border flex flex-col group hover:shadow-lg transition-all duration-300">
+        <div class="relative h-72 overflow-hidden">
+          <img src="assets/pin_4.jpg" alt="Colombia Gesha Natural" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          <span class="absolute top-3 right-3 text-[10px] font-mono px-2 py-0.5 rounded bg-white/90 text-kanso-dark backdrop-blur-sm border border-kanso-border">#49432F</span>
+        </div>
+        <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex items-center justify-between text-xs text-kanso-dark/60 mb-1">
+              <span>Natural Fermentation • 1,950m</span>
+              <span class="font-semibold text-kanso-bean">$32.00</span>
+            </div>
+            <h3 class="font-serif text-2xl text-kanso-dark font-normal">Colombia Huila Pink Bourbon</h3>
+            <p class="text-xs text-kanso-dark/70 mt-2 leading-relaxed font-light">
+              Tasting Notes: White Peach Nectar, Red Currant, and Vanilla Orchid.
+            </p>
+          </div>
+          <button class="w-full bg-kanso-dark text-kanso-bg text-xs uppercase tracking-widest py-3 hover:bg-kanso-bean transition-colors">
+            Add to Basket
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 3: Philosophy / Subscription Box -->
+      <div class="bg-kanso-dark text-kanso-bg rounded-lg p-8 border border-kanso-dark flex flex-col justify-between">
+        <div>
+          <span class="text-[11px] uppercase tracking-widest text-kanso-honey block">The Kanso Club</span>
+          <h3 class="font-serif text-3xl font-light mt-3 leading-snug">
+            Two fresh bags roasted on Wednesdays, shipped in linen pouches.
+          </h3>
+          <p class="text-xs text-kanso-bg/70 font-light mt-4 leading-relaxed">
+            Curated monthly rotations of rare micro-lots from award-winning farms across East Africa and Central America.
+          </p>
+        </div>
+        <div class="pt-8 border-t border-kanso-bg/20">
+          <div class="flex items-baseline justify-between mb-4">
+            <span class="text-xs uppercase tracking-widest text-kanso-bg/80">Monthly Plan</span>
+            <span class="font-serif text-2xl text-kanso-honey">$42 / mo</span>
+          </div>
+          <button class="w-full bg-kanso-honey text-kanso-dark text-xs uppercase tracking-widest font-semibold py-3.5 hover:bg-white transition-colors">
+            Join Roastery Club
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-kanso-card border-t border-kanso-border py-12 text-kanso-dark/70 text-xs">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center space-x-4">
+        <span class="font-serif text-xl font-normal text-kanso-dark">KANSO COFFEE</span>
+        <span class="text-kanso-dark/40">|</span>
+        <span>Showcase design powered by Pinterest Inspiration MCP Plugin</span>
+      </div>
+      <div class="flex items-center space-x-6 text-[11px] uppercase tracking-widest">
+        <span>Palette: #6A4E37 • #93725B • #CEAA8A • #49432F</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

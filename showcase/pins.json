@@ -1,0 +1,30 @@
+[
+  {
+    "dominant_color": "#6a4e37",
+    "aspect_ratio": 0.67,
+    "preview_url": "https://i.pinimg.com/736x/10/38/a1/1038a17b85a6e2fc2f81c2f853e91876.jpg",
+    "orig_url": "https://i.pinimg.com/originals/10/38/a1/1038a17b85a6e2fc2f81c2f853e91876.png",
+    "local_path": "/Users/nguyenkimquockhanh/Desktop/pinterest-inspired-plugin/showcase/assets/pin_1.jpg"
+  },
+  {
+    "dominant_color": "#93725b",
+    "aspect_ratio": 0.56,
+    "preview_url": "https://i.pinimg.com/736x/dc/3e/24/dc3e24deee5e69e62c79acc011f6e1b4.jpg",
+    "orig_url": "https://i.pinimg.com/originals/dc/3e/24/dc3e24deee5e69e62c79acc011f6e1b4.jpg",
+    "local_path": "/Users/nguyenkimquockhanh/Desktop/pinterest-inspired-plugin/showcase/assets/pin_2.jpg"
+  },
+  {
+    "dominant_color": "#ceaa8a",
+    "aspect_ratio": 0.67,
+    "preview_url": "https://i.pinimg.com/736x/78/67/ca/7867ca41e623db4177629556ffd142d6.jpg",
+    "orig_url": "https://i.pinimg.com/originals/78/67/ca/7867ca41e623db4177629556ffd142d6.jpg",
+    "local_path": "/Users/nguyenkimquockhanh/Desktop/pinterest-inspired-plugin/showcase/assets/pin_3.jpg"
+  },
+  {
+    "dominant_color": "#49432f",
+    "aspect_ratio": 0.56,
+    "preview_url": "https://i.pinimg.com/736x/02/39/54/023954b57eb5491edbddec17deab07d2.jpg",
+    "orig_url": "https://i.pinimg.com/originals/02/39/54/023954b57eb5491edbddec17deab07d2.jpg",
+    "local_path": "/Users/nguyenkimquockhanh/Desktop/pinterest-inspired-plugin/showcase/assets/pin_4.jpg"
+  }
+]
