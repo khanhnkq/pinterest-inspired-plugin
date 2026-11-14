@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AETHER TELEMETRY — Modern Autonomous Cloud & AI Inference Cockpit</title>
-  <meta name="description" content="Next-generation cloud telemetry and real-time LLM inference monitoring dashboard designed with Pinterest visual inspiration and anti-slop frontend taste.">
+  <title>Dashboard — High-Fidelity B2B SaaS CRM (Pinterest Pin 1 Replication)</title>
+  <meta name="description" content="Pixel-accurate, anti-slop dark mode B2B SaaS dashboard faithfully replicated from Pinterest visual reference Pin 1 using design-taste-frontend and web-design-guidelines.">
 
   <!-- Tailwind CSS v3 -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- High-Density Engineering Typography: Geist & JetBrains Mono -->
+  <!-- Typography matching reference: Plus Jakarta Sans / Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
@@ -20,25 +20,25 @@
       theme: {
         extend: {
           colors: {
-            aether: {
-              void: '#0C0D10',       // 60% Canvas ground from Pinterest Pin 5
-              surface: '#111318',    // Elevated card surface
-              elevated: '#171B21',   // Interactive card background from Pin 1
-              slate: '#1B1F24',      // Secondary structure from Pin 2
-              border: '#242A35',     // Subtle border separation
-              borderFocus: '#384252',
-              emerald: '#10B981',    // Operational live beacon from Pin 4 (#112D27)
-              emeraldBg: '#08251E',
-              amber: '#F59E0B',      // Warning threshold
-              rose: '#F43F5E',       // Critical anomaly
-              cyan: '#06B6D4',       // Telemetry data stream
-              indigo: '#6366F1',     // Compute cluster metric
-              muted: '#7E889B',      // Secondary text
-              text: '#E6EDF3'        // Primary high-contrast text
+            dash: {
+              canvas: '#0B0D10',       // Deepest matte canvas
+              sidebar: '#111317',      // Distinct sidebar panel
+              card: '#16191F',         // Elevated card background
+              cardHover: '#1B1E26',    // Card hover state
+              border: '#232731',       // High-contrast clean border
+              borderLight: '#2C323F',  // Accent border
+              textPrimary: '#F3F4F6',  // Crisp headline white
+              textSecondary: '#8B94A5',// Readable secondary grey (WCAG 4.5:1+)
+              textMuted: '#5D6678',    // Subdued metadata
+              green: '#10B981',        // Success green
+              greenBg: '#092C23',      // Subdued green pill background
+              red: '#F43F5E',          // Metric drop red
+              redBg: '#2E1018',        // Subdued red pill background
+              activeNav: '#20242E'      // Active navigation background
             }
           },
           fontFamily: {
-            sans: ['"Geist"', '-apple-system', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace']
           }
         }
@@ -47,552 +47,486 @@
   </script>
 
   <style>
-    /* Accessible custom focus states (Web Interface Guidelines compliance) */
+    /* Accessible focus rings (Web Interface Guidelines compliance) */
     *:focus-visible {
       outline: 2px solid #10B981;
       outline-offset: 2px;
-      border-radius: 4px;
+      border-radius: 6px;
     }
 
-    /* Tabular figures for telemetry data */
+    /* Tabular figures for aligned numbers */
     .tabular-numbers {
       font-variant-numeric: tabular-nums;
     }
 
-    /* Subdued grid background pattern */
     body {
-      background-color: #0C0D10;
-      color: #E6EDF3;
-      font-family: 'Geist', sans-serif;
-      background-image: 
-        linear-gradient(to right, rgba(36, 42, 53, 0.25) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(36, 42, 53, 0.25) 1px, transparent 1px);
-      background-size: 32px 32px;
+      background-color: #0B0D10;
+      color: #F3F4F6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    /* Subtle glow on card hover */
-    .telemetry-card {
-      transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
     }
-    .telemetry-card:hover {
-      border-color: #384252;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+    ::-webkit-scrollbar-track {
+      background: #111317;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #232731;
+      border-radius: 3px;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-aether-emerald selection:text-black">
+<body class="min-h-screen flex selection:bg-dash-green selection:text-black">
 
   <!-- Accessible Skip Link (web-design-guidelines requirement) -->
-  <a href="#dashboard-main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-aether-emerald focus:text-black focus:font-mono focus:text-xs focus:font-bold focus:uppercase">
-    Skip to main telemetry
+  <a href="#main-dashboard" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-dash-green focus:text-black focus:font-mono focus:text-xs focus:font-bold focus:uppercase focus:rounded">
+    Skip to dashboard content
   </a>
 
-  <!-- Top System Status Header Bar -->
-  <header class="sticky top-0 z-40 bg-aether-void/90 backdrop-blur-md border-b border-aether-border">
-    <div class="max-w-[1720px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+  <!-- LEFT SIDEBAR (Faithfully mirroring Pin 1) -->
+  <aside aria-label="Main Navigation Sidebar" class="w-64 shrink-0 bg-dash-sidebar border-r border-dash-border flex flex-col justify-between p-4 min-h-screen">
+    
+    <!-- Top Part: Logo, Search, Navigation -->
+    <div class="space-y-6">
       
-      <!-- Brand Logo & Cluster Selector -->
-      <div class="flex items-center space-x-6">
-        <div class="flex items-center space-x-3">
-          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-aether-emerald to-aether-cyan p-0.5 shadow-lg shadow-aether-emerald/10">
-            <div class="w-full h-full bg-aether-void rounded-[6px] flex items-center justify-center">
-              <svg class="w-4 h-4 text-aether-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-              </svg>
+      <!-- Brand & Window Controls -->
+      <div class="flex items-center justify-between px-2 pt-1">
+        <div class="flex items-center space-x-2.5">
+          <!-- Geometric 2x2 Logo Icon matching Pin 1 -->
+          <div class="w-7 h-7 bg-white rounded-md flex items-center justify-center p-1.5 shadow-sm">
+            <div class="grid grid-cols-2 gap-0.5 w-full h-full">
+              <span class="bg-dash-canvas rounded-[1px]"></span>
+              <span class="bg-dash-canvas rounded-[1px]"></span>
+              <span class="bg-dash-canvas rounded-[1px]"></span>
+              <span class="bg-dash-canvas rounded-[1px]"></span>
             </div>
           </div>
-          <div>
-            <div class="flex items-center space-x-2">
-              <span class="font-bold text-sm tracking-tight text-white font-sans">AETHER</span>
-              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-aether-slate border border-aether-border text-aether-emerald font-semibold uppercase">v2.4-telemetry</span>
-            </div>
-            <p class="text-[10px] text-aether-muted font-mono leading-none">Cluster: ap-southeast-1a (Global Mesh)</p>
-          </div>
+          <span class="font-bold text-sm tracking-tight text-white font-sans">Aetheris</span>
         </div>
 
-        <div class="hidden md:block h-6 w-px bg-aether-border" aria-hidden="true"></div>
-
-        <!-- Navigation Tabs -->
-        <nav aria-label="Dashboard views" class="hidden lg:flex items-center space-x-1">
-          <button type="button" class="px-3 py-1.5 rounded text-xs font-medium bg-aether-slate text-white border border-aether-borderFocus">
-            Inference Telemetry
-          </button>
-          <button type="button" class="px-3 py-1.5 rounded text-xs font-medium text-aether-muted hover:text-white hover:bg-aether-slate/50 transition-colors">
-            Compute Mesh
-          </button>
-          <button type="button" class="px-3 py-1.5 rounded text-xs font-medium text-aether-muted hover:text-white hover:bg-aether-slate/50 transition-colors">
-            Vector Embeddings
-          </button>
-          <button type="button" class="px-3 py-1.5 rounded text-xs font-medium text-aether-muted hover:text-white hover:bg-aether-slate/50 transition-colors">
-            Edge Ingress
-          </button>
-        </nav>
-      </div>
-
-      <!-- Right Utility Actions & Live Status Badge -->
-      <div class="flex items-center space-x-3 sm:space-x-4">
-        
-        <!-- Live Cluster Health Indicator -->
-        <div class="flex items-center space-x-2 px-2.5 py-1.5 rounded bg-aether-emeraldBg/50 border border-aether-emerald/30 text-aether-emerald text-xs font-mono" aria-live="polite">
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-aether-emerald opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-aether-emerald"></span>
-          </span>
-          <span class="hidden sm:inline font-medium">99.992% OPERATIONAL</span>
-          <span class="sm:hidden font-medium">LIVE</span>
-        </div>
-
-        <!-- Pinterest Visual Token Badge -->
-        <div class="hidden xl:inline-flex items-center space-x-2 px-2.5 py-1.5 rounded bg-aether-surface border border-aether-border text-[11px] font-mono text-aether-muted">
-          <span class="w-2.5 h-2.5 rounded-full" style="background-color: #171717;"></span>
-          <span>Tokens: #0C0D10 • #112D27</span>
-        </div>
-
-        <!-- Timeframe Controls -->
-        <div class="inline-flex rounded border border-aether-border bg-aether-surface p-0.5 text-xs font-mono">
-          <button type="button" class="px-2.5 py-1 rounded bg-aether-slate text-white font-medium" id="timeframe-1h">1H</button>
-          <button type="button" class="px-2.5 py-1 rounded text-aether-muted hover:text-white transition-colors" id="timeframe-6h">6H</button>
-          <button type="button" class="px-2.5 py-1 rounded text-aether-muted hover:text-white transition-colors" id="timeframe-24h">24H</button>
-        </div>
-
-        <!-- Refresh Trigger -->
-        <button type="button" onclick="triggerTelemetryPulse()" aria-label="Refresh telemetry metrics" class="p-2 rounded bg-aether-surface border border-aether-border hover:border-aether-emerald/50 text-aether-muted hover:text-aether-emerald transition-colors">
-          <svg class="w-4 h-4" id="refresh-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-          </svg>
+        <button type="button" aria-label="Collapse sidebar" class="text-dash-textMuted hover:text-white transition-colors p-1 rounded hover:bg-dash-card">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         </button>
       </div>
 
+      <!-- Search Input with Command Key Badge -->
+      <div class="relative px-1">
+        <div class="flex items-center bg-dash-card border border-dash-border rounded-lg px-3 py-2 text-xs text-dash-textSecondary focus-within:border-dash-borderLight focus-within:text-white transition-colors">
+          <svg class="w-3.5 h-3.5 mr-2 text-dash-textMuted shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" placeholder="Search…" aria-label="Search dashboard" class="bg-transparent border-none outline-none w-full text-xs placeholder:text-dash-textMuted text-white">
+          <kbd class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-dash-sidebar border border-dash-border text-dash-textMuted shrink-0">⌘ K</kbd>
+        </div>
+      </div>
+
+      <!-- Navigation Section: Platform -->
+      <div class="space-y-1">
+        <span class="px-3 text-[11px] font-semibold text-dash-textMuted uppercase tracking-wider block">Platform</span>
+        
+        <nav aria-label="Platform Views" class="space-y-0.5 pt-1">
+          <!-- Active Item: Dashboard -->
+          <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-dash-activeNav text-white font-medium text-xs border border-dash-borderLight/40 shadow-sm" aria-current="page">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+            <span>Dashboard</span>
+          </a>
+
+          <!-- Contacts -->
+          <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-lg text-dash-textSecondary hover:text-white hover:bg-dash-card transition-colors text-xs font-medium">
+            <svg class="w-4 h-4 text-dash-textMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            <span>Contacts</span>
+          </a>
+
+          <!-- Deals -->
+          <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-lg text-dash-textSecondary hover:text-white hover:bg-dash-card transition-colors text-xs font-medium">
+            <svg class="w-4 h-4 text-dash-textMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            <span>Deals</span>
+          </a>
+
+          <!-- Calendar -->
+          <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-lg text-dash-textSecondary hover:text-white hover:bg-dash-card transition-colors text-xs font-medium">
+            <svg class="w-4 h-4 text-dash-textMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <span>Calendar</span>
+          </a>
+
+          <!-- Analytics & Reports -->
+          <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-lg text-dash-textSecondary hover:text-white hover:bg-dash-card transition-colors text-xs font-medium">
+            <svg class="w-4 h-4 text-dash-textMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            <span>Analytics & Reports</span>
+          </a>
+
+          <!-- Workflows -->
+          <a href="#" class="flex items-center space-x-3 px-3 py-2 rounded-lg text-dash-textSecondary hover:text-white hover:bg-dash-card transition-colors text-xs font-medium">
+            <svg class="w-4 h-4 text-dash-textMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <span>Workflows</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Navigation Section: System -->
+      <div class="space-y-1">
+        <span class="px-3 text-[11px] font-semibold text-dash-textMuted uppercase tracking-wider block">System</span>
+        
+        <nav aria-label="System Settings" class="space-y-0.5 pt-1">
+          <a href="#" class="flex items-center justify-between px-3 py-2 rounded-lg text-dash-textSecondary hover:text-white hover:bg-dash-card transition-colors text-xs font-medium group">
+            <div class="flex items-center space-x-3">
+              <svg class="w-4 h-4 text-dash-textMuted group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <span>Settings</span>
+            </div>
+            <svg class="w-3.5 h-3.5 text-dash-textMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </nav>
+      </div>
+
     </div>
-  </header>
 
-  <!-- Main Dashboard Viewport -->
-  <main id="dashboard-main" class="flex-grow max-w-[1720px] w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
-
-    <!-- KPI Metric Cards Grid (High-Density Cockpit) -->
-    <section aria-label="Key Performance Indicators" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <!-- Bottom Part: What's New Card & Customizer -->
+    <div class="space-y-4 pt-4 border-t border-dash-border">
       
-      <!-- KPI 1: Active GPU Throughput -->
-      <article class="telemetry-card bg-aether-surface rounded-lg border border-aether-border p-4 relative overflow-hidden">
-        <div class="flex items-center justify-between text-xs text-aether-muted font-mono">
-          <span>GPU INFERENCE LOAD</span>
-          <span class="inline-flex items-center text-aether-emerald font-semibold">
-            +4.2% <svg class="w-3 h-3 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
-          </span>
+      <!-- What's New Card (Direct from Pin 1) -->
+      <div class="bg-dash-card rounded-lg border border-dash-border p-3.5 space-y-2.5">
+        <div class="flex items-center space-x-2 text-xs font-semibold text-white">
+          <svg class="w-3.5 h-3.5 text-dash-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+          <span>What's new?</span>
         </div>
-        <div class="mt-2 flex items-baseline space-x-2">
-          <span class="text-3xl font-bold font-sans tracking-tight text-white tabular-numbers" id="gpu-metric">88.4%</span>
-          <span class="text-xs font-mono text-aether-muted">/ 128 H100s</span>
-        </div>
-        <!-- Micro Sparkline SVG -->
-        <div class="mt-3 h-8 w-full">
-          <svg class="w-full h-full text-aether-emerald" viewBox="0 0 100 24" fill="none" preserveAspectRatio="none">
-            <path d="M0 18 Q 15 14, 30 19 T 60 10 T 80 12 T 100 6" stroke="currentColor" stroke-width="1.75" vector-effect="non-scaling-stroke"/>
-            <path d="M0 18 Q 15 14, 30 19 T 60 10 T 80 12 T 100 6 L 100 24 L 0 24 Z" fill="url(#emerald-grad)" opacity="0.15"/>
-            <defs>
-              <linearGradient id="emerald-grad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#10B981"/>
-                <stop offset="100%" stop-color="transparent"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-      </article>
+        <ul class="text-[11px] text-dash-textSecondary space-y-1.5 font-normal pl-4 list-disc marker:text-dash-textMuted">
+          <li>Deal pipelines</li>
+          <li>Contact sync</li>
+          <li>Full changelog</li>
+        </ul>
+      </div>
 
-      <!-- KPI 2: P99 TTFT Latency -->
-      <article class="telemetry-card bg-aether-surface rounded-lg border border-aether-border p-4 relative overflow-hidden">
-        <div class="flex items-center justify-between text-xs text-aether-muted font-mono">
-          <span>P99 TTFT (FIRST TOKEN)</span>
-          <span class="inline-flex items-center text-aether-emerald font-semibold">
-            -18ms <svg class="w-3 h-3 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
-          </span>
-        </div>
-        <div class="mt-2 flex items-baseline space-x-2">
-          <span class="text-3xl font-bold font-sans tracking-tight text-white tabular-numbers" id="p99-metric">142<span class="text-lg text-aether-muted font-normal ml-0.5">ms</span></span>
-          <span class="text-xs font-mono text-aether-emerald bg-aether-emeraldBg px-1.5 py-0.5 rounded border border-aether-emerald/30">Target &lt; 200ms</span>
-        </div>
-        <div class="mt-3 h-8 w-full">
-          <svg class="w-full h-full text-aether-cyan" viewBox="0 0 100 24" fill="none" preserveAspectRatio="none">
-            <path d="M0 12 Q 25 18, 50 11 T 75 14 T 100 8" stroke="currentColor" stroke-width="1.75" vector-effect="non-scaling-stroke"/>
-          </svg>
-        </div>
-      </article>
+      <!-- Utilities: Help Center, Documentation, Customizer -->
+      <div class="space-y-1 text-xs">
+        <a href="#" class="flex items-center space-x-2.5 px-3 py-1.5 rounded text-dash-textSecondary hover:text-white transition-colors">
+          <svg class="w-3.5 h-3.5 text-dash-textMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span>Help Center</span>
+        </a>
 
-      <!-- KPI 3: Global Request Volume -->
-      <article class="telemetry-card bg-aether-surface rounded-lg border border-aether-border p-4 relative overflow-hidden">
-        <div class="flex items-center justify-between text-xs text-aether-muted font-mono">
-          <span>STREAM REQUEST RATE</span>
-          <span class="inline-flex items-center text-aether-emerald font-semibold">
-            +11.8%
-          </span>
-        </div>
-        <div class="mt-2 flex items-baseline space-x-2">
-          <span class="text-3xl font-bold font-sans tracking-tight text-white tabular-numbers" id="req-metric">42.8<span class="text-lg text-aether-muted font-normal ml-0.5">k/s</span></span>
-          <span class="text-xs font-mono text-aether-muted">2.57M req/min</span>
-        </div>
-        <div class="mt-3 h-8 w-full">
-          <svg class="w-full h-full text-aether-indigo" viewBox="0 0 100 24" fill="none" preserveAspectRatio="none">
-            <path d="M0 20 Q 20 16, 40 12 T 70 8 T 100 4" stroke="currentColor" stroke-width="1.75" vector-effect="non-scaling-stroke"/>
-          </svg>
-        </div>
-      </article>
+        <a href="#" class="flex items-center space-x-2.5 px-3 py-1.5 rounded text-dash-textSecondary hover:text-white transition-colors">
+          <svg class="w-3.5 h-3.5 text-dash-textMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          <span>Documentation</span>
+        </a>
 
-      <!-- KPI 4: Cache Hit Ratio (KV Cache) -->
-      <article class="telemetry-card bg-aether-surface rounded-lg border border-aether-border p-4 relative overflow-hidden">
-        <div class="flex items-center justify-between text-xs text-aether-muted font-mono">
-          <span>KV CACHE HIT RATE</span>
-          <span class="inline-flex items-center text-aether-amber font-semibold">
-            94.1%
+        <!-- Customizer (Radix UI / Lucide) -->
+        <div class="flex items-center justify-between px-3 py-2 rounded-lg bg-dash-card/60 border border-dash-border text-xs text-white">
+          <div class="flex items-center space-x-2">
+            <svg class="w-4 h-4 text-dash-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+            <div>
+              <p class="font-semibold text-[11px] leading-tight">Customizer</p>
+              <p class="text-[10px] text-dash-textMuted">Radix UI, Lucide</p>
+            </div>
+          </div>
+          <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-dash-sidebar border border-dash-border text-dash-textMuted">⌘ .</span>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT AREA -->
+  <main id="main-dashboard" class="flex-grow p-6 lg:p-8 space-y-6 overflow-y-auto max-w-[1400px]">
+    
+    <!-- Top Header: Title & Reference Pill -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-dash-border pb-4">
+      <div>
+        <h1 class="text-2xl font-bold tracking-tight text-white font-sans">Dashboard</h1>
+        <p class="text-xs text-dash-textSecondary mt-0.5">Live performance metrics & lead pipeline status</p>
+      </div>
+
+      <!-- Provenance Badge: Pinterest Reference Pin 1 -->
+      <div class="flex items-center space-x-3">
+        <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-dash-card border border-dash-border text-xs font-mono text-dash-textSecondary">
+          <span class="w-2 h-2 rounded-full bg-dash-green animate-pulse"></span>
+          <span>Replication: Pinterest Reference Pin 1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. THREE TOP KPI CARDS (Matching Pin 1 exactly) -->
+    <section aria-label="Key Summary Metrics" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      
+      <!-- Card 1: Leads -->
+      <div class="bg-dash-card rounded-xl border border-dash-border p-5 space-y-3 hover:border-dash-borderLight transition-colors">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-medium text-dash-textSecondary">Leads</span>
+          <span class="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full bg-dash-greenBg text-dash-green text-xs font-semibold">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+            <span>8.0%</span>
           </span>
         </div>
-        <div class="mt-2 flex items-baseline space-x-2">
-          <span class="text-3xl font-bold font-sans tracking-tight text-white tabular-numbers">94.1<span class="text-lg text-aether-muted font-normal ml-0.5">%</span></span>
-          <span class="text-xs font-mono text-aether-amber bg-aether-amber/10 px-1.5 py-0.5 rounded border border-aether-amber/30">Prefix Sharing</span>
+        <div class="flex items-baseline space-x-2.5">
+          <span class="text-3xl font-bold tracking-tight text-white tabular-numbers">129</span>
+          <span class="text-xs text-dash-green font-medium">+24 vs last week</span>
         </div>
-        <div class="mt-3 h-8 w-full">
-          <svg class="w-full h-full text-aether-amber" viewBox="0 0 100 24" fill="none" preserveAspectRatio="none">
-            <path d="M0 6 Q 30 7, 50 5 T 80 8 T 100 6" stroke="currentColor" stroke-width="1.75" vector-effect="non-scaling-stroke"/>
-          </svg>
+      </div>
+
+      <!-- Card 2: Conversion Rate -->
+      <div class="bg-dash-card rounded-xl border border-dash-border p-5 space-y-3 hover:border-dash-borderLight transition-colors">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-medium text-dash-textSecondary">Conversion Rate</span>
+          <span class="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full bg-dash-greenBg text-dash-green text-xs font-semibold">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+            <span>2.0%</span>
+          </span>
         </div>
-      </article>
+        <div class="flex items-baseline space-x-2.5">
+          <span class="text-3xl font-bold tracking-tight text-white tabular-numbers">24%</span>
+          <span class="text-xs text-dash-green font-medium">+8 vs last week</span>
+        </div>
+      </div>
+
+      <!-- Card 3: CLV (Customer Lifetime Value) -->
+      <div class="bg-dash-card rounded-xl border border-dash-border p-5 space-y-3 hover:border-dash-borderLight transition-colors">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-1 text-xs font-medium text-dash-textSecondary">
+            <span>CLV</span>
+            <svg class="w-3 h-3 text-dash-textMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <span class="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full bg-dash-redBg text-dash-red text-xs font-semibold">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+            <span>4.0%</span>
+          </span>
+        </div>
+        <div class="flex items-baseline space-x-2.5">
+          <span class="text-3xl font-bold tracking-tight text-white tabular-numbers">14d</span>
+          <span class="text-xs text-dash-green font-medium">+1d vs last week</span>
+        </div>
+      </div>
 
     </section>
 
-    <!-- Main Telemetry Body: Interactive Telemetry Graph & Live Node Inspector -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- 2. REVENUE OVER TIME WAVE CHART (Exact match to Pin 1) -->
+    <section aria-label="Revenue Over Time Curve" class="bg-dash-card rounded-xl border border-dash-border p-6 space-y-6">
       
-      <!-- Left/Center Column (8 Cols): Interactive High-Resolution Latency Chart -->
-      <section aria-label="Latency and Token Generation Curves" class="lg:col-span-8 bg-aether-surface rounded-lg border border-aether-border p-5 space-y-4">
-        
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-aether-border pb-4">
-          <div>
-            <div class="flex items-center space-x-2">
-              <h2 class="text-base font-semibold text-white tracking-tight">Autonomous Edge Ingress & Token Dynamics</h2>
-              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-aether-slate text-aether-emerald font-semibold uppercase">Real-Time</span>
-            </div>
-            <p class="text-xs text-aether-muted mt-0.5 font-mono">Measuring token throughput vs. generation latency across 14 edge regions</p>
-          </div>
-
-          <div class="flex items-center space-x-4 text-xs font-mono">
-            <div class="flex items-center space-x-1.5">
-              <span class="w-2.5 h-2.5 rounded-sm bg-aether-emerald"></span>
-              <span class="text-aether-muted">Input Tokens</span>
-            </div>
-            <div class="flex items-center space-x-1.5">
-              <span class="w-2.5 h-2.5 rounded-sm bg-aether-cyan"></span>
-              <span class="text-aether-muted">Output Tokens</span>
-            </div>
-            <div class="flex items-center space-x-1.5">
-              <span class="w-2.5 h-2.5 rounded-sm bg-aether-amber"></span>
-              <span class="text-aether-muted">P99 Latency (ms)</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- SVG Multi-Series Waveform Graph -->
-        <div class="relative h-72 w-full pt-2">
-          
-          <!-- Y-Axis Gridlines & Reference Labels -->
-          <div class="absolute inset-0 flex flex-col justify-between pointer-events-none text-[10px] font-mono text-aether-muted/50 border-b border-aether-border/60">
-            <div class="border-b border-aether-border/40 pb-1 flex justify-between"><span>60k tok/s</span><span>250ms</span></div>
-            <div class="border-b border-aether-border/40 pb-1 flex justify-between"><span>45k tok/s</span><span>180ms</span></div>
-            <div class="border-b border-aether-border/40 pb-1 flex justify-between"><span>30k tok/s</span><span>120ms</span></div>
-            <div class="border-b border-aether-border/40 pb-1 flex justify-between"><span>15k tok/s</span><span>60ms</span></div>
-            <div class="flex justify-between"><span>0 tok/s</span><span>0ms</span></div>
-          </div>
-
-          <!-- Dynamic SVG Chart Canvas -->
-          <svg class="absolute inset-0 w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 800 240">
-            <!-- Shaded Area Under Curve -->
-            <defs>
-              <linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#10B981" stop-opacity="0.25"/>
-                <stop offset="80%" stop-color="#10B981" stop-opacity="0.0"/>
-              </linearGradient>
-            </defs>
-
-            <!-- Gradient Area -->
-            <polygon points="0,170 80,150 160,165 240,120 320,135 400,90 480,105 560,75 640,85 720,50 800,60 800,240 0,240" fill="url(#area-grad)"/>
-
-            <!-- Series 1: Input Tokens (Emerald) -->
-            <polyline fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-              points="0,170 80,150 160,165 240,120 320,135 400,90 480,105 560,75 640,85 720,50 800,60"/>
-
-            <!-- Series 2: Output Tokens (Cyan) -->
-            <polyline fill="none" stroke="#06B6D4" stroke-width="2" stroke-dasharray="4 2" stroke-linecap="round" stroke-linejoin="round"
-              points="0,195 80,180 160,185 240,160 320,170 400,130 480,140 560,110 640,125 720,95 800,100"/>
-
-            <!-- Series 3: Latency Spikes (Amber) -->
-            <polyline fill="none" stroke="#F59E0B" stroke-width="1.75" stroke-linecap="round"
-              points="0,80 80,75 160,110 240,70 320,65 400,75 480,60 560,65 640,55 720,50 800,45"/>
-
-            <!-- High-Watermark Marker Pin -->
-            <circle cx="720" cy="50" r="4.5" fill="#10B981" stroke="#0C0D10" stroke-width="2"/>
-            <rect x="670" y="16" width="100" height="24" rx="4" fill="#171B21" stroke="#384252" stroke-width="1"/>
-            <text x="720" y="32" fill="#E6EDF3" font-size="10" font-family="JetBrains Mono" text-anchor="middle" font-weight="600">Peak: 58.4k/s</text>
-          </svg>
-
-        </div>
-
-        <!-- X-Axis Timestamps -->
-        <div class="flex justify-between text-[10px] font-mono text-aether-muted pt-2 border-t border-aether-border/40">
-          <span>10:00:00</span>
-          <span>10:15:00</span>
-          <span>10:30:00</span>
-          <span>10:45:00</span>
-          <span>11:00:00</span>
-          <span>Live Now</span>
-        </div>
-
-        <!-- Breakdown Sub-Grid: Regional Health & Cold Starts -->
-        <div class="pt-4 grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-aether-border">
-          <div class="bg-aether-void/60 p-3 rounded border border-aether-border">
-            <span class="text-[10px] font-mono text-aether-muted uppercase">Cold-Start Overhead</span>
-            <div class="text-lg font-bold text-white tabular-numbers mt-0.5">18.2 <span class="text-xs font-normal text-aether-muted">ms</span></div>
-            <div class="w-full bg-aether-slate h-1.5 rounded-full mt-2 overflow-hidden">
-              <div class="bg-aether-emerald h-full rounded-full" style="width: 15%;"></div>
-            </div>
-          </div>
-
-          <div class="bg-aether-void/60 p-3 rounded border border-aether-border">
-            <span class="text-[10px] font-mono text-aether-muted uppercase">Global KV Evictions</span>
-            <div class="text-lg font-bold text-white tabular-numbers mt-0.5">0.003% <span class="text-xs font-normal text-aether-emerald">Stable</span></div>
-            <div class="w-full bg-aether-slate h-1.5 rounded-full mt-2 overflow-hidden">
-              <div class="bg-aether-emerald h-full rounded-full" style="width: 3%;"></div>
-            </div>
-          </div>
-
-          <div class="bg-aether-void/60 p-3 rounded border border-aether-border">
-            <span class="text-[10px] font-mono text-aether-muted uppercase">Cluster Saturation</span>
-            <div class="text-lg font-bold text-white tabular-numbers mt-0.5">74.6% <span class="text-xs font-normal text-aether-cyan">Optimal</span></div>
-            <div class="w-full bg-aether-slate h-1.5 rounded-full mt-2 overflow-hidden">
-              <div class="bg-aether-cyan h-full rounded-full" style="width: 74%;"></div>
-            </div>
-          </div>
-        </div>
-
-      </section>
-
-      <!-- Right Column (4 Cols): Live Node Matrix & Incident Log -->
-      <section aria-label="Nodes Matrix and System Events" class="lg:col-span-4 space-y-6">
-        
-        <!-- Live Edge Node Health Table -->
-        <div class="bg-aether-surface rounded-lg border border-aether-border p-5 space-y-4">
-          <div class="flex items-center justify-between border-b border-aether-border pb-3">
-            <h2 class="text-sm font-semibold text-white tracking-tight">Active Edge Zones</h2>
-            <span class="text-[10px] font-mono text-aether-muted">6 / 6 Operational</span>
-          </div>
-
-          <div class="space-y-2.5">
-            <!-- Node 1 -->
-            <div class="p-2.5 rounded bg-aether-void/70 border border-aether-border flex items-center justify-between hover:border-aether-borderFocus transition-colors">
-              <div class="flex items-center space-x-2.5">
-                <span class="w-2 h-2 rounded-full bg-aether-emerald"></span>
-                <div>
-                  <p class="text-xs font-medium text-white font-mono">us-east-virginia</p>
-                  <p class="text-[10px] text-aether-muted font-mono">32 nodes • vLLM engine</p>
-                </div>
-              </div>
-              <div class="text-right font-mono">
-                <span class="text-xs text-white tabular-numbers font-semibold">12ms</span>
-                <span class="block text-[9px] text-aether-emerald">0.00% err</span>
-              </div>
-            </div>
-
-            <!-- Node 2 -->
-            <div class="p-2.5 rounded bg-aether-void/70 border border-aether-border flex items-center justify-between hover:border-aether-borderFocus transition-colors">
-              <div class="flex items-center space-x-2.5">
-                <span class="w-2 h-2 rounded-full bg-aether-emerald"></span>
-                <div>
-                  <p class="text-xs font-medium text-white font-mono">eu-central-frankfurt</p>
-                  <p class="text-[10px] text-aether-muted font-mono">24 nodes • TensorRT-LLM</p>
-                </div>
-              </div>
-              <div class="text-right font-mono">
-                <span class="text-xs text-white tabular-numbers font-semibold">24ms</span>
-                <span class="block text-[9px] text-aether-emerald">0.01% err</span>
-              </div>
-            </div>
-
-            <!-- Node 3 -->
-            <div class="p-2.5 rounded bg-aether-void/70 border border-aether-border flex items-center justify-between hover:border-aether-borderFocus transition-colors">
-              <div class="flex items-center space-x-2.5">
-                <span class="w-2 h-2 rounded-full bg-aether-emerald"></span>
-                <div>
-                  <p class="text-xs font-medium text-white font-mono">ap-southeast-singapore</p>
-                  <p class="text-[10px] text-aether-muted font-mono">40 nodes • FlashAttention-3</p>
-                </div>
-              </div>
-              <div class="text-right font-mono">
-                <span class="text-xs text-white tabular-numbers font-semibold">38ms</span>
-                <span class="block text-[9px] text-aether-emerald">0.00% err</span>
-              </div>
-            </div>
-
-            <!-- Node 4 -->
-            <div class="p-2.5 rounded bg-aether-void/70 border border-aether-border flex items-center justify-between hover:border-aether-borderFocus transition-colors">
-              <div class="flex items-center space-x-2.5">
-                <span class="w-2 h-2 rounded-full bg-aether-emerald"></span>
-                <div>
-                  <p class="text-xs font-medium text-white font-mono">ap-northeast-tokyo</p>
-                  <p class="text-[10px] text-aether-muted font-mono">32 nodes • Speculative Dec</p>
-                </div>
-              </div>
-              <div class="text-right font-mono">
-                <span class="text-xs text-white tabular-numbers font-semibold">41ms</span>
-                <span class="block text-[9px] text-aether-emerald">0.00% err</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Live Streaming Event Log -->
-        <div class="bg-aether-surface rounded-lg border border-aether-border p-5 space-y-3">
-          <div class="flex items-center justify-between border-b border-aether-border pb-3">
-            <h2 class="text-sm font-semibold text-white tracking-tight">Mesh Event Log</h2>
-            <span class="text-[10px] font-mono text-aether-emerald flex items-center space-x-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-aether-emerald animate-ping"></span>
-              <span>LISTENING</span>
-            </span>
-          </div>
-
-          <div class="space-y-2 font-mono text-[11px]" id="event-stream">
-            <div class="p-2 rounded bg-aether-void/50 border border-white/5 flex items-start space-x-2">
-              <span class="text-aether-emerald font-bold">[11:05:42]</span>
-              <span class="text-aether-text flex-1">Auto-scaling group +8 instances deployed in ap-southeast-1a</span>
-            </div>
-            <div class="p-2 rounded bg-aether-void/50 border border-white/5 flex items-start space-x-2">
-              <span class="text-aether-cyan font-bold">[11:04:19]</span>
-              <span class="text-aether-muted flex-1">Global KV cache checkpoint synchronized across 14 zones</span>
-            </div>
-            <div class="p-2 rounded bg-aether-void/50 border border-white/5 flex items-start space-x-2">
-              <span class="text-aether-amber font-bold">[11:02:51]</span>
-              <span class="text-aether-muted flex-1">Tail latency anomaly re-routed from us-west to us-east (failover 4ms)</span>
-            </div>
-          </div>
-        </div>
-
-      </section>
-
-    </div>
-
-    <!-- Pinterest Inspiration Reference Drawer (Showcase of Design Tokens) -->
-    <section aria-label="Design Tokens and Visual References" class="mt-8 bg-aether-surface rounded-lg border border-aether-border p-6 space-y-4">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-aether-border pb-4">
+      <!-- Card Header: Title & Metric -->
+      <div class="flex items-start justify-between">
         <div>
-          <span class="text-[10px] font-mono uppercase tracking-widest text-aether-emerald font-semibold">Aesthetic Provenance</span>
-          <h2 class="text-lg font-bold text-white tracking-tight font-sans">Pinterest Visual Tokens & Anti-Slop Implementation</h2>
+          <div class="flex items-center space-x-1.5 text-xs text-dash-textSecondary">
+            <span>Revenue over time</span>
+            <svg class="w-3.5 h-3.5 text-dash-textMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <p class="text-3xl font-bold text-white tracking-tight mt-1 tabular-numbers">$30,240</p>
         </div>
-        <p class="text-xs text-aether-muted font-mono">
-          Scraped & Deconstructed via FastMCP • Dominant Palette #0C0D10 & #112D27
-        </p>
+
+        <span class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-full bg-dash-greenBg text-dash-green text-xs font-semibold">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+          <span>7.5% vs last month</span>
+        </span>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- Wave Chart Area with Vertical Tooltip Guideline -->
+      <div class="relative h-64 w-full">
         
-        <!-- Pin Reference 1 -->
-        <div class="bg-aether-void rounded border border-aether-border p-3 space-y-2">
-          <div class="aspect-[4/3] rounded overflow-hidden bg-aether-slate border border-white/5">
-            <img src="dashboard/pin_dash_1.jpg" alt="Dark modern telemetry dashboard layout" class="w-full h-full object-cover">
-          </div>
-          <div class="flex items-center justify-between text-xs font-mono">
-            <span class="text-aether-muted">Pin Reference 01</span>
-            <span class="px-2 py-0.5 rounded bg-aether-slate text-white">#171717</span>
-          </div>
-          <p class="text-[11px] text-aether-muted leading-relaxed font-sans">Dark graphite card surfaces and high-contrast tabular typography.</p>
+        <!-- Y-Axis Labels -->
+        <div class="absolute left-0 top-0 bottom-8 flex flex-col justify-between text-xs text-dash-textMuted font-mono pointer-events-none">
+          <span>40k</span>
+          <span>30k</span>
+          <span>20k</span>
+          <span>10k</span>
+          <span>0</span>
         </div>
 
-        <!-- Pin Reference 2 -->
-        <div class="bg-aether-void rounded border border-aether-border p-3 space-y-2">
-          <div class="aspect-[4/3] rounded overflow-hidden bg-aether-slate border border-white/5">
-            <img src="dashboard/pin_dash_2.png" alt="Dense data telemetry and chart sparklines" class="w-full h-full object-cover">
-          </div>
-          <div class="flex items-center justify-between text-xs font-mono">
-            <span class="text-aether-muted">Pin Reference 02</span>
-            <span class="px-2 py-0.5 rounded bg-aether-slate text-white">#1B1F24</span>
-          </div>
-          <p class="text-[11px] text-aether-muted leading-relaxed font-sans">Multi-curve wave plots and crisp border separators.</p>
+        <!-- Chart Grid Lines -->
+        <div class="absolute left-10 right-0 top-0 bottom-8 flex flex-col justify-between pointer-events-none">
+          <div class="border-b border-dash-border/40 w-full"></div>
+          <div class="border-b border-dash-border/40 w-full"></div>
+          <div class="border-b border-dash-border/40 w-full"></div>
+          <div class="border-b border-dash-border/40 w-full"></div>
+          <div class="border-b border-dash-border/60 w-full"></div>
         </div>
 
-        <!-- Pin Reference 3 -->
-        <div class="bg-aether-void rounded border border-aether-border p-3 space-y-2">
-          <div class="aspect-[4/3] rounded overflow-hidden bg-aether-slate border border-white/5">
-            <img src="dashboard/pin_dash_3.jpg" alt="B2B SaaS cockpit layout" class="w-full h-full object-cover">
+        <!-- Interactive SVG Area Wave Curve -->
+        <div class="absolute left-10 right-0 top-0 bottom-8">
+          <svg class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 1000 200">
+            <defs>
+              <linearGradient id="revenue-gradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4B5563" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#1E232D" stop-opacity="0.0"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Gradient Area Fill -->
+            <polygon points="0,150 150,135 250,90 350,115 450,140 550,110 650,105 750,120 850,115 1000,100 1000,200 0,200" fill="url(#revenue-gradient)"/>
+
+            <!-- Main Wave Line -->
+            <polyline fill="none" stroke="#6B7280" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+              points="0,150 150,135 250,90 350,115 450,140 550,110 650,105 750,120 850,115 1000,100"/>
+
+            <!-- Vertical Guideline at Feb 17 (X = 250) -->
+            <line x1="250" y1="20" x2="250" y2="200" stroke="#4B5563" stroke-width="1.5" stroke-dasharray="3 3"/>
+
+            <!-- Active White Data Dot at Feb 17 -->
+            <circle cx="250" cy="90" r="5" fill="#FFFFFF" stroke="#16191F" stroke-width="2.5"/>
+          </svg>
+
+          <!-- Floating Tooltip Box matching Pin 1 -->
+          <div class="absolute left-[250px] top-[15px] -translate-x-1/2 bg-[#1B1E24] border border-[#2E333F] rounded-lg px-3 py-1.5 shadow-xl flex items-center space-x-2 text-xs z-10 whitespace-nowrap">
+            <span class="text-dash-textSecondary">Tue, Feb 17</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+            <span class="text-dash-textMuted">Revenue</span>
+            <span class="font-bold text-white font-mono">$28,917</span>
           </div>
-          <div class="flex items-center justify-between text-xs font-mono">
-            <span class="text-aether-muted">Pin Reference 03</span>
-            <span class="px-2 py-0.5 rounded bg-aether-slate text-white">#161615</span>
-          </div>
-          <p class="text-[11px] text-aether-muted leading-relaxed font-sans">Linear-style asymmetric cards with zero generic purple gradients.</p>
         </div>
 
-        <!-- Pin Reference 4 -->
-        <div class="bg-aether-void rounded border border-aether-border p-3 space-y-2">
-          <div class="aspect-[4/3] rounded overflow-hidden bg-aether-slate border border-white/5">
-            <img src="dashboard/pin_dash_4.jpg" alt="Neon emerald telemetry indicator pin" class="w-full h-full object-cover">
-          </div>
-          <div class="flex items-center justify-between text-xs font-mono">
-            <span class="text-aether-muted">Pin Reference 04</span>
-            <span class="px-2 py-0.5 rounded bg-aether-emeraldBg text-aether-emerald border border-aether-emerald/30">#112D27</span>
-          </div>
-          <p class="text-[11px] text-aether-muted leading-relaxed font-sans">Operational signal beacon and high-contrast status pills.</p>
+        <!-- X-Axis Dates Navigation Bar -->
+        <div class="absolute left-10 right-0 bottom-0 flex justify-between items-center text-xs font-medium text-dash-textMuted pt-2">
+          <span>Feb 14</span>
+          
+          <!-- Active White Pill for Feb 17 (Direct from Pin 1) -->
+          <span class="px-3 py-1 rounded-full bg-white text-black font-semibold shadow-sm">Feb 17</span>
+          
+          <span>Feb 20</span>
+          <span>Feb 25</span>
+          <span>Mar 3</span>
+          <span>Mar 9</span>
+          <span>Mar 15</span>
         </div>
 
       </div>
+
     </section>
+
+    <!-- 3. BOTTOM SECTION: LEADS MANAGEMENT & RETENTION RATE -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Left Column (6 Cols): Leads Management -->
+      <section aria-label="Leads Management" class="lg:col-span-6 bg-dash-card rounded-xl border border-dash-border p-6 space-y-6">
+        
+        <div>
+          <h2 class="text-sm font-semibold text-white tracking-tight">Leads Management</h2>
+        </div>
+
+        <!-- Tab Controls: Status (Active), Sources, Qualification -->
+        <div class="flex items-center space-x-6 border-b border-dash-border text-xs font-medium">
+          <button type="button" class="pb-2.5 border-b-2 border-white text-white font-semibold">
+            Status
+          </button>
+          <button type="button" class="pb-2.5 border-b-2 border-transparent text-dash-textMuted hover:text-dash-textSecondary transition-colors">
+            Sources
+          </button>
+          <button type="button" class="pb-2.5 border-b-2 border-transparent text-dash-textMuted hover:text-dash-textSecondary transition-colors">
+            Qualification
+          </button>
+        </div>
+
+        <!-- Segmented Progress Bar (Direct from Pin 1) -->
+        <div class="space-y-2">
+          <div class="w-full bg-dash-border h-2 rounded-full overflow-hidden flex">
+            <div class="bg-white h-full" style="width: 45%;"></div>
+            <div class="bg-dash-textMuted h-full" style="width: 25%;"></div>
+            <div class="bg-dash-borderLight h-full" style="width: 30%;"></div>
+          </div>
+        </div>
+
+        <!-- Sub Stats: Open Leads vs In Progress Leads -->
+        <div class="grid grid-cols-2 gap-4 pt-2">
+          <div class="space-y-1">
+            <div class="w-6 h-1 bg-white rounded-full"></div>
+            <p class="text-xs text-dash-textSecondary mt-2">Open</p>
+            <p class="text-xl font-bold text-white tabular-numbers">114 <span class="text-xs font-normal text-dash-textMuted">leads</span></p>
+          </div>
+
+          <div class="space-y-1">
+            <div class="w-6 h-1 bg-dash-textMuted rounded-full"></div>
+            <p class="text-xs text-dash-textSecondary mt-2">In Progress</p>
+            <p class="text-xl font-bold text-white tabular-numbers">62 <span class="text-xs font-normal text-dash-textMuted">leads</span></p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Right Column (6 Cols): Retention Rate (Grouped Vertical Bar Chart) -->
+      <section aria-label="Cohort Retention Rate" class="lg:col-span-6 bg-dash-card rounded-xl border border-dash-border p-6 space-y-6">
+        
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-semibold text-white tracking-tight">Retention Rate</h2>
+          <button type="button" aria-label="Retention options" class="text-dash-textMuted hover:text-white p-1 rounded hover:bg-dash-cardHover">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/></svg>
+          </button>
+        </div>
+
+        <div class="flex items-baseline space-x-2">
+          <span class="text-3xl font-bold text-white tracking-tight tabular-numbers">95%</span>
+          <span class="text-xs text-dash-green font-medium">12% vs last month</span>
+        </div>
+
+        <!-- Legend (Enterprises, SMEs, Startups) -->
+        <div class="flex items-center space-x-5 text-xs text-dash-textSecondary">
+          <div class="flex items-center space-x-1.5">
+            <span class="w-2.5 h-2.5 rounded-sm bg-white"></span>
+            <span>Enterprises</span>
+          </div>
+          <div class="flex items-center space-x-1.5">
+            <span class="w-2.5 h-2.5 rounded-sm bg-dash-textSecondary"></span>
+            <span>SMEs</span>
+          </div>
+          <div class="flex items-center space-x-1.5">
+            <span class="w-2.5 h-2.5 rounded-sm bg-dash-borderLight"></span>
+            <span>Startups</span>
+          </div>
+        </div>
+
+        <!-- Grouped Vertical Bar Charts matching Pin 1 -->
+        <div class="pt-2 h-28 flex items-end justify-between gap-2 border-b border-dash-border/60 pb-1">
+          
+          <!-- Group 1 -->
+          <div class="flex items-end space-x-1 h-full">
+            <div class="w-2.5 bg-white rounded-t-sm" style="height: 65%;"></div>
+            <div class="w-2.5 bg-dash-textSecondary rounded-t-sm" style="height: 40%;"></div>
+            <div class="w-2.5 bg-dash-borderLight rounded-t-sm" style="height: 25%;"></div>
+          </div>
+
+          <!-- Group 2 -->
+          <div class="flex items-end space-x-1 h-full">
+            <div class="w-2.5 bg-white rounded-t-sm" style="height: 80%;"></div>
+            <div class="w-2.5 bg-dash-textSecondary rounded-t-sm" style="height: 50%;"></div>
+            <div class="w-2.5 bg-dash-borderLight rounded-t-sm" style="height: 35%;"></div>
+          </div>
+
+          <!-- Group 3 -->
+          <div class="flex items-end space-x-1 h-full">
+            <div class="w-2.5 bg-white rounded-t-sm" style="height: 90%;"></div>
+            <div class="w-2.5 bg-dash-textSecondary rounded-t-sm" style="height: 60%;"></div>
+            <div class="w-2.5 bg-dash-borderLight rounded-t-sm" style="height: 45%;"></div>
+          </div>
+
+          <!-- Group 4 -->
+          <div class="flex items-end space-x-1 h-full">
+            <div class="w-2.5 bg-white rounded-t-sm" style="height: 75%;"></div>
+            <div class="w-2.5 bg-dash-textSecondary rounded-t-sm" style="height: 45%;"></div>
+            <div class="w-2.5 bg-dash-borderLight rounded-t-sm" style="height: 30%;"></div>
+          </div>
+
+          <!-- Group 5 -->
+          <div class="flex items-end space-x-1 h-full">
+            <div class="w-2.5 bg-white rounded-t-sm" style="height: 85%;"></div>
+            <div class="w-2.5 bg-dash-textSecondary rounded-t-sm" style="height: 55%;"></div>
+            <div class="w-2.5 bg-dash-borderLight rounded-t-sm" style="height: 40%;"></div>
+          </div>
+
+          <!-- Group 6 -->
+          <div class="flex items-end space-x-1 h-full">
+            <div class="w-2.5 bg-white rounded-t-sm" style="height: 95%;"></div>
+            <div class="w-2.5 bg-dash-textSecondary rounded-t-sm" style="height: 70%;"></div>
+            <div class="w-2.5 bg-dash-borderLight rounded-t-sm" style="height: 50%;"></div>
+          </div>
+
+          <!-- Group 7 -->
+          <div class="flex items-end space-x-1 h-full">
+            <div class="w-2.5 bg-white rounded-t-sm" style="height: 92%;"></div>
+            <div class="w-2.5 bg-dash-textSecondary rounded-t-sm" style="height: 65%;"></div>
+            <div class="w-2.5 bg-dash-borderLight rounded-t-sm" style="height: 45%;"></div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
 
   </main>
 
-  <!-- Accessible Footer -->
-  <footer class="mt-8 border-t border-aether-border bg-aether-void py-6 text-xs text-aether-muted font-mono">
-    <div class="max-w-[1720px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div class="flex items-center space-x-3">
-        <span class="w-2 h-2 rounded-full bg-aether-emerald"></span>
-        <span>AETHER TELEMETRY ENGINE • SOC 2 TYPE II CERTIFIED</span>
-      </div>
-      <div>
-        <span>Design Read: High-Density Cockpit (Variance: 7, Motion: 6, Density: 8)</span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Interactive JavaScript Simulation Script -->
-  <script>
-    function triggerTelemetryPulse() {
-      const refreshIcon = document.getElementById('refresh-icon');
-      refreshIcon.classList.add('animate-spin');
-      
-      setTimeout(() => {
-        // Randomly simulate micro-fluctuation in metrics
-        const gpu = (87 + Math.random() * 3).toFixed(1);
-        const p99 = Math.floor(138 + Math.random() * 8);
-        const req = (42 + Math.random() * 2).toFixed(1);
-
-        document.getElementById('gpu-metric').innerText = gpu + '%';
-        document.getElementById('p99-metric').innerHTML = p99 + '<span class="text-lg text-aether-muted font-normal ml-0.5">ms</span>';
-        document.getElementById('req-metric').innerHTML = req + '<span class="text-lg text-aether-muted font-normal ml-0.5">k/s</span>';
-
-        // Add simulated live event
-        const stream = document.getElementById('event-stream');
-        const now = new Date();
-        const timeStr = '[' + now.toTimeString().split(' ')[0] + ']';
-        const newLog = document.createElement('div');
-        newLog.className = 'p-2 rounded bg-aether-void/50 border border-white/5 flex items-start space-x-2 animate-fadeIn';
-        newLog.innerHTML = `<span class="text-aether-emerald font-bold">${timeStr}</span><span class="text-aether-text flex-1">Heartbeat pulse verified across 128 H100 inference instances (${p99}ms)</span>`;
-        stream.prepend(newLog);
-
-        refreshIcon.classList.remove('animate-spin');
-      }, 600);
-    }
-
-    // Interval live tick
-    setInterval(() => {
-      const gpuEl = document.getElementById('gpu-metric');
-      if (gpuEl) {
-        const val = (88 + (Math.random() * 0.8 - 0.4)).toFixed(1);
-        gpuEl.innerText = val + '%';
-      }
-    }, 4000);
-  </script>
 </body>
 </html>

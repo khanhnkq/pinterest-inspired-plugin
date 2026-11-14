@@ -1,7 +1,7 @@
 {
   "name": "pinterest-inspiration",
-  "version": "1.1.0",
-  "description": "Pinterest visual inspiration MCP plugin for Claude Code with bundled design-taste-frontend and web-design-guidelines skills. Fetches high-res design references, dominant colors, and image dimensions for anti-slop UI development.",
+  "version": "1.2.0",
+  "description": "Pinterest visual inspiration MCP plugin for Claude Code with palette quantization, Tesseract OCR, and bundled design-taste-frontend and web-design-guidelines skills.",
   "author": {
     "name": "Antigravity Team"
   },
@@ -12,6 +12,8 @@
     "ui",
     "moodboard",
     "mcp",
+    "color-quantization",
+    "ocr",
     "design-taste-frontend",
     "web-design-guidelines"
   ],

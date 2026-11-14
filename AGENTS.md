@@ -44,6 +44,32 @@ Downloads an inspiration image to local storage for multi-modal vision inspectio
 - **Return Value:**
   - Absolute local file path of the downloaded image.
 
+### `extract_color_palette(image_path_or_url: str, num_colors: int = 5)`
+Extracts a full quantized color palette, relative luminance, 60-30-10 semantic roles, and WCAG contrast analysis from any local image or Pinterest image URL using Pillow median-cut quantization.
+
+- **Parameters:**
+  - `image_path_or_url` (`string`, required): Local file path or HTTP/HTTPS image URL.
+  - `num_colors` (`integer`, optional, default: 5): Number of quantized colors to extract (3 to 10).
+- **Return Value:**
+  - Dict containing total colors, `canvas_ground_60`, `surface_structure_30`, `high_impact_accent_10`, list of palette colors with frequency percentages and relative luminance, contrast matrix against the canvas, and ready-to-paste Tailwind CSS `@theme` snippet.
+
+### `calculate_wcag_contrast(foreground_hex: str, background_hex: str)`
+Calculates the exact WCAG 2.1 relative luminance and contrast ratio between any two hex colors.
+
+- **Parameters:**
+  - `foreground_hex` (`string`, required): Text or foreground color hex (e.g. `#FFFFFF` or `#F3F4F6`).
+  - `background_hex` (`string`, required): Surface or background color hex (e.g. `#0B0D10`).
+- **Return Value:**
+  - Dict with contrast ratio (e.g. `17.6:1`), compliance flags for AA/AAA normal and large text, and graphical component status (`AAA_ENHANCED`, `AA_COMPLIANT`, `FAIL`).
+
+### `extract_text_and_ocr(image_path_or_url: str)`
+Extracts raw text, numerical metrics, headings, and navigation labels from reference pins using Tesseract OCR.
+
+- **Parameters:**
+  - `image_path_or_url` (`string`, required): Local image path or direct image URL.
+- **Return Value:**
+  - Dict with `raw_text`, non-empty `lines`, `numerical_metrics` (e.g. `$30,240`, `129`, `24%`, `14d`), `detected_headings`, and `detected_navigation`.
+
 ---
 
 ## 3. Bundled Skills & Design Workflow
@@ -55,24 +81,26 @@ flowchart TD
     User["User Request"] --> Query["1. Query Formulation (Visual English)"]
     Query --> Fetch["2. Call search_pinterest_inspiration (Limit 4-8)"]
     Fetch --> Moodboard["3. Render Visual Markdown Moodboard"]
-    Moodboard --> Taste["4. Apply design-taste-frontend: Design Read & Three Dials"]
-    Taste --> Code["5. Synthesize Anti-Slop Tailwind/React Code"]
-    Code --> Audit["6. Audit with web-design-guidelines (A11y & WCAG 4.5:1)"]
+    Moodboard --> Select["4. User Pin Selection (Human-in-the-Loop)"]
+    Select --> Deconstruct["5. Vision Deconstruction of Chosen Pin"]
+    Deconstruct --> Taste["6. Faithful Anti-Slop Code Replication (design-taste-frontend)"]
+    Taste --> Audit["7. Audit with web-design-guidelines (A11y & WCAG 4.5:1)"]
 ```
 
 1. **Query Translation:** Convert user requests into descriptive visual English search terms.
    - *Example:* "Make a minimalist artisanal coffee roastery website" → `"artisanal coffee shop website ui editorial warm earthy"`
 2. **Visual Retrieval:** Call `search_pinterest_inspiration(query=..., limit=6)`.
-3. **Present Moodboard:** Display an aesthetic Markdown moodboard with clickable preview images and dominant color hex badges.
-4. **Design Read & The Three Dials (`design-taste-frontend`):**
+3. **Present Moodboard:** Display an aesthetic Markdown moodboard with clickable preview images, numbered labels, and dominant color hex badges.
+4. **User Pin Selection (Human-in-the-Loop):** Prompt the user to select their preferred pin reference to anchor the design direction on.
+5. **Vision Deconstruction:** Download the selected pin via `download_pin_image()`, inspect its exact layout architecture (sidebars, card grids, charts, widgets), and extract its structural DNA.
+6. **Faithful Visual Replication (`design-taste-frontend`):**
    - Output a one-line Design Read: `"Reading this as: <page kind> for <audience>, with a <vibe> language, leaning toward <aesthetic family>."`
-   - Set the dials: `DESIGN_VARIANCE`, `MOTION_INTENSITY`, `VISUAL_DENSITY` (e.g., `8 / 6 / 4`).
+   - Set the dials: `DESIGN_VARIANCE`, `MOTION_INTENSITY`, `VISUAL_DENSITY` (e.g., `7 / 6 / 8`).
    - Eliminate AI tells: No purple gradients, no generic Inter+slate-900, no cookie-cutter centered cards.
-5. **Color & Layout Synthesis:**
-   - Map Pinterest `dominant_color` hex codes to the 60-30-10 palette rule (Canvas, Structure, Accent).
-   - Pair display serif/grotesque fonts with clean body typography.
-6. **Accessibility Audit (`web-design-guidelines`):**
+   - Build UI components that visually replicate the exact composition, widgets, and layout rhythm of the chosen reference pin.
+7. **Accessibility Audit (`web-design-guidelines`):**
    - Verify WCAG AA 4.5:1 contrast against surfaces.
+   - Enforce visible `:focus-visible` rings, semantic `<button>` / `<a>` tags, skip links, and explicit image dimensions.
    - Enforce visible `:focus-visible` rings, semantic `<button>` / `<a>` tags, skip links, and explicit image dimensions.
 
 ---

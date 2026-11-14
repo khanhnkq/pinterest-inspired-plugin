@@ -56,6 +56,26 @@ The plugin provides two core Model Context Protocol (MCP) tools via stdio / SSE:
   - `output_path` (*string*, optional): Custom file path or directory. Defaults to `.pinterest_cache/<hash>.jpg`.
 - **Returns**: String path of the saved file.
 
+### 3. `extract_color_palette`
+- **Purpose**: Quantizes an image into its prominent color palette, relative luminance, 60-30-10 semantic roles, and WCAG contrast check.
+- **Parameters**:
+  - `image_path_or_url` (*string*, required): Local image path or HTTP URL.
+  - `num_colors` (*integer*, optional, default: `5`): Number of quantized colors (3 to 10).
+- **Returns**: Dict with `canvas_ground_60`, `surface_structure_30`, `high_impact_accent_10`, list of palette colors with frequency percentages and relative luminance, contrast matrix, and ready-to-paste Tailwind CSS `@theme` snippet.
+
+### 4. `calculate_wcag_contrast`
+- **Purpose**: Calculates exact WCAG 2.1 relative luminance and contrast ratio between any two hex colors.
+- **Parameters**:
+  - `foreground_hex` (*string*, required): Foreground/text hex color.
+  - `background_hex` (*string*, required): Background/surface hex color.
+- **Returns**: Contrast ratio (e.g. `17.6:1`) and WCAG AA/AAA compliance flags.
+
+### 5. `extract_text_and_ocr`
+- **Purpose**: Runs Tesseract OCR on a reference pin to extract raw text, numerical metrics (`$30,240`, `129`, `24%`), headings, and navigation labels for high-fidelity UI cloning.
+- **Parameters**:
+  - `image_path_or_url` (*string*, required): Local image path or direct image URL.
+- **Returns**: Dict with `raw_text`, `lines`, `numerical_metrics`, `detected_headings`, and `detected_navigation`.
+
 ---
 
 ## 3. End-to-End Design Pipeline
@@ -63,10 +83,12 @@ The plugin provides two core Model Context Protocol (MCP) tools via stdio / SSE:
 ```mermaid
 flowchart TD
     User["User Prompt"] --> Phase1["Phase 1: Visual Query Formulation"]
-    Phase1 --> Phase2["Phase 2: Pinterest Scraper Engine"]
+    Phase1 --> Phase2["Phase 2: Pinterest Scraper Engine (<800ms)"]
     Phase2 --> Phase3["Phase 3: Visual Markdown Moodboard"]
-    Phase3 --> Branch{"Creative Intent"}
-    Branch -->|Frontend UI/UX| Phase4A["Phase 4A: design-taste-frontend Pipeline"]
+    Phase3 --> Phase3B["Phase 3.5: User Reference Selection (Human-in-the-Loop)"]
+    Phase3B --> Inspect["Vision Deconstruction: Download & Inspect Chosen Pin"]
+    Inspect --> Branch{"Creative Intent"}
+    Branch -->|Frontend UI/UX| Phase4A["Phase 4A: Faithful Visual Replication & Component Architecture"]
     Phase4A --> Dial["The Three Dials (Variance / Motion / Density)"]
     Dial --> Code["Anti-Slop Tailwind & React Architecture"]
     Code --> Audit["Phase 5: web-design-guidelines Audit (A11y / WCAG 4.5:1)"]
@@ -139,6 +161,19 @@ Always present the findings to the user as a **structured, highly visual Markdow
 2. **Asymmetric Bento Layout**: Non-uniform card proportions reflecting natural editorial storytelling.
 3. **Color Harmony**: 60-30-10 palette anchored on natural roasted tones against an oatmeal background.
 ```
+
+---
+
+### Phase 3.5: User Pin Selection (Human-in-the-Loop) & Vision Deconstruction
+
+**CRITICAL RULE:** Do NOT jump into code generation with arbitrary layouts!
+1. **Invite User Selection**: Present the visual moodboard with clear, numbered options (e.g., `Pin 1`, `Pin 2`, `Pin 3`). Ask the user which reference image they want to anchor the design on.
+   - Example prompt: *"Which visual direction would you like to replicate? Please select Pin 1, Pin 2, or Pin 3."*
+2. **Download & Vision Inspection**: Call `download_pin_image(image_url=chosen_pin.image_url)` to store the image locally. Inspect the image with Vision to deconstruct:
+   - **Exact Layout Architecture**: Sidebar width, header placement, card divisions, column splits.
+   - **Exact Component Inventory**: KPI cards, line charts, segmented progress bars, tooltips, data tables.
+   - **Exact Color Ratios**: Canvas `#hex`, card surface `#hex`, borders, and alert badges.
+3. **Faithful Visual Replication**: Translate the chosen pin's composition directly into code so the resulting interface is visually recognizable and true to the selected reference pin.
 
 ---
 
