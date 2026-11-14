@@ -2,7 +2,14 @@
   "mcpServers": {
     "pinterest-inspiration": {
       "command": "uv",
-      "args": ["run", "python", "-m", "src.server"]
+      "args": [
+        "run",
+        "--directory",
+        "/Users/nguyenkimquockhanh/Desktop/pinterest-inspired-plugin",
+        "python",
+        "-m",
+        "src.server"
+      ]
     }
   }
 }
