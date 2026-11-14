@@ -63,10 +63,12 @@ The plugin provides two core Model Context Protocol (MCP) tools via stdio / SSE:
 ```mermaid
 flowchart TD
     User["User Prompt"] --> Phase1["Phase 1: Visual Query Formulation"]
-    Phase1 --> Phase2["Phase 2: Pinterest Scraper Engine"]
+    Phase1 --> Phase2["Phase 2: Pinterest Scraper Engine (<800ms)"]
     Phase2 --> Phase3["Phase 3: Visual Markdown Moodboard"]
-    Phase3 --> Branch{"Creative Intent"}
-    Branch -->|Frontend UI/UX| Phase4A["Phase 4A: design-taste-frontend Pipeline"]
+    Phase3 --> Phase3B["Phase 3.5: User Reference Selection (Human-in-the-Loop)"]
+    Phase3B --> Inspect["Vision Deconstruction: Download & Inspect Chosen Pin"]
+    Inspect --> Branch{"Creative Intent"}
+    Branch -->|Frontend UI/UX| Phase4A["Phase 4A: Faithful Visual Replication & Component Architecture"]
     Phase4A --> Dial["The Three Dials (Variance / Motion / Density)"]
     Dial --> Code["Anti-Slop Tailwind & React Architecture"]
     Code --> Audit["Phase 5: web-design-guidelines Audit (A11y / WCAG 4.5:1)"]
@@ -139,6 +141,19 @@ Always present the findings to the user as a **structured, highly visual Markdow
 2. **Asymmetric Bento Layout**: Non-uniform card proportions reflecting natural editorial storytelling.
 3. **Color Harmony**: 60-30-10 palette anchored on natural roasted tones against an oatmeal background.
 ```
+
+---
+
+### Phase 3.5: User Pin Selection (Human-in-the-Loop) & Vision Deconstruction
+
+**CRITICAL RULE:** Do NOT jump into code generation with arbitrary layouts!
+1. **Invite User Selection**: Present the visual moodboard with clear, numbered options (e.g., `Pin 1`, `Pin 2`, `Pin 3`). Ask the user which reference image they want to anchor the design on.
+   - Example prompt: *"Which visual direction would you like to replicate? Please select Pin 1, Pin 2, or Pin 3."*
+2. **Download & Vision Inspection**: Call `download_pin_image(image_url=chosen_pin.image_url)` to store the image locally. Inspect the image with Vision to deconstruct:
+   - **Exact Layout Architecture**: Sidebar width, header placement, card divisions, column splits.
+   - **Exact Component Inventory**: KPI cards, line charts, segmented progress bars, tooltips, data tables.
+   - **Exact Color Ratios**: Canvas `#hex`, card surface `#hex`, borders, and alert badges.
+3. **Faithful Visual Replication**: Translate the chosen pin's composition directly into code so the resulting interface is visually recognizable and true to the selected reference pin.
 
 ---
 
