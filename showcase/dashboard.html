@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth antialiased">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AETHER TELEMETRY — Modern Autonomous Cloud & AI Inference Cockpit</title>
+  <meta name="description" content="Next-generation cloud telemetry and real-time LLM inference monitoring dashboard designed with Pinterest visual inspiration and anti-slop frontend taste.">
+
+  <!-- Tailwind CSS v3 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- High-Density Engineering Typography: Geist & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            aether: {
+              void: '#0C0D10',       // 60% Canvas ground from Pinterest Pin 5
+              surface: '#111318',    // Elevated card surface
+              elevated: '#171B21',   // Interactive card background from Pin 1
+              slate: '#1B1F24',      // Secondary structure from Pin 2
+              border: '#242A35',     // Subtle border separation
+              borderFocus: '#384252',
+              emerald: '#10B981',    // Operational live beacon from Pin 4 (#112D27)
+              emeraldBg: '#08251E',
+              amber: '#F59E0B',      // Warning threshold
+              rose: '#F43F5E',       // Critical anomaly
+              cyan: '#06B6D4',       // Telemetry data stream
+              indigo: '#6366F1',     // Compute cluster metric
+              muted: '#7E889B',      // Secondary text
+              text: '#E6EDF3'        // Primary high-contrast text
+            }
+          },
+          fontFamily: {
+            sans: ['"Geist"', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Accessible custom focus states (Web Interface Guidelines compliance) */
+    *:focus-visible {
+      outline: 2px solid #10B981;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    /* Tabular figures for telemetry data */
+    .tabular-numbers {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Subdued grid background pattern */
+    body {
+      background-color: #0C0D10;
+      color: #E6EDF3;
+      font-family: 'Geist', sans-serif;
+      background-image: 
+        linear-gradient(to right, rgba(36, 42, 53, 0.25) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(36, 42, 53, 0.25) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* Subtle glow on card hover */
+    .telemetry-card {
+      transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .telemetry-card:hover {
+      border-color: #384252;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-aether-emerald selection:text-black">
+
+  <!-- Accessible Skip Link (web-design-guidelines requirement) -->
+  <a href="#dashboard-main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-aether-emerald focus:text-black focus:font-mono focus:text-xs focus:font-bold focus:uppercase">
+    Skip to main telemetry
+  </a>
+
+  <!-- Top System Status Header Bar -->
+  <header class="sticky top-0 z-40 bg-aether-void/90 backdrop-blur-md border-b border-aether-border">
+    <div class="max-w-[1720px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo & Cluster Selector -->
+      <div class="flex items-center space-x-6">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-aether-emerald to-aether-cyan p-0.5 shadow-lg shadow-aether-emerald/10">
+            <div class="w-full h-full bg-aether-void rounded-[6px] flex items-center justify-center">
+              <svg class="w-4 h-4 text-aether-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="font-bold text-sm tracking-tight text-white font-sans">AETHER</span>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-aether-slate border border-aether-border text-aether-emerald font-semibold uppercase">v2.4-telemetry</span>
+            </div>
+            <p class="text-[10px] text-aether-muted font-mono leading-none">Cluster: ap-southeast-1a (Global Mesh)</p>
+          </div>
+        </div>
+
+        <div class="hidden md:block h-6 w-px bg-aether-border" aria-hidden="true"></div>
+
+        <!-- Navigation Tabs -->
+        <nav aria-label="Dashboard views" class="hidden lg:flex items-center space-x-1">
+          <button type="button" class="px-3 py-1.5 rounded text-xs font-medium bg-aether-slate text-white border border-aether-borderFocus">
+            Inference Telemetry
+          </button>
+          <button type="button" class="px-3 py-1.5 rounded text-xs font-medium text-aether-muted hover:text-white hover:bg-aether-slate/50 transition-colors">
+            Compute Mesh
+          </button>
+          <button type="button" class="px-3 py-1.5 rounded text-xs font-medium text-aether-muted hover:text-white hover:bg-aether-slate/50 transition-colors">
+            Vector Embeddings
+          </button>
+          <button type="button" class="px-3 py-1.5 rounded text-xs font-medium text-aether-muted hover:text-white hover:bg-aether-slate/50 transition-colors">
+            Edge Ingress
+          </button>
+        </nav>
+      </div>
+
+      <!-- Right Utility Actions & Live Status Badge -->
+      <div class="flex items-center space-x-3 sm:space-x-4">
+        
+        <!-- Live Cluster Health Indicator -->
+        <div class="flex items-center space-x-2 px-2.5 py-1.5 rounded bg-aether-emeraldBg/50 border border-aether-emerald/30 text-aether-emerald text-xs font-mono" aria-live="polite">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-aether-emerald opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-aether-emerald"></span>
+          </span>
+          <span class="hidden sm:inline font-medium">99.992% OPERATIONAL</span>
+          <span class="sm:hidden font-medium">LIVE</span>
+        </div>
+
+        <!-- Pinterest Visual Token Badge -->
+        <div class="hidden xl:inline-flex items-center space-x-2 px-2.5 py-1.5 rounded bg-aether-surface border border-aether-border text-[11px] font-mono text-aether-muted">
+          <span class="w-2.5 h-2.5 rounded-full" style="background-color: #171717;"></span>
+          <span>Tokens: #0C0D10 • #112D27</span>
+        </div>
+
+        <!-- Timeframe Controls -->
+        <div class="inline-flex rounded border border-aether-border bg-aether-surface p-0.5 text-xs font-mono">
+          <button type="button" class="px-2.5 py-1 rounded bg-aether-slate text-white font-medium" id="timeframe-1h">1H</button>
+          <button type="button" class="px-2.5 py-1 rounded text-aether-muted hover:text-white transition-colors" id="timeframe-6h">6H</button>
+          <button type="button" class="px-2.5 py-1 rounded text-aether-muted hover:text-white transition-colors" id="timeframe-24h">24H</button>
+        </div>
+
+        <!-- Refresh Trigger -->
+        <button type="button" onclick="triggerTelemetryPulse()" aria-label="Refresh telemetry metrics" class="p-2 rounded bg-aether-surface border border-aether-border hover:border-aether-emerald/50 text-aether-muted hover:text-aether-emerald transition-colors">
+          <svg class="w-4 h-4" id="refresh-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Dashboard Viewport -->
+  <main id="dashboard-main" class="flex-grow max-w-[1720px] w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+
+    <!-- KPI Metric Cards Grid (High-Density Cockpit) -->
+    <section aria-label="Key Performance Indicators" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      
+      <!-- KPI 1: Active GPU Throughput -->
+      <article class="telemetry-card bg-aether-surface rounded-lg border border-aether-border p-4 relative overflow-hidden">
+        <div class="flex items-center justify-between text-xs text-aether-muted font-mono">
+          <span>GPU INFERENCE LOAD</span>
+          <span class="inline-flex items-center text-aether-emerald font-semibold">
+            +4.2% <svg class="w-3 h-3 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+          </span>
+        </div>
+        <div class="mt-2 flex items-baseline space-x-2">
+          <span class="text-3xl font-bold font-sans tracking-tight text-white tabular-numbers" id="gpu-metric">88.4%</span>
+          <span class="text-xs font-mono text-aether-muted">/ 128 H100s</span>
+        </div>
+        <!-- Micro Sparkline SVG -->
+        <div class="mt-3 h-8 w-full">
+          <svg class="w-full h-full text-aether-emerald" viewBox="0 0 100 24" fill="none" preserveAspectRatio="none">
+            <path d="M0 18 Q 15 14, 30 19 T 60 10 T 80 12 T 100 6" stroke="currentColor" stroke-width="1.75" vector-effect="non-scaling-stroke"/>
+            <path d="M0 18 Q 15 14, 30 19 T 60 10 T 80 12 T 100 6 L 100 24 L 0 24 Z" fill="url(#emerald-grad)" opacity="0.15"/>
+            <defs>
+              <linearGradient id="emerald-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#10B981"/>
+                <stop offset="100%" stop-color="transparent"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </article>
+
+      <!-- KPI 2: P99 TTFT Latency -->
+      <article class="telemetry-card bg-aether-surface rounded-lg border border-aether-border p-4 relative overflow-hidden">
+        <div class="flex items-center justify-between text-xs text-aether-muted font-mono">
+          <span>P99 TTFT (FIRST TOKEN)</span>
+          <span class="inline-flex items-center text-aether-emerald font-semibold">
+            -18ms <svg class="w-3 h-3 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+          </span>
+        </div>
+        <div class="mt-2 flex items-baseline space-x-2">
+          <span class="text-3xl font-bold font-sans tracking-tight text-white tabular-numbers" id="p99-metric">142<span class="text-lg text-aether-muted font-normal ml-0.5">ms</span></span>
+          <span class="text-xs font-mono text-aether-emerald bg-aether-emeraldBg px-1.5 py-0.5 rounded border border-aether-emerald/30">Target &lt; 200ms</span>
+        </div>
+        <div class="mt-3 h-8 w-full">
+          <svg class="w-full h-full text-aether-cyan" viewBox="0 0 100 24" fill="none" preserveAspectRatio="none">
+            <path d="M0 12 Q 25 18, 50 11 T 75 14 T 100 8" stroke="currentColor" stroke-width="1.75" vector-effect="non-scaling-stroke"/>
+          </svg>
+        </div>
+      </article>
+
+      <!-- KPI 3: Global Request Volume -->
+      <article class="telemetry-card bg-aether-surface rounded-lg border border-aether-border p-4 relative overflow-hidden">
+        <div class="flex items-center justify-between text-xs text-aether-muted font-mono">
+          <span>STREAM REQUEST RATE</span>
+          <span class="inline-flex items-center text-aether-emerald font-semibold">
+            +11.8%
+          </span>
+        </div>
+        <div class="mt-2 flex items-baseline space-x-2">
+          <span class="text-3xl font-bold font-sans tracking-tight text-white tabular-numbers" id="req-metric">42.8<span class="text-lg text-aether-muted font-normal ml-0.5">k/s</span></span>
+          <span class="text-xs font-mono text-aether-muted">2.57M req/min</span>
+        </div>
+        <div class="mt-3 h-8 w-full">
+          <svg class="w-full h-full text-aether-indigo" viewBox="0 0 100 24" fill="none" preserveAspectRatio="none">
+            <path d="M0 20 Q 20 16, 40 12 T 70 8 T 100 4" stroke="currentColor" stroke-width="1.75" vector-effect="non-scaling-stroke"/>
+          </svg>
+        </div>
+      </article>
+
+      <!-- KPI 4: Cache Hit Ratio (KV Cache) -->
+      <article class="telemetry-card bg-aether-surface rounded-lg border border-aether-border p-4 relative overflow-hidden">
+        <div class="flex items-center justify-between text-xs text-aether-muted font-mono">
+          <span>KV CACHE HIT RATE</span>
+          <span class="inline-flex items-center text-aether-amber font-semibold">
+            94.1%
+          </span>
+        </div>
+        <div class="mt-2 flex items-baseline space-x-2">
+          <span class="text-3xl font-bold font-sans tracking-tight text-white tabular-numbers">94.1<span class="text-lg text-aether-muted font-normal ml-0.5">%</span></span>
+          <span class="text-xs font-mono text-aether-amber bg-aether-amber/10 px-1.5 py-0.5 rounded border border-aether-amber/30">Prefix Sharing</span>
+        </div>
+        <div class="mt-3 h-8 w-full">
+          <svg class="w-full h-full text-aether-amber" viewBox="0 0 100 24" fill="none" preserveAspectRatio="none">
+            <path d="M0 6 Q 30 7, 50 5 T 80 8 T 100 6" stroke="currentColor" stroke-width="1.75" vector-effect="non-scaling-stroke"/>
+          </svg>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- Main Telemetry Body: Interactive Telemetry Graph & Live Node Inspector -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      
+      <!-- Left/Center Column (8 Cols): Interactive High-Resolution Latency Chart -->
+      <section aria-label="Latency and Token Generation Curves" class="lg:col-span-8 bg-aether-surface rounded-lg border border-aether-border p-5 space-y-4">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-aether-border pb-4">
+          <div>
+            <div class="flex items-center space-x-2">
+              <h2 class="text-base font-semibold text-white tracking-tight">Autonomous Edge Ingress & Token Dynamics</h2>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-aether-slate text-aether-emerald font-semibold uppercase">Real-Time</span>
+            </div>
+            <p class="text-xs text-aether-muted mt-0.5 font-mono">Measuring token throughput vs. generation latency across 14 edge regions</p>
+          </div>
+
+          <div class="flex items-center space-x-4 text-xs font-mono">
+            <div class="flex items-center space-x-1.5">
+              <span class="w-2.5 h-2.5 rounded-sm bg-aether-emerald"></span>
+              <span class="text-aether-muted">Input Tokens</span>
+            </div>
+            <div class="flex items-center space-x-1.5">
+              <span class="w-2.5 h-2.5 rounded-sm bg-aether-cyan"></span>
+              <span class="text-aether-muted">Output Tokens</span>
+            </div>
+            <div class="flex items-center space-x-1.5">
+              <span class="w-2.5 h-2.5 rounded-sm bg-aether-amber"></span>
+              <span class="text-aether-muted">P99 Latency (ms)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SVG Multi-Series Waveform Graph -->
+        <div class="relative h-72 w-full pt-2">
+          
+          <!-- Y-Axis Gridlines & Reference Labels -->
+          <div class="absolute inset-0 flex flex-col justify-between pointer-events-none text-[10px] font-mono text-aether-muted/50 border-b border-aether-border/60">
+            <div class="border-b border-aether-border/40 pb-1 flex justify-between"><span>60k tok/s</span><span>250ms</span></div>
+            <div class="border-b border-aether-border/40 pb-1 flex justify-between"><span>45k tok/s</span><span>180ms</span></div>
+            <div class="border-b border-aether-border/40 pb-1 flex justify-between"><span>30k tok/s</span><span>120ms</span></div>
+            <div class="border-b border-aether-border/40 pb-1 flex justify-between"><span>15k tok/s</span><span>60ms</span></div>
+            <div class="flex justify-between"><span>0 tok/s</span><span>0ms</span></div>
+          </div>
+
+          <!-- Dynamic SVG Chart Canvas -->
+          <svg class="absolute inset-0 w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 800 240">
+            <!-- Shaded Area Under Curve -->
+            <defs>
+              <linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#10B981" stop-opacity="0.25"/>
+                <stop offset="80%" stop-color="#10B981" stop-opacity="0.0"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Gradient Area -->
+            <polygon points="0,170 80,150 160,165 240,120 320,135 400,90 480,105 560,75 640,85 720,50 800,60 800,240 0,240" fill="url(#area-grad)"/>
+
+            <!-- Series 1: Input Tokens (Emerald) -->
+            <polyline fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+              points="0,170 80,150 160,165 240,120 320,135 400,90 480,105 560,75 640,85 720,50 800,60"/>
+
+            <!-- Series 2: Output Tokens (Cyan) -->
+            <polyline fill="none" stroke="#06B6D4" stroke-width="2" stroke-dasharray="4 2" stroke-linecap="round" stroke-linejoin="round"
+              points="0,195 80,180 160,185 240,160 320,170 400,130 480,140 560,110 640,125 720,95 800,100"/>
+
+            <!-- Series 3: Latency Spikes (Amber) -->
+            <polyline fill="none" stroke="#F59E0B" stroke-width="1.75" stroke-linecap="round"
+              points="0,80 80,75 160,110 240,70 320,65 400,75 480,60 560,65 640,55 720,50 800,45"/>
+
+            <!-- High-Watermark Marker Pin -->
+            <circle cx="720" cy="50" r="4.5" fill="#10B981" stroke="#0C0D10" stroke-width="2"/>
+            <rect x="670" y="16" width="100" height="24" rx="4" fill="#171B21" stroke="#384252" stroke-width="1"/>
+            <text x="720" y="32" fill="#E6EDF3" font-size="10" font-family="JetBrains Mono" text-anchor="middle" font-weight="600">Peak: 58.4k/s</text>
+          </svg>
+
+        </div>
+
+        <!-- X-Axis Timestamps -->
+        <div class="flex justify-between text-[10px] font-mono text-aether-muted pt-2 border-t border-aether-border/40">
+          <span>10:00:00</span>
+          <span>10:15:00</span>
+          <span>10:30:00</span>
+          <span>10:45:00</span>
+          <span>11:00:00</span>
+          <span>Live Now</span>
+        </div>
+
+        <!-- Breakdown Sub-Grid: Regional Health & Cold Starts -->
+        <div class="pt-4 grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-aether-border">
+          <div class="bg-aether-void/60 p-3 rounded border border-aether-border">
+            <span class="text-[10px] font-mono text-aether-muted uppercase">Cold-Start Overhead</span>
+            <div class="text-lg font-bold text-white tabular-numbers mt-0.5">18.2 <span class="text-xs font-normal text-aether-muted">ms</span></div>
+            <div class="w-full bg-aether-slate h-1.5 rounded-full mt-2 overflow-hidden">
+              <div class="bg-aether-emerald h-full rounded-full" style="width: 15%;"></div>
+            </div>
+          </div>
+
+          <div class="bg-aether-void/60 p-3 rounded border border-aether-border">
+            <span class="text-[10px] font-mono text-aether-muted uppercase">Global KV Evictions</span>
+            <div class="text-lg font-bold text-white tabular-numbers mt-0.5">0.003% <span class="text-xs font-normal text-aether-emerald">Stable</span></div>
+            <div class="w-full bg-aether-slate h-1.5 rounded-full mt-2 overflow-hidden">
+              <div class="bg-aether-emerald h-full rounded-full" style="width: 3%;"></div>
+            </div>
+          </div>
+
+          <div class="bg-aether-void/60 p-3 rounded border border-aether-border">
+            <span class="text-[10px] font-mono text-aether-muted uppercase">Cluster Saturation</span>
+            <div class="text-lg font-bold text-white tabular-numbers mt-0.5">74.6% <span class="text-xs font-normal text-aether-cyan">Optimal</span></div>
+            <div class="w-full bg-aether-slate h-1.5 rounded-full mt-2 overflow-hidden">
+              <div class="bg-aether-cyan h-full rounded-full" style="width: 74%;"></div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Right Column (4 Cols): Live Node Matrix & Incident Log -->
+      <section aria-label="Nodes Matrix and System Events" class="lg:col-span-4 space-y-6">
+        
+        <!-- Live Edge Node Health Table -->
+        <div class="bg-aether-surface rounded-lg border border-aether-border p-5 space-y-4">
+          <div class="flex items-center justify-between border-b border-aether-border pb-3">
+            <h2 class="text-sm font-semibold text-white tracking-tight">Active Edge Zones</h2>
+            <span class="text-[10px] font-mono text-aether-muted">6 / 6 Operational</span>
+          </div>
+
+          <div class="space-y-2.5">
+            <!-- Node 1 -->
+            <div class="p-2.5 rounded bg-aether-void/70 border border-aether-border flex items-center justify-between hover:border-aether-borderFocus transition-colors">
+              <div class="flex items-center space-x-2.5">
+                <span class="w-2 h-2 rounded-full bg-aether-emerald"></span>
+                <div>
+                  <p class="text-xs font-medium text-white font-mono">us-east-virginia</p>
+                  <p class="text-[10px] text-aether-muted font-mono">32 nodes • vLLM engine</p>
+                </div>
+              </div>
+              <div class="text-right font-mono">
+                <span class="text-xs text-white tabular-numbers font-semibold">12ms</span>
+                <span class="block text-[9px] text-aether-emerald">0.00% err</span>
+              </div>
+            </div>
+
+            <!-- Node 2 -->
+            <div class="p-2.5 rounded bg-aether-void/70 border border-aether-border flex items-center justify-between hover:border-aether-borderFocus transition-colors">
+              <div class="flex items-center space-x-2.5">
+                <span class="w-2 h-2 rounded-full bg-aether-emerald"></span>
+                <div>
+                  <p class="text-xs font-medium text-white font-mono">eu-central-frankfurt</p>
+                  <p class="text-[10px] text-aether-muted font-mono">24 nodes • TensorRT-LLM</p>
+                </div>
+              </div>
+              <div class="text-right font-mono">
+                <span class="text-xs text-white tabular-numbers font-semibold">24ms</span>
+                <span class="block text-[9px] text-aether-emerald">0.01% err</span>
+              </div>
+            </div>
+
+            <!-- Node 3 -->
+            <div class="p-2.5 rounded bg-aether-void/70 border border-aether-border flex items-center justify-between hover:border-aether-borderFocus transition-colors">
+              <div class="flex items-center space-x-2.5">
+                <span class="w-2 h-2 rounded-full bg-aether-emerald"></span>
+                <div>
+                  <p class="text-xs font-medium text-white font-mono">ap-southeast-singapore</p>
+                  <p class="text-[10px] text-aether-muted font-mono">40 nodes • FlashAttention-3</p>
+                </div>
+              </div>
+              <div class="text-right font-mono">
+                <span class="text-xs text-white tabular-numbers font-semibold">38ms</span>
+                <span class="block text-[9px] text-aether-emerald">0.00% err</span>
+              </div>
+            </div>
+
+            <!-- Node 4 -->
+            <div class="p-2.5 rounded bg-aether-void/70 border border-aether-border flex items-center justify-between hover:border-aether-borderFocus transition-colors">
+              <div class="flex items-center space-x-2.5">
+                <span class="w-2 h-2 rounded-full bg-aether-emerald"></span>
+                <div>
+                  <p class="text-xs font-medium text-white font-mono">ap-northeast-tokyo</p>
+                  <p class="text-[10px] text-aether-muted font-mono">32 nodes • Speculative Dec</p>
+                </div>
+              </div>
+              <div class="text-right font-mono">
+                <span class="text-xs text-white tabular-numbers font-semibold">41ms</span>
+                <span class="block text-[9px] text-aether-emerald">0.00% err</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Streaming Event Log -->
+        <div class="bg-aether-surface rounded-lg border border-aether-border p-5 space-y-3">
+          <div class="flex items-center justify-between border-b border-aether-border pb-3">
+            <h2 class="text-sm font-semibold text-white tracking-tight">Mesh Event Log</h2>
+            <span class="text-[10px] font-mono text-aether-emerald flex items-center space-x-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-aether-emerald animate-ping"></span>
+              <span>LISTENING</span>
+            </span>
+          </div>
+
+          <div class="space-y-2 font-mono text-[11px]" id="event-stream">
+            <div class="p-2 rounded bg-aether-void/50 border border-white/5 flex items-start space-x-2">
+              <span class="text-aether-emerald font-bold">[11:05:42]</span>
+              <span class="text-aether-text flex-1">Auto-scaling group +8 instances deployed in ap-southeast-1a</span>
+            </div>
+            <div class="p-2 rounded bg-aether-void/50 border border-white/5 flex items-start space-x-2">
+              <span class="text-aether-cyan font-bold">[11:04:19]</span>
+              <span class="text-aether-muted flex-1">Global KV cache checkpoint synchronized across 14 zones</span>
+            </div>
+            <div class="p-2 rounded bg-aether-void/50 border border-white/5 flex items-start space-x-2">
+              <span class="text-aether-amber font-bold">[11:02:51]</span>
+              <span class="text-aether-muted flex-1">Tail latency anomaly re-routed from us-west to us-east (failover 4ms)</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- Pinterest Inspiration Reference Drawer (Showcase of Design Tokens) -->
+    <section aria-label="Design Tokens and Visual References" class="mt-8 bg-aether-surface rounded-lg border border-aether-border p-6 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-aether-border pb-4">
+        <div>
+          <span class="text-[10px] font-mono uppercase tracking-widest text-aether-emerald font-semibold">Aesthetic Provenance</span>
+          <h2 class="text-lg font-bold text-white tracking-tight font-sans">Pinterest Visual Tokens & Anti-Slop Implementation</h2>
+        </div>
+        <p class="text-xs text-aether-muted font-mono">
+          Scraped & Deconstructed via FastMCP • Dominant Palette #0C0D10 & #112D27
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Pin Reference 1 -->
+        <div class="bg-aether-void rounded border border-aether-border p-3 space-y-2">
+          <div class="aspect-[4/3] rounded overflow-hidden bg-aether-slate border border-white/5">
+            <img src="dashboard/pin_dash_1.jpg" alt="Dark modern telemetry dashboard layout" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-center justify-between text-xs font-mono">
+            <span class="text-aether-muted">Pin Reference 01</span>
+            <span class="px-2 py-0.5 rounded bg-aether-slate text-white">#171717</span>
+          </div>
+          <p class="text-[11px] text-aether-muted leading-relaxed font-sans">Dark graphite card surfaces and high-contrast tabular typography.</p>
+        </div>
+
+        <!-- Pin Reference 2 -->
+        <div class="bg-aether-void rounded border border-aether-border p-3 space-y-2">
+          <div class="aspect-[4/3] rounded overflow-hidden bg-aether-slate border border-white/5">
+            <img src="dashboard/pin_dash_2.png" alt="Dense data telemetry and chart sparklines" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-center justify-between text-xs font-mono">
+            <span class="text-aether-muted">Pin Reference 02</span>
+            <span class="px-2 py-0.5 rounded bg-aether-slate text-white">#1B1F24</span>
+          </div>
+          <p class="text-[11px] text-aether-muted leading-relaxed font-sans">Multi-curve wave plots and crisp border separators.</p>
+        </div>
+
+        <!-- Pin Reference 3 -->
+        <div class="bg-aether-void rounded border border-aether-border p-3 space-y-2">
+          <div class="aspect-[4/3] rounded overflow-hidden bg-aether-slate border border-white/5">
+            <img src="dashboard/pin_dash_3.jpg" alt="B2B SaaS cockpit layout" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-center justify-between text-xs font-mono">
+            <span class="text-aether-muted">Pin Reference 03</span>
+            <span class="px-2 py-0.5 rounded bg-aether-slate text-white">#161615</span>
+          </div>
+          <p class="text-[11px] text-aether-muted leading-relaxed font-sans">Linear-style asymmetric cards with zero generic purple gradients.</p>
+        </div>
+
+        <!-- Pin Reference 4 -->
+        <div class="bg-aether-void rounded border border-aether-border p-3 space-y-2">
+          <div class="aspect-[4/3] rounded overflow-hidden bg-aether-slate border border-white/5">
+            <img src="dashboard/pin_dash_4.jpg" alt="Neon emerald telemetry indicator pin" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-center justify-between text-xs font-mono">
+            <span class="text-aether-muted">Pin Reference 04</span>
+            <span class="px-2 py-0.5 rounded bg-aether-emeraldBg text-aether-emerald border border-aether-emerald/30">#112D27</span>
+          </div>
+          <p class="text-[11px] text-aether-muted leading-relaxed font-sans">Operational signal beacon and high-contrast status pills.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Accessible Footer -->
+  <footer class="mt-8 border-t border-aether-border bg-aether-void py-6 text-xs text-aether-muted font-mono">
+    <div class="max-w-[1720px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <span class="w-2 h-2 rounded-full bg-aether-emerald"></span>
+        <span>AETHER TELEMETRY ENGINE • SOC 2 TYPE II CERTIFIED</span>
+      </div>
+      <div>
+        <span>Design Read: High-Density Cockpit (Variance: 7, Motion: 6, Density: 8)</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript Simulation Script -->
+  <script>
+    function triggerTelemetryPulse() {
+      const refreshIcon = document.getElementById('refresh-icon');
+      refreshIcon.classList.add('animate-spin');
+      
+      setTimeout(() => {
+        // Randomly simulate micro-fluctuation in metrics
+        const gpu = (87 + Math.random() * 3).toFixed(1);
+        const p99 = Math.floor(138 + Math.random() * 8);
+        const req = (42 + Math.random() * 2).toFixed(1);
+
+        document.getElementById('gpu-metric').innerText = gpu + '%';
+        document.getElementById('p99-metric').innerHTML = p99 + '<span class="text-lg text-aether-muted font-normal ml-0.5">ms</span>';
+        document.getElementById('req-metric').innerHTML = req + '<span class="text-lg text-aether-muted font-normal ml-0.5">k/s</span>';
+
+        // Add simulated live event
+        const stream = document.getElementById('event-stream');
+        const now = new Date();
+        const timeStr = '[' + now.toTimeString().split(' ')[0] + ']';
+        const newLog = document.createElement('div');
+        newLog.className = 'p-2 rounded bg-aether-void/50 border border-white/5 flex items-start space-x-2 animate-fadeIn';
+        newLog.innerHTML = `<span class="text-aether-emerald font-bold">${timeStr}</span><span class="text-aether-text flex-1">Heartbeat pulse verified across 128 H100 inference instances (${p99}ms)</span>`;
+        stream.prepend(newLog);
+
+        refreshIcon.classList.remove('animate-spin');
+      }, 600);
+    }
+
+    // Interval live tick
+    setInterval(() => {
+      const gpuEl = document.getElementById('gpu-metric');
+      if (gpuEl) {
+        const val = (88 + (Math.random() * 0.8 - 0.4)).toFixed(1);
+        gpuEl.innerText = val + '%';
+      }
+    }, 4000);
+  </script>
+</body>
+</html>

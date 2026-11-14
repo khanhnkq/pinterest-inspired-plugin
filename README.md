@@ -13,17 +13,43 @@
 
 ---
 
-## 📸 Real-World Showcase: From Pinterest Moodboard to Live UI
+## 📸 Real-World Showcases: From Pinterest Moodboards to Production UI
 
-> **Real-World Proof of Concept:** Below is the live production website **"KANSO ROASTERS — Artisanal Single-Origin & Slow Craft"**, designed and coded entirely by an AI Agent. The agent extracted real pins and dominant hex colors directly from Pinterest via this plugin, applied anti-slop guidelines (`design-taste-frontend`), and enforced accessibility standards (`web-design-guidelines`).
+> **Real-World Proof of Concept:** Below are two production web applications designed and coded entirely by an AI Agent using this plugin. The agent extracted real pins, dominant hex colors, and aspect ratios directly from Pinterest, applied **`design-taste-frontend`** (anti-slop directives & the Three Dials), and enforced **`web-design-guidelines`** (WCAG AA accessibility & CLS prevention).
+
+---
+
+### ⚡ Showcase 1: AETHER TELEMETRY — Modern AI Inference Dashboard
+
+> **Design Read:** *High-performance cloud infrastructure & AI inference telemetry cockpit for engineering leaders, featuring a Linear-style dark aesthetic, tabular monospace metrics, emerald operational beacons, and asymmetric telemetry plots.*  
+> **The Three Dials:** `DESIGN_VARIANCE: 7` | `MOTION_INTENSITY: 6` | `VISUAL_DENSITY: 8`
+
+<p align="center">
+  <img src="showcase/dashboard-showcase-desktop.png" alt="Aether Modern Dashboard Showcase Desktop View" width="100%" />
+</p>
+
+| 📌 1. Pinterest Extracted Tokens | 💻 2. Live Dashboard Implementation (Tailwind CSS + SVG) |
+| :--- | :--- |
+| <img src="showcase/dashboard/pin_dash_1.jpg" width="220" alt="Graphite Architecture Pin" /> <br> **Graphite Cockpit Surface** <br> `Dominant Hex: #171717` <br><br> <img src="showcase/dashboard/pin_dash_2.png" width="220" alt="Telemetry Waveforms Pin" /> <br> **Dense Telemetry Plots** <br> `Dominant Hex: #1B1F24` | **Autonomous Edge Ingress & Token Dynamics:** <br> • Multi-curve SVG waveform plot tracking input/output token velocity and P99 latency.<br> • 60-30-10 palette anchored on Dark Void (`#0C0D10`), Elevated Slate (`#171B21`), and Emerald (`#10B981`).<br> • Tabular monospace metrics (`tabular-nums`) with real-time interactive simulation.<br> • Micro sparklines with compositor-friendly SVG gradient fills. |
+| <img src="showcase/dashboard/pin_dash_3.jpg" width="220" alt="B2B Cockpit Grid Pin" /> <br> **Asymmetric B2B Grid** <br> `Dominant Hex: #161615` <br><br> <img src="showcase/dashboard/pin_dash_4.jpg" width="220" alt="Emerald Beacon Pin" /> <br> **Operational Status Glow** <br> `Dominant Hex: #112D27` | **Live Edge Zone Matrix & Streaming Event Log:** <br> • Active cluster telemetry across US-East, EU-Central, and Asia-Pacific edge zones.<br> • Visible focus management (`focus-visible:ring-2 focus-visible:ring-emerald-500`).<br> • Screen-reader accessible skip-link (`#dashboard-main`) and `aria-live="polite"` status updates.<br> • Zero generic purple gradients or template cliches. |
+
+<p align="center">
+  <img src="showcase/dashboard-showcase-full.png" alt="Aether Telemetry Dashboard Full Page View" width="100%" />
+  <em>Complete high-density cockpit captured directly via Headless Chrome (1440 x 1400 viewport). Full source code available in <code>showcase/dashboard.html</code>.</em>
+</p>
+
+---
+
+### ☕ Showcase 2: KANSO ROASTERS — Artisanal Single-Origin Roastery
+
+> **Design Read:** *Specialty coffee roastery celebrating slow agricultural craft, featuring an oatmeal linen canvas, Cormorant Garamond display typography, and an asymmetric double-frame bento layout.*  
+> **The Three Dials:** `DESIGN_VARIANCE: 8` | `MOTION_INTENSITY: 5` | `VISUAL_DENSITY: 4`
 
 <p align="center">
   <img src="showcase/kanso-showcase-desktop.png" alt="Pinterest Inspiration Plugin Real World Showcase Desktop View" width="100%" />
 </p>
 
-### 🎯 Visual Transformation Pipeline (From Pins to Production Code)
-
-| 📌 1. Pinterest Extracted Pins & Hex Tokens | 💻 2. Live UI Implementation (Tailwind CSS + React) |
+| 📌 1. Pinterest Extracted Tokens | 💻 2. Live UI Implementation (Tailwind CSS + React) |
 | :--- | :--- |
 | <img src="showcase/assets/pin_1.jpg" width="220" alt="V60 Pour Over Pin" /> <br> **V60 Pour Over Protocol** <br> `Dominant Hex: #6A4E37` <br><br> <img src="showcase/assets/pin_2.jpg" width="220" alt="Artisanal Roasted Beans Pin" /> <br> **Artisanal Roasted Beans** <br> `Dominant Hex: #93725B` | **Asymmetric Editorial Hero Section:** <br> • Direct mapping of `#6A4E37` to primary CTA buttons and brand accent pills.<br> • Staggered dual-frame photography preserving native Pinterest aspect ratios.<br> • Oatmeal linen canvas (`#FAF7F2`) replacing harsh clinical whites.<br> • Elegant typography pairing: *Cormorant Garamond* display + *Plus Jakarta Sans* UI copy. |
 | <img src="showcase/assets/pin_3.jpg" width="220" alt="Ethiopia Yirgacheffe Pin" /> <br> **Ethiopia Yirgacheffe** <br> `Dominant Hex: #CEAA8A` <br><br> <img src="showcase/assets/pin_4.jpg" width="220" alt="Colombia Gesha Reserve Pin" /> <br> **Colombia Gesha Reserve** <br> `Dominant Hex: #49432F` | **Seasonal Bento Grid & Interactive Extraction Lab:** <br> • Individual lot cards tagged with dominant hex identifiers (`#CEAA8A`, `#49432F`).<br> • 60-30-10 harmonic color distribution eliminating "AI slop" cliches.<br> • Deep espresso charcoal card (`#211813`) creating visual hierarchy and focal weight.<br> • WCAG AA compliant contrast ratios (4.5:1+) and visible keyboard focus rings. |
@@ -36,7 +62,9 @@
 ---
 
 ## 📖 Table of Contents
-- [Real-World Showcase](#-real-world-showcase-from-pinterest-moodboard-to-live-ui)
+- [Real-World Showcases](#-real-world-showcases-from-pinterest-moodboards-to-production-ui)
+  - [Showcase 1: Modern AI Inference Dashboard (AETHER)](#-showcase-1-aether-telemetry--modern-ai-inference-dashboard)
+  - [Showcase 2: Artisanal Specialty Roastery (KANSO)](#-showcase-2-kanso-roasters--artisanal-single-origin-roastery)
 - [Overview](#-overview)
 - [Integrated UI/UX Skills](#-integrated-uiux-skills)
 - [Why This Plugin? (Anti-Generic AI)](#-why-this-plugin-anti-generic-ai)
@@ -414,10 +442,14 @@ pinterest-inspired-plugin/
 ├── .claude-plugin/
 │   └── plugin.json                 # Claude Code plugin manifest
 ├── showcase/
-│   ├── assets/                     # Downloaded Pinterest reference pins
+│   ├── assets/                     # Downloaded Pinterest pins (Roastery)
+│   ├── dashboard/                  # Downloaded Pinterest pins (Telemetry)
 │   ├── index.html                  # Live KANSO ROASTERS showcase website
-│   ├── kanso-showcase-desktop.png  # High-res desktop showcase screenshot
-│   ├── kanso-showcase-full.png     # Full-page editorial showcase screenshot
+│   ├── dashboard.html              # Live AETHER TELEMETRY modern dashboard
+│   ├── kanso-showcase-desktop.png  # Desktop roastery screenshot
+│   ├── kanso-showcase-full.png     # Full-page roastery screenshot
+│   ├── dashboard-showcase-desktop.png # Desktop dashboard screenshot
+│   ├── dashboard-showcase-full.png    # Full-page dashboard screenshot
 │   └── pins.json                   # Raw Pinterest token dump
 ├── skills/
 │   ├── pinterest-inspiration/
