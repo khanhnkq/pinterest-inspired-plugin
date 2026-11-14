@@ -1,7 +1,7 @@
 {
   "name": "pinterest-inspiration",
-  "version": "1.2.0",
-  "description": "Visual inspiration MCP plugin with palette quantization, Tesseract OCR metric extraction, WCAG contrast verification, and bundled anti-slop design skills. Scrapes pins, extracts exact typography and UI metrics, and generates production Tailwind/React code.",
+  "version": "1.3.0",
+  "description": "Visual inspiration MCP plugin with palette quantization, Tesseract OCR metric extraction, computer-vision layout detection, closed-loop visual diff verification, WCAG contrast verification, and bundled anti-slop design skills. Scrapes pins, extracts layout geometry and UI metrics, and converges production UI code.",
   "author": "Antigravity Team",
   "keywords": [
     "pinterest",
@@ -16,6 +16,10 @@
     "color-quantization",
     "ocr",
     "tesseract",
+    "layout-detection",
+    "visual-diff",
+    "iterative-verification",
+    "computer-vision",
     "wcag-contrast",
     "design-taste-frontend",
     "web-design-guidelines",
@@ -29,7 +33,8 @@
   ],
   "suggestedPrompts": [
     "Search Pinterest for modern dark SaaS dashboards, extract the quantized color palette and OCR metrics, and build the UI",
-    "Find visual inspiration for a minimalist modern coffee shop landing page and audit contrast with calculate_wcag_contrast",
-    "Extract text and numerical metrics from a reference pin using extract_text_and_ocr to replicate the dashboard"
+    "Detect layout regions and card grid columns from a reference pin using detect_layout_regions",
+    "Compare my rendered component screenshot against the reference pin using compare_visual_diff and inspect the heatmap",
+    "Find visual inspiration for a minimalist modern coffee shop landing page and audit contrast with calculate_wcag_contrast"
   ]
 }

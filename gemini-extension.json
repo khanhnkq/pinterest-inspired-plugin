@@ -1,7 +1,7 @@
 {
   "name": "pinterest-inspiration",
-  "version": "1.2.0",
-  "description": "Pinterest visual inspiration extension with palette quantization, Tesseract OCR metric extraction, and integrated design-taste-frontend and web-design-guidelines skills.",
+  "version": "1.3.0",
+  "description": "Pinterest visual inspiration extension with palette quantization, Tesseract OCR metric extraction, computer-vision layout detection, closed-loop visual diff verification, and integrated design-taste-frontend and web-design-guidelines skills.",
   "author": {
     "name": "Antigravity Team"
   },

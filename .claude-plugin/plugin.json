@@ -1,7 +1,7 @@
 {
   "name": "pinterest-inspiration",
-  "version": "1.2.0",
-  "description": "Pinterest visual inspiration MCP plugin for Claude Code with palette quantization, Tesseract OCR, and bundled design-taste-frontend and web-design-guidelines skills.",
+  "version": "1.3.0",
+  "description": "Pinterest visual inspiration MCP plugin for Claude Code with palette quantization, Tesseract OCR, layout detection, visual diff verification, and bundled design-taste-frontend and web-design-guidelines skills.",
   "author": {
     "name": "Antigravity Team"
   },
@@ -14,6 +14,9 @@
     "mcp",
     "color-quantization",
     "ocr",
+    "layout-detection",
+    "visual-diff",
+    "iterative-verification",
     "design-taste-frontend",
     "web-design-guidelines"
   ],

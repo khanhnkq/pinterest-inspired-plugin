@@ -15,7 +15,7 @@ Operational guidelines for Claude Code interacting with the Pinterest Inspiratio
 
 ## MCP Tools Reference
 
-This plugin registers 5 standardized MCP tools:
+This plugin registers 7 standardized MCP tools:
 
 1. `search_pinterest_inspiration(query: str, limit: int = 8)`:
    - Scrapes visual references from Pinterest via mobile SSR state.
@@ -24,7 +24,7 @@ This plugin registers 5 standardized MCP tools:
 
 2. `download_pin_image(image_url: str, output_path: str = '')`:
    - Downloads a selected pin image to `.pinterest_cache/` or a custom directory.
-   - Allows vision analysis or local design asset archiving.
+   - Allows vision analysis, computer-vision layout detection, or local design asset archiving.
 
 3. `extract_color_palette(image_path_or_url: str, num_colors: int = 5)`:
    - Quantizes the image into prominent colors with percentage share and relative luminance.
@@ -38,17 +38,27 @@ This plugin registers 5 standardized MCP tools:
 5. `extract_text_and_ocr(image_path_or_url: str)`:
    - Uses Tesseract OCR to extract exact stats, numerical metrics (`$30,240`, `129`, `24%`), headings, and navigation labels from reference pins for high-fidelity UI cloning.
 
+6. `detect_layout_regions(image_path_or_url: str)`:
+   - Analyzes layout geometry using horizontal/vertical luminance projections.
+   - Detects sidebar width %, header height px, content bounding box, and estimated card columns (e.g. 2, 3, or 4).
+
+7. `compare_visual_diff(reference_image_path_or_url: str, rendered_screenshot_path: str, threshold: float = 80.0)`:
+   - Compares a rendered UI screenshot with a reference pin using pixel absolute differences.
+   - Outputs similarity percentage score (0-100%), pass/fail verdict, and saves a heatmap image to `.pinterest_cache/diff_heatmap.png`.
+
 ---
 
-## Bundled Skills & Design Workflow
+## Bundled Skills & Superpowers Iterative Verification Loop
 
 This plugin bundles three native skills inside `skills/`:
-- `skills/pinterest-inspiration`: Core visual search and moodboard extraction.
+- `skills/pinterest-inspiration`: Core visual search, moodboard extraction, layout detection, and visual diff verification.
 - `skills/design-taste-frontend`: Anti-slop frontend taste (The Three Dials, Design Read, asymmetric layouts, typographic tension).
 - `skills/web-design-guidelines`: Web interface guidelines, accessibility compliance, visible focus states, and WCAG contrast.
 
-### Standard Pipeline:
+### Standard Verification Pipeline:
 1. **Translate queries into descriptive visual English** with design terminology (e.g. `minimalist brutalist dashboard ui`, `artisanal ceramic landing page`).
-2. **Present a rich Markdown visual moodboard** featuring preview images and dominant color hex badges.
-3. **Execute Design Read & Dials** before writing frontend code. Avoid AI defaults (purple gradients, generic centered 3-card grids).
-4. **Map Pinterest dominant hex colors** into a 60-30-10 palette and enforce WCAG 4.5:1 contrast and keyboard focus.
+2. **Present a rich Markdown visual moodboard** featuring preview images and dominant color hex badges. Let the user choose their reference pin.
+3. **INSPECT (Multi-Modal CV Extraction):** Call `download_pin_image()`, `extract_color_palette()` (for 60-30-10 palette), `detect_layout_regions()` (for sidebar width % and card columns), and `extract_text_and_ocr()` (for real stats & labels).
+4. **BUILD (Anti-Slop Synthesis):** Execute Design Read & Dials before writing frontend code (`design-taste-frontend`). Avoid AI defaults (purple gradients, generic centered 3-card grids).
+5. **IMPROVE (Closed-Loop Visual Diff):** Render a screenshot of the built UI, run `compare_visual_diff(reference_pin, screenshot)`, and verify WCAG AA 4.5:1 contrast.
+6. **ITERATE:** If similarity score < 80%, inspect `.pinterest_cache/diff_heatmap.png`, patch layout classes (grid columns, padding, typography), and re-verify until convergence.

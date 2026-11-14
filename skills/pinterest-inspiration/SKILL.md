@@ -1,15 +1,15 @@
 ---
 name: pinterest-inspiration
-description: Search Pinterest for real-world visual inspiration, color palettes, and layout aesthetics without API keys. Displays Markdown moodboards with image previews and dominant color hex pills, and orchestrates downstream anti-slop UI/UX design (via bundled design-taste-frontend and web-design-guidelines) and photorealistic AI image generation.
+description: Search Pinterest for real-world visual inspiration, color palettes, and layout aesthetics without API keys. Displays Markdown moodboards with image previews and dominant color hex pills, and orchestrates downstream anti-slop UI/UX design (via bundled design-taste-frontend and web-design-guidelines), multi-modal layout detection, closed-loop visual diff verification, and photorealistic AI image generation.
 ---
 
 # Pinterest Inspiration Skill
 
-> **Universal AI Agent Skill for Visual Reference & Creative Direction**  
+> **Universal AI Agent Skill for Visual Reference, Computer Vision Layout Extraction & Iterative Verification**  
 > Integrated with **design-taste-frontend** (Anti-Slop Design Taste) and **web-design-guidelines** (A11y Standards).  
 > Compatible with **Google Antigravity, Claude Code, OpenAI Codex, Cursor, and Windsurf**.
 
-This skill empowers AI Agents to search Pinterest for real-world visual references, extract high-fidelity design tokens (HD original images, preview URLs, dominant color hex values, and aspect ratios), render structured visual moodboards, and translate visual concepts directly into production-grade UI/UX code or photorealistic AI image generation prompts.
+This skill empowers AI Agents to search Pinterest for real-world visual references, extract high-fidelity design tokens (HD original images, preview URLs, dominant color hex values, and aspect ratios), perform automated computer-vision layout detection, execute closed-loop visual difference verification, and translate visual concepts directly into production-grade UI/UX code or photorealistic AI image generation prompts.
 
 ---
 
@@ -19,87 +19,147 @@ Activate this skill whenever the user:
 - Requests UI/UX design ideas, landing page concepts, web/mobile dashboards, or app redesigns.
 - Asks for color palette recommendations, moodboards, or visual theme inspiration.
 - Wants to generate AI images (Midjourney, Gemini ImageGen, Imagen 3, DALL-E) and needs authentic style reference tokens (lighting, texture, angle, composition).
-- Provides visual requests that need elevated design execution (e.g., *"design a minimalist artisanal coffee landing page"*, *"design a sleek cybernetic watch dashboard"*, *"retro Japanese poster design"*).
+- Asks to replicate or clone an existing design reference with high fidelity.
+- Needs to perform visual quality assurance, layout geometry detection, or visual diff comparisons against a reference image.
 - Needs to break free from generic "AI slop" (overused purple-cyan gradients, generic Inter typography, cookie-cutter cards).
 
 ---
 
-## 2. Core MCP Tools
+## 2. Core MCP Tools (7 Standardized Tools)
 
-The plugin provides two core Model Context Protocol (MCP) tools via stdio / SSE:
+The plugin provides 7 core Model Context Protocol (MCP) tools via stdio / SSE:
 
-### 1. `search_pinterest_inspiration`
+### 1. `search_pinterest_inspiration(query: str, limit: int = 8)`
 - **Purpose**: Scrapes top Pinterest pins directly using mobile SSR without requiring Pinterest API credentials.
 - **Parameters**:
   - `query` (*string*, required): Visual search query in English.
   - `limit` (*integer*, optional, default: `8`, max: `10`): Number of visual pins to retrieve.
-- **Returns**: Array of pin objects:
-  ```json
-  [
-    {
-      "id": "1087197091392817452",
-      "image_url": "https://i.pinimg.com/originals/...jpg",
-      "preview_url": "https://i.pinimg.com/736x/...jpg",
-      "dominant_color": "#2c3e50",
-      "width": 1080,
-      "height": 1920,
-      "aspect_ratio": 0.56,
-      "query": "minimalist editorial web design"
-    }
-  ]
-  ```
+- **Returns**: Array of pin objects (`id`, `image_url`, `preview_url`, `dominant_color`, `width`, `height`, `aspect_ratio`, `query`).
 
-### 2. `download_pin_image`
-- **Purpose**: Downloads a selected pin image to local disk for multimodal inspection (Vision models) or inclusion in project assets.
+### 2. `download_pin_image(image_url: str, output_path: str = '')`
+- **Purpose**: Downloads a selected pin image to local disk (`.pinterest_cache/<hash>.jpg`) for multi-modal inspection, layout detection, or inclusion in project assets.
 - **Parameters**:
   - `image_url` (*string*, required): Direct URL to the pin image (`image_url` or `preview_url`).
-  - `output_path` (*string*, optional): Custom file path or directory. Defaults to `.pinterest_cache/<hash>.jpg`.
-- **Returns**: String path of the saved file.
+  - `output_path` (*string*, optional): Custom file path or directory.
+- **Returns**: Absolute file path of the saved image.
 
-### 3. `extract_color_palette`
-- **Purpose**: Quantizes an image into its prominent color palette, relative luminance, 60-30-10 semantic roles, and WCAG contrast check.
+### 3. `extract_color_palette(image_path_or_url: str, num_colors: int = 5)`
+- **Purpose**: Quantizes an image into its prominent color palette using Pillow median-cut quantization, relative luminance, 60-30-10 semantic roles, and WCAG contrast check.
 - **Parameters**:
   - `image_path_or_url` (*string*, required): Local image path or HTTP URL.
   - `num_colors` (*integer*, optional, default: `5`): Number of quantized colors (3 to 10).
 - **Returns**: Dict with `canvas_ground_60`, `surface_structure_30`, `high_impact_accent_10`, list of palette colors with frequency percentages and relative luminance, contrast matrix, and ready-to-paste Tailwind CSS `@theme` snippet.
 
-### 4. `calculate_wcag_contrast`
+### 4. `calculate_wcag_contrast(foreground_hex: str, background_hex: str)`
 - **Purpose**: Calculates exact WCAG 2.1 relative luminance and contrast ratio between any two hex colors.
 - **Parameters**:
   - `foreground_hex` (*string*, required): Foreground/text hex color.
   - `background_hex` (*string*, required): Background/surface hex color.
-- **Returns**: Contrast ratio (e.g. `17.6:1`) and WCAG AA/AAA compliance flags.
+- **Returns**: Contrast ratio (e.g. `17.6:1`) and WCAG AA/AAA compliance flags (`AAA_ENHANCED`, `AA_COMPLIANT`, `FAIL`).
 
-### 5. `extract_text_and_ocr`
+### 5. `extract_text_and_ocr(image_path_or_url: str)`
 - **Purpose**: Runs Tesseract OCR on a reference pin to extract raw text, numerical metrics (`$30,240`, `129`, `24%`), headings, and navigation labels for high-fidelity UI cloning.
 - **Parameters**:
   - `image_path_or_url` (*string*, required): Local image path or direct image URL.
 - **Returns**: Dict with `raw_text`, `lines`, `numerical_metrics`, `detected_headings`, and `detected_navigation`.
 
+### 6. `detect_layout_regions(image_path_or_url: str)`
+- **Purpose**: Analyzes image geometry via horizontal and vertical luminance projections to detect structural UI regions (sidebar, header, content bounding box, and card grid columns).
+- **Parameters**:
+  - `image_path_or_url` (*string*, required): Local image file path or HTTP image URL.
+- **Returns**: Dict containing:
+  - `sidebar_detected`: bool (True if a distinct vertical navigation column exists on left)
+  - `sidebar_width_pct`: float (e.g. `18.5`)
+  - `header_detected`: bool (True if top navigation bar is detected)
+  - `header_height_px`: int (estimated height in pixels, e.g. `64`)
+  - `main_grid_bounding_box`: `[x, y, w, h]` (pixel coordinates of primary content canvas)
+  - `estimated_card_columns`: int (estimated grid column count: 2, 3, or 4)
+  - `analysis`: text explanation of detected UI geometry.
+
+### 7. `compare_visual_diff(reference_image_path_or_url: str, rendered_screenshot_path: str, threshold: float = 80.0)`
+- **Purpose**: Performs automated computer-vision visual difference evaluation between a reference design pin and a rendered UI screenshot. Generates a visual diff heatmap.
+- **Parameters**:
+  - `reference_image_path_or_url` (*string*, required): Reference pin image path or URL.
+  - `rendered_screenshot_path` (*string*, required): Path to rendered UI screenshot image.
+  - `threshold` (*float*, optional, default: `80.0`): Similarity percentage threshold (0.0 to 100.0) required to pass.
+- **Returns**: Dict containing:
+  - `similarity_score_pct`: float (e.g. `87.4`)
+  - `threshold`: float (e.g. `80.0`)
+  - `passed`: bool (`True` if similarity >= threshold)
+  - `diff_image_path`: str (path to generated heatmap image, e.g. `.pinterest_cache/diff_heatmap.png`)
+  - `analysis`: detailed breakdown of spatial and color discrepancies.
+
 ---
 
-## 3. End-to-End Design Pipeline
+## 3. Superpowers Iterative Verification Loop (Inspect -> Improve -> Iterate)
+
+To achieve human-designer quality, the agent follows a closed-loop engineering cycle:
 
 ```mermaid
 flowchart TD
-    User["User Prompt"] --> Phase1["Phase 1: Visual Query Formulation"]
-    Phase1 --> Phase2["Phase 2: Pinterest Scraper Engine (<800ms)"]
-    Phase2 --> Phase3["Phase 3: Visual Markdown Moodboard"]
-    Phase3 --> Phase3B["Phase 3.5: User Reference Selection (Human-in-the-Loop)"]
-    Phase3B --> Inspect["Vision Deconstruction: Download & Inspect Chosen Pin"]
-    Inspect --> Branch{"Creative Intent"}
-    Branch -->|Frontend UI/UX| Phase4A["Phase 4A: Faithful Visual Replication & Component Architecture"]
-    Phase4A --> Dial["The Three Dials (Variance / Motion / Density)"]
-    Dial --> Code["Anti-Slop Tailwind & React Architecture"]
-    Code --> Audit["Phase 5: web-design-guidelines Audit (A11y / WCAG 4.5:1)"]
-    Branch -->|GenAI Imagery| Phase4B["Phase 4B: Prompt Deconstruction (Midjourney/Imagen 3)"]
+    User["User Request"] --> Phase1["1. Visual Query Formulation"]
+    Phase1 --> Phase2["2. Search Pinterest (<800ms)"]
+    Phase2 --> Moodboard["3. Render Visual Markdown Moodboard"]
+    Moodboard --> UserSelect["4. User Pin Selection (Human-in-the-Loop)"]
+    
+    subgraph SuperpowersLoop ["Superpowers Iterative Verification Loop"]
+        direction TB
+        Inspect["INSPECT (Multi-Modal Extraction)<br/>• download_pin_image()<br/>• extract_color_palette()<br/>• detect_layout_regions()<br/>• extract_text_and_ocr()"]
+        Build["BUILD (Anti-Slop Synthesis)<br/>• design-taste-frontend (The Three Dials)<br/>• Tailwind @theme & Component Layout"]
+        Diff["IMPROVE (Closed-Loop Evaluation)<br/>• Render Screenshot<br/>• compare_visual_diff(ref, screenshot)<br/>• calculate_wcag_contrast()"]
+        Eval{"Similarity >= 80% &<br/>WCAG AA Pass?"}
+        Refine["ITERATE (Precision Patching)<br/>• Inspect diff_heatmap.png<br/>• Fix grid columns, margins & spacing<br/>• Adjust contrast & typography"]
+        
+        Inspect --> Build
+        Build --> Diff
+        Diff --> Eval
+        Eval -- No --> Refine
+        Refine --> Diff
+    end
+
+    UserSelect --> Inspect
+    Eval -- Yes --> Ship["Ship Production-Grade Component with Diff Report"]
 ```
 
-### Phase 1: Query Formulation & Translation
+### Step 1: INSPECT (Multi-Modal Feature Extraction)
+Once the user selects a target reference pin, download it and run automated inspection:
+1. `download_pin_image(chosen_pin.image_url)`: Save to `.pinterest_cache/`.
+2. `extract_color_palette()`:
+   - Identify `canvas_ground_60`, `surface_structure_30`, and `high_impact_accent_10`.
+   - Extract ready-to-paste Tailwind CSS `@theme` variables.
+3. `detect_layout_regions()`:
+   - Determine whether a sidebar exists and its width percentage (`sidebar_width_pct`).
+   - Read header height (`header_height_px`) and column count (`estimated_card_columns`).
+4. `extract_text_and_ocr()`:
+   - Extract exact financial metrics, percentages, heading strings, and tab navigation labels.
+
+### Step 2: BUILD & IMPROVE (Anti-Slop Synthesis & Visual Diffing)
+1. Apply **`design-taste-frontend`**:
+   - Output the one-line Design Read: `"Reading this as: <kind> for <audience>, with a <vibe> language, leaning toward <aesthetic family>."`
+   - Set the Three Dials (`DESIGN_VARIANCE: 7`, `MOTION_INTENSITY: 4`, `VISUAL_DENSITY: 8`).
+   - Implement the component using detected tokens (e.g. sidebar width `w-[18.5%]`, grid layout `grid-cols-3`).
+2. Verify accessibility with **`calculate_wcag_contrast`**:
+   - Ensure all text-to-surface contrast ratios exceed 4.5:1 (WCAG AA).
+3. Evaluate visual similarity with **`compare_visual_diff`**:
+   - Compare the rendered screenshot against the reference pin:
+     `compare_visual_diff(reference_image_path, screenshot_path, threshold=80.0)`
+
+### Step 3: ITERATE (Closed-Loop Convergence)
+If `compare_visual_diff` reports `passed: false`:
+1. Check `analysis` and examine `.pinterest_cache/diff_heatmap.png`.
+2. Pinpoint the source of discrepancy:
+   - *Layout mismatch:* Adjust column grid (`grid-cols-2` vs `grid-cols-3`) or sidebar width.
+   - *Color divergence:* Align Tailwind background classes with `canvas_ground_60`.
+   - *Typography spacing:* Tighten heading leading or card padding.
+3. Re-run `compare_visual_diff` until score >= 80% and WCAG AA is verified.
+
+---
+
+## 4. Query Formulation & Translation
 
 Pinterest search algorithms respond best to **descriptive visual English keywords** rather than abstract conceptual or conversational phrases.
 
-#### Translation & Keyword Expansion Rules:
+### Translation & Keyword Expansion Rules:
 1. **Always translate non-English requests into English.**
 2. **Combine 3–5 high-signal descriptors:**
    - `[Subject/Medium]` + `[Aesthetic Style]` + `[Color/Lighting]` + `[Context/Format]`
@@ -115,24 +175,9 @@ Pinterest search algorithms respond best to **descriptive visual English keyword
 
 ---
 
-### Phase 2: Call `search_pinterest_inspiration`
+## 5. Visual Moodboard Presentation
 
-Invoke the tool with the formulated query and set `limit` between 4 and 8:
-
-```json
-{
-  "query": "artisanal coffee shop website ui editorial warm earthy",
-  "limit": 6
-}
-```
-
----
-
-### Phase 3: Render the Markdown Visual Moodboard
-
-Always present the findings to the user as a **structured, highly visual Markdown Moodboard** before jumping into code or prompt generation.
-
-#### Standard Moodboard Format:
+Always present search results as a **structured, highly visual Markdown Moodboard** with preview images and dominant color hex pills:
 
 ```markdown
 ### 🎨 Visual Inspiration Moodboard: [Topic]
@@ -164,53 +209,19 @@ Always present the findings to the user as a **structured, highly visual Markdow
 
 ---
 
-### Phase 3.5: User Pin Selection (Human-in-the-Loop) & Vision Deconstruction
+## 6. Anti-Patterns & Best Practices
 
-**CRITICAL RULE:** Do NOT jump into code generation with arbitrary layouts!
-1. **Invite User Selection**: Present the visual moodboard with clear, numbered options (e.g., `Pin 1`, `Pin 2`, `Pin 3`). Ask the user which reference image they want to anchor the design on.
-   - Example prompt: *"Which visual direction would you like to replicate? Please select Pin 1, Pin 2, or Pin 3."*
-2. **Download & Vision Inspection**: Call `download_pin_image(image_url=chosen_pin.image_url)` to store the image locally. Inspect the image with Vision to deconstruct:
-   - **Exact Layout Architecture**: Sidebar width, header placement, card divisions, column splits.
-   - **Exact Component Inventory**: KPI cards, line charts, segmented progress bars, tooltips, data tables.
-   - **Exact Color Ratios**: Canvas `#hex`, card surface `#hex`, borders, and alert badges.
-3. **Faithful Visual Replication**: Translate the chosen pin's composition directly into code so the resulting interface is visually recognizable and true to the selected reference pin.
-
----
-
-### Phase 4A: UI/UX Synthesis via `design-taste-frontend`
-
-When generating frontend code, activate the bundled **`design-taste-frontend`** methodology:
-
-#### 1. Output the One-Line Design Read
-Before writing code, state clearly:  
-`"Reading this as: <page kind> for <audience>, with a <vibe> language, leaning toward <aesthetic family>."`
-
-#### 2. Set The Three Dials
-- **`DESIGN_VARIANCE` (1–10)**: 7–8 (editorial asymmetry, broken grids, staggering).
-- **`MOTION_INTENSITY` (1–10)**: 4–6 (restrained subtle micro-interactions, smooth hover lifts).
-- **`VISUAL_DENSITY` (1–10)**: 3–4 (spacious, breathable negative space).
-
-#### 3. Enforce Anti-Default Discipline
-- ❌ **No AI-purple gradients** (`indigo-500` to `purple-600`).
-- ❌ **No generic Inter + slate-900 combinations**. Use curated pairings (e.g. *Cormorant Garamond* / *Instrument Serif* + *Plus Jakarta Sans* / *Geist*).
-- ❌ **No cookie-cutter 3-column centered cards**.
-- ✅ **Use Pinterest extracted hex colors** for the 60-30-10 rule (Canvas, Structure, Accent).
+| Do's ✅ | Don'ts ❌ |
+| :--- | :--- |
+| **Translate queries into descriptive English** with art & design terminology. | **Don't search in raw conversational non-English** or single vague words like `"web"`. |
+| **Display markdown image previews** (`![alt](preview_url)`) so the user can see inspiration. | **Don't just output raw JSON text** or long lists of plain URLs without image embeds. |
+| **Extract layout regions & exact OCR metrics** before writing UI code. | **Don't guess card columns or invent fake placeholder data** when OCR can extract real metrics. |
+| **Run `compare_visual_diff`** to verify visual convergence against the reference. | **Don't assume your first draft looks like the pin** without running visual diff inspection. |
+| **Enforce WCAG 4.5:1 contrast** using `calculate_wcag_contrast`. | **Don't use low-contrast muted gray text** that fails accessibility standards. |
 
 ---
 
-### Phase 5: Accessibility Audit via `web-design-guidelines`
-
-Every generated component must be validated against the bundled **`web-design-guidelines`**:
-
-1. **WCAG AA 4.5:1 Contrast Ratio**: Text must maintain sufficient contrast against all background surfaces.
-2. **Keyboard Focus Rings**: Never use `outline-none` without `focus-visible:ring-2 focus-visible:ring-offset-2`.
-3. **Semantic Markup**: `<button>` for actions, `<a>` for navigation. Include a hidden skip-link (`<a href="#main" class="sr-only focus:not-sr-only">Skip to content</a>`).
-4. **Layout Stability (CLS)**: Explicit `width` and `height` on all image tags.
-5. **Typographic Polish**: Curly quotes (`“` `”`), true ellipsis (`…`), and non-breaking spaces (`&nbsp;`).
-
----
-
-## 4. Cross-Agent Environment Support
+## 7. Cross-Agent Environment Support
 
 This skill operates uniformly across all supported environments:
 - **Google Antigravity**: Discovered under `skills/pinterest-inspiration/SKILL.md` with tool calls via `mcp_config.json`.

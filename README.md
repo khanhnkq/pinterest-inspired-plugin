@@ -208,6 +208,34 @@ Extracts raw text, numerical metrics, headings, and navigation labels from refer
   - `image_path_or_url` (`string`, required): Local image path or direct image URL.
 - **Output:** Structured dictionary with `raw_text`, non-empty `lines`, `numerical_metrics` (e.g. `$30,240`, `129`, `24%`, `14d`), `detected_headings`, and `detected_navigation`.
 
+### 6. `detect_layout_regions`
+Analyzes image geometry via horizontal and vertical luminance projections to detect structural UI regions (sidebar, header, content canvas bounding box, and estimated card grid columns).
+
+- **Parameters:**
+  - `image_path_or_url` (`string`, required): Local file path or HTTP/HTTPS image URL.
+- **Output:** Structured dictionary containing:
+  - `sidebar_detected`: bool (True if a distinct vertical navigation column exists on left)
+  - `sidebar_width_pct`: float (e.g. `18.5`)
+  - `header_detected`: bool (True if top navigation bar is detected)
+  - `header_height_px`: int (e.g. `64`)
+  - `main_grid_bounding_box`: `[x, y, w, h]` (pixel coordinates of primary content canvas)
+  - `estimated_card_columns`: int (estimated grid column count: 2, 3, or 4)
+  - `analysis`: text explanation of detected UI layout geometry.
+
+### 7. `compare_visual_diff`
+Performs automated computer-vision visual difference evaluation between a reference design pin and a rendered UI screenshot. Generates a visual diff heatmap.
+
+- **Parameters:**
+  - `reference_image_path_or_url` (`string`, required): Reference pin image path or URL.
+  - `rendered_screenshot_path` (`string`, required): Path to rendered UI screenshot image.
+  - `threshold` (`float`, optional, default: `80.0`): Similarity percentage threshold (0.0 to 100.0) required to pass.
+- **Output:** Structured dictionary containing:
+  - `similarity_score_pct`: float (e.g. `87.4`)
+  - `threshold`: float (e.g. `80.0`)
+  - `passed`: bool (`True` if similarity >= threshold)
+  - `diff_image_path`: str (path to generated heatmap image, e.g. `.pinterest_cache/diff_heatmap.png`)
+  - `analysis`: detailed breakdown of spatial and color discrepancies.
+
 ---
 
 ## 🎯 End-to-End Real World Workflows
@@ -315,6 +343,53 @@ The Agent breaks down the retrieved pins:
 **Gemini Imagen 3 Prompt:**
 > A high-end editorial commercial photograph of an intricate mechanical wristwatch. The camera angle is an extreme macro close-up showcasing the balance wheel and gear train under antireflective sapphire crystal. Lighting features dual-tone cyberpunk rim lighting with cool cyan (#00F0FF) highlighting the brushed metal beveled edges and warm neon magenta accentuating the dial indicators against a deep obsidian black background. Photorealistic, 8k resolution, razor-sharp focus.
 ```
+
+---
+
+### Workflow 3: ⚡ The Superpowers Iterative Verification Loop (Inspect -> Improve -> Iterate)
+
+When creating high-fidelity UI replicas from visual pins, agents avoid guesswork by executing an automated closed-loop visual verification cycle:
+
+```mermaid
+flowchart LR
+    A["1. INSPECT<br/>• download_pin_image<br/>• extract_color_palette<br/>• detect_layout_regions<br/>• extract_text_and_ocr"] --> B["2. IMPROVE<br/>• Synthesize with design-taste<br/>• compare_visual_diff (Ref vs Render)<br/>• calculate_wcag_contrast"]
+    B --> C{"Similarity >= 80% &<br/>WCAG AA Pass?"}
+    C -->|No: Inspect heatmap| D["3. ITERATE<br/>• Patch grid columns & sidebar<br/>• Tune margins & typography"]
+    D --> B
+    C -->|Yes| E["Production Verified Code"]
+```
+
+#### Step 1: INSPECT (Multi-Modal Computer Vision Analysis)
+The Agent analyzes the reference image using specialized CV tools before writing code:
+```python
+# 1. Quantize 60-30-10 palette and generate Tailwind @theme
+palette = extract_color_palette("showcase/dashboard/pin_dash_1.jpg", num_colors=5)
+
+# 2. Detect layout geometry (sidebar width %, header height, grid columns)
+layout = detect_layout_regions("showcase/dashboard/pin_dash_1.jpg")
+# => {'sidebar_detected': True, 'sidebar_width_pct': 18.5, 'estimated_card_columns': 3, ...}
+
+# 3. Extract exact numbers, percentages, and labels
+ocr = extract_text_and_ocr("showcase/dashboard/pin_dash_1.jpg")
+# => {'numerical_metrics': ['$30,240', '129', '24%'], 'detected_navigation': ['Overview', 'Telemetry', 'Clusters']}
+```
+
+#### Step 2: IMPROVE (Initial Build & Closed-Loop Evaluation)
+The Agent builds the UI component using the exact detected dimensions and tokens, captures a screenshot, and evaluates visual convergence:
+```python
+diff_report = compare_visual_diff(
+    reference_image_path_or_url="showcase/dashboard/pin_dash_1.jpg",
+    rendered_screenshot_path=".pinterest_cache/rendered_dashboard.png",
+    threshold=80.0
+)
+# => {'similarity_score_pct': 87.4, 'passed': True, 'diff_image_path': '.pinterest_cache/diff_heatmap.png'}
+```
+
+#### Step 3: ITERATE (Precision Convergence)
+If `passed` is `False` or similarity is below threshold:
+1. Agent inspects `.pinterest_cache/diff_heatmap.png` to locate highlighted differences.
+2. Adjusts specific Tailwind classes (e.g. `col-span-2` -> `col-span-3`, padding `p-4` -> `p-6`).
+3. Re-runs `compare_visual_diff` until target similarity and accessibility requirements are met.
 
 ---
 
@@ -488,12 +563,15 @@ pinterest-inspired-plugin/
 │   ├── __init__.py
 │   ├── color_extractor.py          # Quantized palette & WCAG contrast analyzer
 │   ├── ocr_extractor.py            # Tesseract OCR & UI metric extractor
+│   ├── layout_detector.py          # CV layout projection & grid column detector
+│   ├── visual_diff.py              # Visual difference & heatmap diff generator
 │   ├── pinterest_scraper.py        # Mobile SSR parser & downloader
-│   └── server.py                   # FastMCP stdio/SSE server
+│   └── server.py                   # FastMCP stdio/SSE server (7 tools)
 ├── tests/
-│   ├── test_color_and_ocr.py       # 8 unit tests for color quantization & OCR
+│   ├── test_color_and_ocr.py       # Unit tests for color quantization & OCR
+│   ├── test_layout_and_diff.py     # Unit tests for layout detector & visual diff
 │   ├── test_scraper.py             # 24 unit & mock tests for scraper
-│   └── test_server.py              # 7 tests for FastMCP server tools
+│   └── test_server.py              # FastMCP server tool execution tests
 ├── AGENTS.md                       # Guidelines for OpenAI Codex & Cursor
 ├── CLAUDE.md                       # Guidelines for Claude Code
 ├── plugin.json                     # Antigravity plugin manifest
