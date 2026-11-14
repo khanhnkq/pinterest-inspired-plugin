@@ -237,6 +237,82 @@ def extract_text_and_ocr(image_path_or_url: str) -> dict[str, Any]:
     return _ocr(image_path_or_url)
 
 
+@mcp.tool()
+def detect_layout_regions(image_path_or_url: str) -> dict[str, Any]:
+    """Detect structural UI regions from a reference design or screenshot.
+
+    Calculates horizontal and vertical luminance projections to detect sidebars,
+    top navigation headers, main content canvas bounding box, and estimated card grid columns.
+    Enables AI agents to replicate layout geometry faithfully without guessing.
+
+    Args:
+        image_path_or_url: Absolute or relative local path, or HTTP/HTTPS image URL.
+
+    Returns:
+        Dict containing:
+            - sidebar_detected: bool (True if distinct vertical boundary in left 4-35%)
+            - sidebar_width_pct: float (e.g. 18.5)
+            - sidebar_width_px: int
+            - header_detected: bool (True if distinct horizontal boundary in top 3-25%)
+            - header_height_px: int (e.g. 64)
+            - header_height_pct: float
+            - main_grid_bounding_box: [x, y, w, h] pixel coordinates of content canvas
+            - estimated_card_columns: int (estimated grid columns: 1, 2, 3, or 4)
+            - layout_type: str ("full_dashboard", "sidebar_and_grid", "header_and_grid", "grid_only", "single_column")
+            - image_dimensions: {"width": int, "height": int}
+            - recommendation: actionable design layout guidance
+    """
+    try:
+        from src.layout_detector import detect_layout_regions as _detect
+    except ImportError:
+        from layout_detector import detect_layout_regions as _detect  # type: ignore
+
+    return _detect(image_path_or_url)
+
+
+@mcp.tool()
+def compare_visual_diff(
+    reference_image_path_or_url: str,
+    rendered_screenshot_path: str,
+    threshold: float = 80.0,
+    output_diff_path: str = "",
+) -> dict[str, Any]:
+    """Compare a rendered UI screenshot against a reference pin design image for visual fidelity.
+
+    Performs automated computer-vision visual difference evaluation between a reference design
+    and a rendered implementation screenshot. Resizes to standard resolution, computes channel-by-channel
+    pixel absolute differences, generates a diff heatmap, and checks against the pass threshold.
+
+    Args:
+        reference_image_path_or_url: Reference design pin image path or URL.
+        rendered_screenshot_path: Rendered UI implementation screenshot path or URL.
+        threshold: Minimum similarity percentage required to pass (0.0 to 100.0, default 80.0).
+        output_diff_path: Optional custom path for saving the diff heatmap image.
+            Defaults to `.pinterest_cache/diff_heatmap.png`.
+
+    Returns:
+        Dict containing:
+            - similarity_score_pct: float (0.0 to 100.0)
+            - threshold: float (e.g. 80.0)
+            - passed: bool (True if similarity_score_pct >= threshold)
+            - diff_image_path: str path to generated heatmap image
+            - analysis: detailed breakdown of visual similarity and discrepancies
+            - resolution_compared: [width, height]
+            - mean_channel_diff: float average per-channel pixel difference
+    """
+    try:
+        from src.visual_diff import compare_visual_diff as _compare
+    except ImportError:
+        from visual_diff import compare_visual_diff as _compare  # type: ignore
+
+    return _compare(
+        reference_image_path_or_url,
+        rendered_screenshot_path,
+        threshold=threshold,
+        output_diff_path=output_diff_path,
+    )
+
+
 def main() -> None:
     """Run FastMCP server on configured transport (stdio or sse / streamable-http)."""
     transport = os.getenv("MCP_TRANSPORT", "stdio").lower().strip()

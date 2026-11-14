@@ -10,10 +10,19 @@ from src.server import download_pin_image, mcp, search_pinterest_inspiration
 
 
 def test_server_tool_registration():
-    """Verify both tools are properly registered on the FastMCP instance."""
+    """Verify all 7 tools are properly registered on the FastMCP instance."""
     tool_names = [tool.name for tool in mcp._tool_manager.list_tools()]
-    assert "search_pinterest_inspiration" in tool_names
-    assert "download_pin_image" in tool_names
+    expected_tools = [
+        "search_pinterest_inspiration",
+        "download_pin_image",
+        "extract_color_palette",
+        "calculate_wcag_contrast",
+        "extract_text_and_ocr",
+        "detect_layout_regions",
+        "compare_visual_diff",
+    ]
+    for tool_name in expected_tools:
+        assert tool_name in tool_names, f"Missing tool: {tool_name}"
 
 
 def test_search_pinterest_inspiration_empty_query():
@@ -109,3 +118,51 @@ async def test_fastmcp_call_tool_download():
         assert len(result) >= 1
         content_text = result[0][0].text
         assert content_text == test_dest
+
+
+@pytest.mark.asyncio
+async def test_fastmcp_call_tool_detect_layout():
+    """Verify calling detect_layout_regions via FastMCP protocol."""
+    mock_layout = {
+        "sidebar_detected": True,
+        "sidebar_width_pct": 18.5,
+        "header_detected": True,
+        "header_height_px": 64,
+        "main_grid_bounding_box": [148, 64, 652, 536],
+        "estimated_card_columns": 3,
+        "layout_type": "full_dashboard",
+    }
+
+    with patch("src.layout_detector.detect_layout_regions") as mock_det:
+        mock_det.return_value = mock_layout
+        result = await mcp.call_tool("detect_layout_regions", {"image_path_or_url": "test.jpg"})
+        assert len(result) >= 1
+        assert "sidebar_detected" in result[0][0].text
+        assert "full_dashboard" in result[0][0].text
+
+
+@pytest.mark.asyncio
+async def test_fastmcp_call_tool_compare_diff():
+    """Verify calling compare_visual_diff via FastMCP protocol."""
+    mock_diff = {
+        "similarity_score_pct": 88.5,
+        "threshold": 80.0,
+        "passed": True,
+        "diff_image_path": "/path/to/diff.png",
+        "analysis": "PASSED with 88.5%",
+    }
+
+    with patch("src.visual_diff.compare_visual_diff") as mock_cmp:
+        mock_cmp.return_value = mock_diff
+        result = await mcp.call_tool(
+            "compare_visual_diff",
+            {
+                "reference_image_path_or_url": "ref.jpg",
+                "rendered_screenshot_path": "screen.png",
+                "threshold": 80.0,
+            },
+        )
+        assert len(result) >= 1
+        assert "88.5" in result[0][0].text
+        assert "PASSED" in result[0][0].text
+
