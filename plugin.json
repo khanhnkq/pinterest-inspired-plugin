@@ -1,0 +1,21 @@
+{
+  "name": "pinterest-inspiration",
+  "version": "1.0.0",
+  "description": "Pinterest visual inspiration MCP plugin. Scrapes top visual references, dominant colors, and image dimensions for UI/UX design and AI image generation without browser binaries or API tokens.",
+  "author": "Antigravity Team",
+  "keywords": [
+    "pinterest",
+    "inspiration",
+    "design",
+    "ui",
+    "moodboard",
+    "mcp",
+    "visual-reference",
+    "color-palette"
+  ],
+  "suggestedPrompts": [
+    "Find visual inspiration for a minimalist modern dashboard UI",
+    "Show me Pinterest moodboards for luxury perfume editorial branding",
+    "Search Pinterest for brutalist typography posters and download the top image"
+  ]
+}

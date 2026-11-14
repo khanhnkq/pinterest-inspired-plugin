@@ -1,0 +1,15 @@
+{
+  "name": "pinterest-inspiration",
+  "version": "1.0.0",
+  "description": "Pinterest visual inspiration extension. Scrapes design references, dominant colors, and dimensions for UI design and AI image generation.",
+  "author": {
+    "name": "Antigravity Team"
+  },
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "pinterest-inspiration": {
+      "command": "uv",
+      "args": ["run", "python", "-m", "src.server"]
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "pinterest-inspiration",
+  "version": "1.0.0",
+  "description": "Pinterest visual inspiration MCP plugin for Claude Code. Fetches high-res design references, dominant colors, and image dimensions.",
+  "author": {
+    "name": "Antigravity Team"
+  },
+  "keywords": [
+    "pinterest",
+    "inspiration",
+    "design",
+    "ui",
+    "moodboard",
+    "mcp"
+  ],
+  "mcpServers": {
+    "pinterest-inspiration": {
+      "command": "uv",
+      "args": ["run", "python", "-m", "src.server"]
+    }
+  }
+}
