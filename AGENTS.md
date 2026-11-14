@@ -44,6 +44,32 @@ Downloads an inspiration image to local storage for multi-modal vision inspectio
 - **Return Value:**
   - Absolute local file path of the downloaded image.
 
+### `extract_color_palette(image_path_or_url: str, num_colors: int = 5)`
+Extracts a full quantized color palette, relative luminance, 60-30-10 semantic roles, and WCAG contrast analysis from any local image or Pinterest image URL using Pillow median-cut quantization.
+
+- **Parameters:**
+  - `image_path_or_url` (`string`, required): Local file path or HTTP/HTTPS image URL.
+  - `num_colors` (`integer`, optional, default: 5): Number of quantized colors to extract (3 to 10).
+- **Return Value:**
+  - Dict containing total colors, `canvas_ground_60`, `surface_structure_30`, `high_impact_accent_10`, list of palette colors with frequency percentages and relative luminance, contrast matrix against the canvas, and ready-to-paste Tailwind CSS `@theme` snippet.
+
+### `calculate_wcag_contrast(foreground_hex: str, background_hex: str)`
+Calculates the exact WCAG 2.1 relative luminance and contrast ratio between any two hex colors.
+
+- **Parameters:**
+  - `foreground_hex` (`string`, required): Text or foreground color hex (e.g. `#FFFFFF` or `#F3F4F6`).
+  - `background_hex` (`string`, required): Surface or background color hex (e.g. `#0B0D10`).
+- **Return Value:**
+  - Dict with contrast ratio (e.g. `17.6:1`), compliance flags for AA/AAA normal and large text, and graphical component status (`AAA_ENHANCED`, `AA_COMPLIANT`, `FAIL`).
+
+### `extract_text_and_ocr(image_path_or_url: str)`
+Extracts raw text, numerical metrics, headings, and navigation labels from reference pins using Tesseract OCR.
+
+- **Parameters:**
+  - `image_path_or_url` (`string`, required): Local image path or direct image URL.
+- **Return Value:**
+  - Dict with `raw_text`, non-empty `lines`, `numerical_metrics` (e.g. `$30,240`, `129`, `24%`, `14d`), `detected_headings`, and `detected_navigation`.
+
 ---
 
 ## 3. Bundled Skills & Design Workflow

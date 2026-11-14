@@ -56,6 +56,26 @@ The plugin provides two core Model Context Protocol (MCP) tools via stdio / SSE:
   - `output_path` (*string*, optional): Custom file path or directory. Defaults to `.pinterest_cache/<hash>.jpg`.
 - **Returns**: String path of the saved file.
 
+### 3. `extract_color_palette`
+- **Purpose**: Quantizes an image into its prominent color palette, relative luminance, 60-30-10 semantic roles, and WCAG contrast check.
+- **Parameters**:
+  - `image_path_or_url` (*string*, required): Local image path or HTTP URL.
+  - `num_colors` (*integer*, optional, default: `5`): Number of quantized colors (3 to 10).
+- **Returns**: Dict with `canvas_ground_60`, `surface_structure_30`, `high_impact_accent_10`, list of palette colors with frequency percentages and relative luminance, contrast matrix, and ready-to-paste Tailwind CSS `@theme` snippet.
+
+### 4. `calculate_wcag_contrast`
+- **Purpose**: Calculates exact WCAG 2.1 relative luminance and contrast ratio between any two hex colors.
+- **Parameters**:
+  - `foreground_hex` (*string*, required): Foreground/text hex color.
+  - `background_hex` (*string*, required): Background/surface hex color.
+- **Returns**: Contrast ratio (e.g. `17.6:1`) and WCAG AA/AAA compliance flags.
+
+### 5. `extract_text_and_ocr`
+- **Purpose**: Runs Tesseract OCR on a reference pin to extract raw text, numerical metrics (`$30,240`, `129`, `24%`), headings, and navigation labels for high-fidelity UI cloning.
+- **Parameters**:
+  - `image_path_or_url` (*string*, required): Local image path or direct image URL.
+- **Returns**: Dict with `raw_text`, `lines`, `numerical_metrics`, `detected_headings`, and `detected_navigation`.
+
 ---
 
 ## 3. End-to-End Design Pipeline

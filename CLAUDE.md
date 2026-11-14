@@ -15,7 +15,7 @@ Operational guidelines for Claude Code interacting with the Pinterest Inspiratio
 
 ## MCP Tools Reference
 
-This plugin registers two MCP tools:
+This plugin registers 5 standardized MCP tools:
 
 1. `search_pinterest_inspiration(query: str, limit: int = 8)`:
    - Scrapes visual references from Pinterest via mobile SSR state.
@@ -25,6 +25,18 @@ This plugin registers two MCP tools:
 2. `download_pin_image(image_url: str, output_path: str = '')`:
    - Downloads a selected pin image to `.pinterest_cache/` or a custom directory.
    - Allows vision analysis or local design asset archiving.
+
+3. `extract_color_palette(image_path_or_url: str, num_colors: int = 5)`:
+   - Quantizes the image into prominent colors with percentage share and relative luminance.
+   - Assigns 60-30-10 semantic roles (Canvas, Surface, Accent).
+   - Generates ready-to-paste Tailwind CSS `@theme` snippet and WCAG contrast check.
+
+4. `calculate_wcag_contrast(foreground_hex: str, background_hex: str)`:
+   - Computes exact WCAG 2.1 relative luminance and contrast ratio.
+   - Flags compliance for AA/AAA normal and large text.
+
+5. `extract_text_and_ocr(image_path_or_url: str)`:
+   - Uses Tesseract OCR to extract exact stats, numerical metrics (`$30,240`, `129`, `24%`), headings, and navigation labels from reference pins for high-fidelity UI cloning.
 
 ---
 

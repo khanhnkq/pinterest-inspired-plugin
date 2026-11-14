@@ -1,5 +1,11 @@
 FROM python:3.12-slim
 
+# Install system dependencies including Tesseract OCR for text and metric extraction
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    tesseract-ocr \
+    tesseract-ocr-eng \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install uv binary from official image
 COPY --from=ghcr.io/astral-sh/uv:0.6.5 /uv /bin/uv
 

@@ -169,6 +169,74 @@ def download_pin_image(image_url: str, output_path: str = "") -> str:
     return str(target_file)
 
 
+@mcp.tool()
+def extract_color_palette(image_path_or_url: str, num_colors: int = 5) -> dict[str, Any]:
+    """Extract dominant quantized color palette, relative luminance, and 60-30-10 semantic roles.
+
+    Analyzes a local image file or Pinterest image URL using Pillow median-cut quantization.
+    Calculates percentage share, WCAG relative luminance, contrast matrix against the canvas,
+    and returns a ready-to-paste Tailwind CSS theme snippet.
+
+    Args:
+        image_path_or_url: Local file path or HTTP/HTTPS image URL.
+        num_colors: Number of distinct colors to extract (3 to 10, default 5).
+
+    Returns:
+        Dict containing total colors extracted, canvas 60% color, surface 30% color,
+        high-impact accent 10% color, palette list, contrast analysis, and Tailwind snippet.
+    """
+    try:
+        from src.color_extractor import extract_color_palette as _extract
+    except ImportError:
+        from color_extractor import extract_color_palette as _extract  # type: ignore
+
+    return _extract(image_path_or_url, num_colors=num_colors)
+
+
+@mcp.tool()
+def calculate_wcag_contrast(foreground_hex: str, background_hex: str) -> dict[str, Any]:
+    """Calculate WCAG 2.1 contrast ratio and accessibility compliance between any two hex colors.
+
+    Verifies whether a color combination meets WCAG AA (>= 4.5:1 for normal text, >= 3.0:1 for large text)
+    and WCAG AAA (>= 7.0:1 for normal text, >= 4.5:1 for large text) standards.
+
+    Args:
+        foreground_hex: Hex code of text/foreground (e.g. '#F3F4F6' or '#FFFFFF').
+        background_hex: Hex code of canvas/surface background (e.g. '#0B0D10').
+
+    Returns:
+        Dict with contrast ratio (e.g. '17.6:1'), compliance flags, and overall rating.
+    """
+    try:
+        from src.color_extractor import calculate_contrast_ratio as _calc
+    except ImportError:
+        from color_extractor import calculate_contrast_ratio as _calc  # type: ignore
+
+    return _calc(foreground_hex, background_hex)
+
+
+@mcp.tool()
+def extract_text_and_ocr(image_path_or_url: str) -> dict[str, Any]:
+    """Extract text, numbers, metrics, navigation labels, and UI headers from an image via OCR.
+
+    Analyzes reference pins using Tesseract OCR to extract exact stats, currencies,
+    percentages (e.g. '$30,240', '129', '24%', '14d'), headings, and navigation labels
+    so generated UI code faithfully mirrors the content of the reference image.
+
+    Args:
+        image_path_or_url: Local file path or HTTP/HTTPS image URL.
+
+    Returns:
+        Dict with raw text, cleaned lines, numerical metrics, detected headings, and navigation items.
+    """
+    try:
+        from src.ocr_extractor import extract_text_and_ocr as _ocr
+    except ImportError:
+        from ocr_extractor import extract_text_and_ocr as _ocr  # type: ignore
+
+    return _ocr(image_path_or_url)
+
+
 def main() -> None:
     """Run FastMCP server on configured transport (stdio or sse / streamable-http)."""
     transport = os.getenv("MCP_TRANSPORT", "stdio").lower().strip()

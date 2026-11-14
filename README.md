@@ -185,6 +185,29 @@ Downloads an inspiration image to local storage for Vision model inspection or p
   - `output_path` (`string`, optional): Target path or directory. Defaults to `.pinterest_cache/<hash>.jpg`.
 - **Output:** Absolute path of the downloaded image file.
 
+### 3. `extract_color_palette`
+Extracts a full quantized color palette, relative luminance, 60-30-10 semantic roles, and WCAG contrast check from any image or URL using Pillow median-cut quantization.
+
+- **Parameters:**
+  - `image_path_or_url` (`string`, required): Local file path or HTTP/HTTPS image URL.
+  - `num_colors` (`integer`, optional, default: `5`): Number of quantized colors to extract (3 to 10).
+- **Output:** Structured dictionary with `canvas_ground_60`, `surface_structure_30`, `high_impact_accent_10`, list of palette colors with frequency percentages and relative luminance, contrast matrix against the canvas, and ready-to-paste Tailwind CSS `@theme` snippet.
+
+### 4. `calculate_wcag_contrast`
+Calculates exact WCAG 2.1 relative luminance and contrast ratio between any two hex colors.
+
+- **Parameters:**
+  - `foreground_hex` (`string`, required): Text or foreground color hex (e.g. `#FFFFFF` or `#F3F4F6`).
+  - `background_hex` (`string`, required): Surface or background color hex (e.g. `#0B0D10`).
+- **Output:** Exact contrast ratio (e.g. `17.6:1`), compliance flags for AA/AAA normal and large text, and graphical component status (`AAA_ENHANCED`, `AA_COMPLIANT`, `FAIL`).
+
+### 5. `extract_text_and_ocr`
+Extracts raw text, numerical metrics, headings, and navigation labels from reference pins using Tesseract OCR.
+
+- **Parameters:**
+  - `image_path_or_url` (`string`, required): Local image path or direct image URL.
+- **Output:** Structured dictionary with `raw_text`, non-empty `lines`, `numerical_metrics` (e.g. `$30,240`, `129`, `24%`, `14d`), `detected_headings`, and `detected_navigation`.
+
 ---
 
 ## 🎯 End-to-End Real World Workflows
@@ -427,7 +450,7 @@ uv run pytest --cov=src -v
 ```
 
 ```
-============================== 31 passed in 0.50s ==============================
+============================== 39 passed in 1.92s ==============================
 ```
 
 ---
@@ -463,9 +486,12 @@ pinterest-inspired-plugin/
 │       └── SKILL.md                # Vercel accessibility & interface guidelines
 ├── src/
 │   ├── __init__.py
+│   ├── color_extractor.py          # Quantized palette & WCAG contrast analyzer
+│   ├── ocr_extractor.py            # Tesseract OCR & UI metric extractor
 │   ├── pinterest_scraper.py        # Mobile SSR parser & downloader
 │   └── server.py                   # FastMCP stdio/SSE server
 ├── tests/
+│   ├── test_color_and_ocr.py       # 8 unit tests for color quantization & OCR
 │   ├── test_scraper.py             # 24 unit & mock tests for scraper
 │   └── test_server.py              # 7 tests for FastMCP server tools
 ├── AGENTS.md                       # Guidelines for OpenAI Codex & Cursor

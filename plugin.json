@@ -1,7 +1,7 @@
 {
   "name": "pinterest-inspiration",
-  "version": "1.1.0",
-  "description": "Zero-config visual inspiration MCP plugin with built-in frontend design taste and web interface accessibility skills. Scrapes top Pinterest pins, extracts dominant hex colors and dimensions, generates anti-slop Tailwind/React UI, and crafts precision AI prompts.",
+  "version": "1.2.0",
+  "description": "Visual inspiration MCP plugin with palette quantization, Tesseract OCR metric extraction, WCAG contrast verification, and bundled anti-slop design skills. Scrapes pins, extracts exact typography and UI metrics, and generates production Tailwind/React code.",
   "author": "Antigravity Team",
   "keywords": [
     "pinterest",
@@ -13,6 +13,10 @@
     "mcp",
     "visual-reference",
     "color-palette",
+    "color-quantization",
+    "ocr",
+    "tesseract",
+    "wcag-contrast",
     "design-taste-frontend",
     "web-design-guidelines",
     "anti-slop",
@@ -24,8 +28,8 @@
     "skills/web-design-guidelines/SKILL.md"
   ],
   "suggestedPrompts": [
-    "Find visual inspiration for a minimalist modern coffee shop landing page and build it using design-taste-frontend",
-    "Show me Pinterest moodboards for luxury perfume editorial branding and audit the UI with web-design-guidelines",
-    "Search Pinterest for brutalist typography posters and download the top image for multimodal inspection"
+    "Search Pinterest for modern dark SaaS dashboards, extract the quantized color palette and OCR metrics, and build the UI",
+    "Find visual inspiration for a minimalist modern coffee shop landing page and audit contrast with calculate_wcag_contrast",
+    "Extract text and numerical metrics from a reference pin using extract_text_and_ocr to replicate the dashboard"
   ]
 }
