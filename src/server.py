@@ -8,6 +8,7 @@ Claude Code, OpenAI Codex, Cursor/Windsurf).
 from __future__ import annotations
 
 import logging
+import os
 import sys
 from typing import Any, List, Optional
 
@@ -31,8 +32,12 @@ logging.basicConfig(
 )
 logger = logging.getLogger("pinterest-inspiration-mcp")
 
+# Read host, port and transport configuration from environment
+MCP_HOST = os.getenv("MCP_HOST", "0.0.0.0")
+MCP_PORT = int(os.getenv("MCP_PORT", "8000"))
+
 # Initialize FastMCP Server
-mcp = FastMCP("pinterest-inspiration")
+mcp = FastMCP("pinterest-inspiration", host=MCP_HOST, port=MCP_PORT)
 
 
 def _get_scraper_module():
@@ -165,8 +170,13 @@ def download_pin_image(image_url: str, output_path: str = "") -> str:
 
 
 def main() -> None:
-    """Run FastMCP server on stdio transport."""
-    mcp.run(transport="stdio")
+    """Run FastMCP server on configured transport (stdio or sse / streamable-http)."""
+    transport = os.getenv("MCP_TRANSPORT", "stdio").lower().strip()
+    if transport in ("sse", "streamable-http"):
+        logger.info(f"Starting FastMCP server with transport={transport} on {MCP_HOST}:{MCP_PORT}")
+        mcp.run(transport=transport)
+    else:
+        mcp.run(transport="stdio")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,16 @@
+services:
+  pinterest-mcp:
+    build: .
+    container_name: pinterest-inspiration-mcp
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8085:8085"
+    environment:
+      - MCP_TRANSPORT=sse
+      - MCP_HOST=0.0.0.0
+      - MCP_PORT=8085
+    volumes:
+      - pinterest_cache:/app/.pinterest_cache
+
+volumes:
+  pinterest_cache:
