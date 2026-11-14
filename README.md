@@ -12,7 +12,30 @@
 
 ---
 
+## 📸 Real-World Showcase: From Pinterest Moodboard to Live UI
+
+> **Chứng minh năng lực thực tế:** Dưới đây là sản phẩm website thực tế **"KANSO COFFEE — Single Origin & Slow Roastery"** được AI Agent thiết kế và lập trình hoàn chỉnh bằng cách bóc tách trực tiếp ảnh và mã màu từ Pinterest qua plugin này!
+
+<p align="center">
+  <img src="showcase/kanso-showcase-desktop.png" alt="Pinterest Inspiration Plugin Real World Showcase" width="100%" />
+</p>
+
+### 🎯 Quy trình biến đổi trực quan (From Pins to Production Code)
+
+| 📌 1. Ảnh & Mã Màu Bóc Tách Từ Pinterest | 💻 2. Giao Diện Web Thực Tế Tạo Ra (Tailwind CSS) |
+| :--- | :--- |
+| <img src="showcase/assets/pin_1.jpg" width="220" /> <br> **V60 Pour Over Protocol** <br> `Dominant Hex: #6A4E37` <br><br> <img src="showcase/assets/pin_2.jpg" width="220" /> <br> **Artisanal Roasted Beans** <br> `Dominant Hex: #93725B` | **Hero Section Bất Đối Xứng:** <br> • Ánh xạ trực tiếp màu `#6A4E37` vào nút bấm CTA & typography Cormorant Garamond.<br> • Bố cục so le khung ảnh đôi tái hiện đúng tỉ lệ khung hình Pinterest.<br> • Sử dụng màu nền kem yến mạch `#FBF9F5` làm dịu mắt người dùng. |
+| <img src="showcase/assets/pin_3.jpg" width="220" /> <br> **Ethiopia Yirgacheffe** <br> `Dominant Hex: #CEAA8A` <br><br> <img src="showcase/assets/pin_4.jpg" width="220" /> <br> **Colombia Gesha Reserve** <br> `Dominant Hex: #49432F` | **Bento Grid Sản Phẩm Mùa Vụ:** <br> • Thẻ Card sản phẩm gắn trực tiếp mã màu nhận diện từng loại hạt.<br> • Phối màu 60-30-10 chống hiện tượng "AI slop" rập khuôn.<br> • Thẻ Kanso Club dùng màu nền espresso than củi `#211813` tạo điểm nhấn. |
+
+<p align="center">
+  <img src="showcase/kanso-showcase-full.png" alt="Full Editorial Bento Grid Showcase" width="100%" />
+  <em>Toàn cảnh giao diện hoàn chỉnh được chụp thực tế bằng Headless Chrome (1440 x 1800 viewport). Mã nguồn có sẵn tại <code>showcase/index.html</code>.</em>
+</p>
+
+---
+
 ## 📖 Table of Contents
+- [Real-World Showcase](#-real-world-showcase-from-pinterest-moodboard-to-live-ui)
 - [Overview](#-overview)
 - [Why This Plugin? (Anti-Generic AI)](#-why-this-plugin-anti-generic-ai)
 - [Key Features](#-key-features)
